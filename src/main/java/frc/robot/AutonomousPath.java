@@ -7,7 +7,8 @@ public class AutonomousPath{
         PathRedA, 
         PathBlueA, 
         PathRedB, 
-        PathBlueB
+        PathBlueB,
+        CouldNotDeterminePath
       }
 
     public VisionPathName pathName; // I am thinking PathRedA,PathBlueA,PathRedB,PathBlueB

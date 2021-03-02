@@ -1,13 +1,21 @@
 package frc.robot;
 
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+//import static org.junit.Assert.assertEquals;
+//import org.junit.Test;
+import frc.robot.AutonomousPath.VisionPathName;
 
 public class TestPixy {
-    @Test
+    
+   // @Test
     public void TestPixy(){
         
-        VisionFieldLayoutRecognizer objectVisionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
+        // AutonomousPath objecAutonomousPath = new AutonomousPath();
+        // VisionFieldLayoutRecognizer objectVisionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
+        
+        // objecAutonomousPath.pathName = VisionPathName.PathBlueA;
+        // AutonomousPath objecAutonomousPathTestResult = objectVisionFieldLayoutRecognizer.detectPose();
+
+        // assertEquals(objecAutonomousPath, objecAutonomousPathTestResult);
 
     }
 }

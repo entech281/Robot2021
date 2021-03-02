@@ -1,6 +1,8 @@
 package frc.robot;
 
 import java.util.ArrayList;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.AutonomousPath.VisionPathName;
 
 
@@ -17,22 +19,27 @@ import frc.robot.AutonomousPath.VisionPathName;
  public class VisionFieldLayoutRecognizer
     implements PixyFieldPoseResolver{
 
-    private  PixyCameraConnector objectPixyCameraConnector = new PixyCameraConnector();    
+     
+    
+    public VisionFieldLayoutRecognizer() {
+      
+    }
 
-    public AutonomousPath detectPose(FieldVisionInput pixyBlock) {
-
+     public AutonomousPath detectPose(ArrayList<FieldVisionInput> arraylistFieldVisionInput) {
+        
       AutonomousPath objectAutonomousPath;
       FieldVisionInput objectFieldVisionInput;
-      ArrayList<FieldVisionInput> arraylistFieldVisionInput;
+      DistanceRange objectDistanceRange;
 
       double dblFocalLength = 11.33;//pixels = 3mm
       double dblWidth = 7; //inches
       double dblDistance = 0; 
       double dblAverageDistance = 0;
-      double[] dblArrPixels = new double[4];
+      double[] dblArrPixels = new double[3];
 
-      arraylistFieldVisionInput = objectPixyCameraConnector.getFieldVisionInput();
+      
       objectAutonomousPath = new AutonomousPath();
+      objectDistanceRange = new DistanceRange();
 
       // This is the input array that will hold the values provided by the pixie cam 
       // regarding the pixels from each ball seen
@@ -49,9 +56,12 @@ import frc.robot.AutonomousPath.VisionPathName;
       if (arraylistFieldVisionInput.size() >  0 )   
       {
         for(int count = 0; count < arraylistFieldVisionInput.size(); count++){
+
           objectFieldVisionInput = arraylistFieldVisionInput.get(count);
-          dblArrPixels[count] = objectFieldVisionInput.objectHeight * 
-                                  objectFieldVisionInput.objectWidth;
+
+          dblArrPixels[count] = objectFieldVisionInput.getObjectHeight() * 
+                                  objectFieldVisionInput.getObjectWidth();
+                                  
         }
       }
       
@@ -60,26 +70,17 @@ import frc.robot.AutonomousPath.VisionPathName;
          dblDistance = dblDistance + (dblWidth*dblFocalLength)/dblArrPixels[i];
   
       }
-      
+      SmartDashboard.putNumber("Distance: ", dblDistance);
       // Finding the average of the distance
       dblAverageDistance = dblDistance/3;
-  
-    // I am comparing the above calculated value with the averages i calculated using the given 
-    // galactic search measurements.
-   
-    if (dblAverageDistance > 8.50 && dblAverageDistance < 10.0){
-      objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathRedA;
-    }
-    else if (dblAverageDistance > 16.10 && dblAverageDistance < 16.30){
-      objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathBlueA;
-    }
-    else if (dblAverageDistance > 10.30 && dblAverageDistance < 10.40){
-      objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathRedA;
-    }
-    else if (dblAverageDistance > 17.50 && dblAverageDistance < 17.80){
-      objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathRedB;
-    }
-
+      SmartDashboard.putNumber("AvgDist", dblAverageDistance);
+    
+      // I am comparing the above calculated value with the averages i calculated using the given 
+      // galactic search measurements.   
+    
+      objectAutonomousPath.pathName =  objectDistanceRange.getPathForCalculatedDistance(dblAverageDistance);
+    
+      SmartDashboard.putString("Path", objectAutonomousPath.pathName.toString());
       return objectAutonomousPath;
 
     }

@@ -14,23 +14,19 @@ public class PixyCameraConnector implements PixyCameraConnectorInterface{
 
     private Pixy2 pixy;    
 
-    public Pixy2  PixyCameraConnector() {
+    public PixyCameraConnector() {
 
       //pixy = new Pixy2();
       pixy = Pixy2.createInstance(new SPILink());
       pixy.init();
-      return pixy;
-
+      //pixy.setLamp((byte) 1, (byte) 1); // Turns the LEDs on
+		  //pixy.setLED(200, 30, 255); // Sets the RGB LED to purple
+      
     }
 
     public ArrayList<FieldVisionInput> getFieldVisionInput() {
 
-      double  xCoord = 0.0;
-      double yCoord = 0.0;
-      int imageAngle = 0;
-      int imageHeight = 0;
-      int imageWidth = 0;
-      int blockCount = 0;
+      int blockCount;
       ArrayList<Block> blocks;
       ArrayList<FieldVisionInput> arraylistFieldVisionInput = new ArrayList<FieldVisionInput>();
       FieldVisionInput objectFieldVisionInput;
@@ -39,32 +35,36 @@ public class PixyCameraConnector implements PixyCameraConnectorInterface{
 		  //pixy.setLED(200, 30, 255); // Sets the RGB LED to purple
       //pixy.getCCC().getBlocks( false , 255 , 255 );  
 
-      //assign the data toan ArrayList for convinience      
+      //assign the data to an ArrayList for convinience      
       blockCount = pixy.getCCC().getBlocks();
+      SmartDashboard.putNumber("blockcount", blockCount);
+
       
       if (blockCount <= 0) {
-        return null; // If blocks were not found, stop processing
+        return arraylistFieldVisionInput; // If blocks were not found, stop processing
       }
       
       blocks = pixy.getCCC().getBlockCache();
+
+      SmartDashboard.putNumber("BlockSizeFromCache", blocks.size());
       
       if (blocks.size() >  0 )   
       {
         for(int count = 0; count < blocks.size(); count++){
           
-          objectFieldVisionInput = new FieldVisionInput();
+          objectFieldVisionInput = new FieldVisionInput(
+            blocks.get(count).getX(),
+            blocks.get(count).getY(),
+            blocks.get(count).getWidth(),
+            blocks.get(count).getHeight(),
+            blocks.get(count).getAngle()
+          );
 
-          objectFieldVisionInput.xValue = blocks.get(count).getX();        // x position of the largesttarget
-          objectFieldVisionInput.yValue = blocks.get(count).getY();        // y position of the largesttarget  
-          objectFieldVisionInput.objectAngle = blocks.get(count).getAngle();// angle at which the camera sees the image
-          objectFieldVisionInput.objectHeight = blocks.get(count).getHeight(); // Image height
-          objectFieldVisionInput.objectWidth = blocks.get(count).getWidth(); // ImageWidth
-        
-          // examples     
-          SmartDashboard.putBoolean( "present" ,  true );    
-          SmartDashboard.putNumber( "Xccord" ,0);     
-          SmartDashboard.putNumber( "Ycoord" , 0);     
-          SmartDashboard.putString( "Data" , "" );   
+          // // examples     
+          // SmartDashboard.putBoolean( "present" ,  true );    
+          // SmartDashboard.putNumber( "Width" ,objectFieldVisionInput.objectWidth);     
+          // SmartDashboard.putNumber( "Ycoord" , 0);     
+          // SmartDashboard.putString( "Data" , "" );   
 
           arraylistFieldVisionInput.add(objectFieldVisionInput);
         }
