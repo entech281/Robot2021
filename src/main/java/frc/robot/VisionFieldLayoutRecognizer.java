@@ -3,7 +3,6 @@ package frc.robot;
 import java.util.ArrayList;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.AutonomousPath.VisionPathName;
 
 
 /*
@@ -78,9 +77,9 @@ import frc.robot.AutonomousPath.VisionPathName;
       // I am comparing the above calculated value with the averages i calculated using the given 
       // galactic search measurements.   
     
-      objectAutonomousPath.pathName =  objectDistanceRange.getPathForCalculatedDistance(dblAverageDistance);
+      objectAutonomousPath.setPathName(objectDistanceRange.getPathForCalculatedDistance(dblAverageDistance));
     
-      SmartDashboard.putString("Path", objectAutonomousPath.pathName.toString());
+      SmartDashboard.putString("Path", objectAutonomousPath.getPathName().toString());
       return objectAutonomousPath;
 
     }

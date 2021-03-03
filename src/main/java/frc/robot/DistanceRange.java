@@ -2,12 +2,10 @@ package frc.robot;
 
 import java.util.HashMap;
 
-import frc.robot.AutonomousPath.VisionPathName;
-
 public class DistanceRange 
   implements DistanceRangeInterface{
 
-    HashMap<String, Double> distanceRanges;
+    private HashMap<String, Double> distanceRanges;
 
     public DistanceRange(){
         
@@ -32,25 +30,25 @@ public class DistanceRange
 
         if (distanceCalculated >= getDistanceRanges().get("PathRedALowerBound") && 
               distanceCalculated <= getDistanceRanges().get("PathRedAUpperBound")){
-            objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathRedA;
+            objectAutonomousPath.setPathName(frc.robot.VisionPathName.PathRedA);
           }
           else if (distanceCalculated >= getDistanceRanges().get("PathBlueALowerBound") && 
                     distanceCalculated <= getDistanceRanges().get("PathBlueAUpperBound")){
-            objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathBlueA;
+            objectAutonomousPath.setPathName(frc.robot.VisionPathName.PathBlueA);
           }
           else if (distanceCalculated >= getDistanceRanges().get("PathRedBLowerBound") && 
                       distanceCalculated <= getDistanceRanges().get("PathRedBUperBound")){
-            objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathRedA;
+            objectAutonomousPath.setPathName(frc.robot.VisionPathName.PathRedA);
           }
           else if (distanceCalculated >= getDistanceRanges().get("PathBlueBLowerBound") && 
                     distanceCalculated <= getDistanceRanges().get("PathBlueBLowerBound")){
-            objectAutonomousPath.pathName = frc.robot.AutonomousPath.VisionPathName.PathRedB;
+            objectAutonomousPath.setPathName(frc.robot.VisionPathName.PathRedB);
           }
           else{
-            objectAutonomousPath.pathName  = VisionPathName.CouldNotDeterminePath;
+            objectAutonomousPath.setPathName(VisionPathName.CouldNotDeterminePath);
           }
 
-          return objectAutonomousPath.pathName;
+          return objectAutonomousPath.getPathName();
 
     }
 

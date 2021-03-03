@@ -9,8 +9,7 @@ package frc.robot;
 
 import java.util.ArrayList;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import org.junit.runner.JUnitCore;
 // import org.junit.runner.Result;
 // import org.junit.runner.notification.Failure;
@@ -31,13 +30,13 @@ public class Robot extends TimedRobot {
           VisionFieldLayoutRecognizer objectVisionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
           PixyCameraConnector objPixyCameraConnector = new PixyCameraConnector();
 
-          SmartDashboard.putNumber("Number Found", 11);
-
           ArrayList<FieldVisionInput> arraylistFieldVisionInput = 
                     objPixyCameraConnector.getFieldVisionInput();
 
-          objectVisionFieldLayoutRecognizer.detectPose(arraylistFieldVisionInput);
+          // Below is the object that will hold the returned path
+          AutonomousPath objectAutonomousPath = objectVisionFieldLayoutRecognizer.detectPose(arraylistFieldVisionInput);
           
+
           
      }
   

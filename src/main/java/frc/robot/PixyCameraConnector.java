@@ -10,7 +10,7 @@ import  edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // tag::code[]
 //@Data
-public class PixyCameraConnector implements PixyCameraConnectorInterface{
+public class PixyCameraConnector {
 
     private Pixy2 pixy;    
 
@@ -69,8 +69,9 @@ public class PixyCameraConnector implements PixyCameraConnectorInterface{
           arraylistFieldVisionInput.add(objectFieldVisionInput);
         }
       }
-      else     
+      else {      
         SmartDashboard.putBoolean( "present" ,  false );
+      }
 
         return arraylistFieldVisionInput;
 
