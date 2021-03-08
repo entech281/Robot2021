@@ -10,9 +10,10 @@ package frc.robot;
 import java.util.ArrayList;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import org.junit.runner.JUnitCore;
-// import org.junit.runner.Result;
-// import org.junit.runner.notification.Failure;
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
+import org.junit.runner.notification.Failure;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -36,8 +37,25 @@ public class Robot extends TimedRobot {
           // Below is the object that will hold the returned path
           AutonomousPath objectAutonomousPath = objectVisionFieldLayoutRecognizer.detectPose(arraylistFieldVisionInput);
           
-
+          
           
      }
+
+     public void performUnitTests(){
+
+          // Test
+          Result result = JUnitCore.runClasses(TestPixy.class);
+                         
+          for (Failure failure : result.getFailures()) {
+          System.out.println(failure.toString());
+          }
+               
+          System.out.println(result.wasSuccessful());
+
+          
+
+}
+
+     
   
 }
