@@ -4,8 +4,7 @@ public class AutonomousPath{
 
    
 
-    private VisionPathName pathName; // I am thinking PathRedA,PathBlueA,PathRedB,PathBlueB
-    // I can add anything else we will need in the output here
+    private VisionPathName pathName; 
 
     public VisionPathName getPathName() {
       return pathName;

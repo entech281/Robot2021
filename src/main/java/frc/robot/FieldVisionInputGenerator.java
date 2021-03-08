@@ -10,24 +10,14 @@ public class FieldVisionInputGenerator {
 
     public FieldVisionInputGenerator(){
         
-        objectArrayFieldVisionInput = new ArrayList<FieldVisionInput>();
-        objectPixyCameraConnector = new PixyCameraConnector();
-
-        objectArrayFieldVisionInput = objectPixyCameraConnector.getFieldVisionInput();
+        // Here Pixy connection will be created
 
     }
 
-    // public FieldVisionInputGenerator(int xValue, int yValue,
-    // int objWidth, int objHeight, int objAngle){
-
-    //     objectFieldVisionInput = new FieldVisionInput(xValue, yValue,
-    //                                 objWidth, objHeight, objAngle);
-
-    //     objectArrayFieldVisionInput.add(objectFieldVisionInput);
-
-    // }
-
     public FieldVisionInput getObjectFieldVisionInput() {
+        // This function has all code removed except for the ones below 
+        // because i need to return a value
+
         return objectFieldVisionInput;
     }
 
