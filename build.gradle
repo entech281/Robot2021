@@ -57,6 +57,8 @@ dependencies {
     nativeDesktopZip wpi.deps.vendor.jni(wpi.platforms.desktop)
 
     testImplementation 'junit:junit:4.12'
+    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
 
     // Enable simulation gui support. Must check the box in vscode to enable support
     // upon debugging

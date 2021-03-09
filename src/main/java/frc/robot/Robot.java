@@ -7,12 +7,9 @@
 
 package frc.robot;
 
-import java.util.ArrayList;
+import java.util.List;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import org.junit.runner.JUnitCore;
-// import org.junit.runner.Result;
-// import org.junit.runner.notification.Failure;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -30,14 +27,16 @@ public class Robot extends TimedRobot {
           VisionFieldLayoutRecognizer objectVisionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
           PixyCameraConnector objPixyCameraConnector = new PixyCameraConnector();
 
-          ArrayList<FieldVisionInput> arraylistFieldVisionInput = 
+          List<FieldVisionInput> arraylistFieldVisionInput = 
                     objPixyCameraConnector.getFieldVisionInput();
 
           // Below is the object that will hold the returned path
           AutonomousPath objectAutonomousPath = objectVisionFieldLayoutRecognizer.detectPose(arraylistFieldVisionInput);
           
-
+          
           
      }
+
+     
   
 }

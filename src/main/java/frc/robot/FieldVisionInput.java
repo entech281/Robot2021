@@ -2,19 +2,19 @@ package frc.robot;
 
 public class FieldVisionInput{
 
-    private int xValue = 0;         // Not sure if i will need this in my calculation, looks like (x-cord)
-    private int yValue = 0;         // Not sure if i will need this in my calculation, looks like (y-cord)
-    private int objectWidth = 0;    // Width of the object we have programmed the Pixy to see
-    private int objectHeight = 0;   // Height of the object we have programmed the Pixy to see
-    private int objectAngle = 0;    // Angle at which the Pixy to sees the object
+    private int xValue = 0;         
+    private int yValue = 0;         
+    private int objectWidth = 0;    
+    private int objectHeight = 0;   
+    private int objectAngle = 0;    
 
     public FieldVisionInput(int xValue, int yValue,
-    int objWidth, int objHeight, int objAngle){
+    int width, int height, int angle){
         this.xValue  = xValue;
         this.yValue =  yValue;
-        this.objectWidth = objWidth;
-        this.objectHeight = objHeight;
-        this.objectAngle = objAngle;
+        this.objectWidth = width;
+        this.objectHeight = height;
+        this.objectAngle = angle;
     }
 
     @Override

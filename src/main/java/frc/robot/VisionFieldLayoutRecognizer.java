@@ -1,24 +1,12 @@
 package frc.robot;
 
+import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
-/*
- * VisionFieldLayoutRecognizer
- * 
- * Version 1.0
- *
- * 02/27/2021
- * 
- * EnTech 
- */
 
  public class VisionFieldLayoutRecognizer
-    implements PixyFieldPoseResolver{
+    implements PixyFieldPoseResolverInterface{
 
-    private ArrayList<Double> distanceRanges;
+    private List<Double> distanceRanges;
     
     public VisionFieldLayoutRecognizer() {
       DistanceRange();
@@ -59,45 +47,45 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     return VisionPathName.CouldNotDeterminePath;
   }
 
-  public AutonomousPath detectPose(ArrayList<FieldVisionInput> arraylistFieldVisionInput) {
+  public AutonomousPath detectPose(List<FieldVisionInput> fieldVisionInputParameter) {
         
-      AutonomousPath objectAutonomousPath;
-      FieldVisionInput objectFieldVisionInput;
-      DistanceRange objectDistanceRange;
+      AutonomousPath autonomousPath;
+      FieldVisionInput fieldVisionInput;
+      DistanceRange distanceRange;
 
-      double dblFocalLength = 11.33;//pixels = 3mm
-      double dblWidth = 7; //inches
-      double dblDistance = 0; 
-      double dblAverageDistance = 0;
-      double[] dblArrPixels = new double[3];
+      double focalLength = 11.33;//pixels = 3mm
+      double width = 7; //inches
+      double distance = 0; 
+      double averageDistance = 0;
+      double[] pixels = new double[3];
       int visionPathCount = 0;
-      VisionPathName strVisionPathName = VisionPathName.CouldNotDeterminePath;
+      VisionPathName visionPathName = VisionPathName.CouldNotDeterminePath;
 
       
-      objectAutonomousPath = new AutonomousPath();
+      autonomousPath = new AutonomousPath();
        
       // Just for refernce the formula to calculate the focal length
       //dblFocalLength = (dblPixels*dblDistance)/dblWidth;
 
-      if (arraylistFieldVisionInput.size() >  0 ) {
-        for(int count = 0; count < arraylistFieldVisionInput.size(); count++){
+      if (fieldVisionInputParameter.size() >  0 ) {
+        for(int count = 0; count < fieldVisionInputParameter.size(); count++){
 
-          objectFieldVisionInput = arraylistFieldVisionInput.get(count);
+          fieldVisionInput = fieldVisionInputParameter.get(count);
 
-          dblArrPixels[count] = objectFieldVisionInput.getObjectHeight() * 
-                                  objectFieldVisionInput.getObjectWidth();
+          pixels[count] = fieldVisionInput.getObjectHeight() * 
+                                  fieldVisionInput.getObjectWidth();
                                   
         }
       }
       
       // For loop that adds the distance of the three balls
-      for (int i = 0; i < dblArrPixels.length; i++) {
-         dblDistance = dblDistance + (dblWidth*dblFocalLength)/dblArrPixels[i];
+      for (int i = 0; i < pixels.length; i++) {
+         distance = distance + (width*focalLength)/pixels[i];
   
       }
       
       // Finding the average of the distance
-      dblAverageDistance = dblDistance/3;
+      averageDistance = distance/3;
       
     
       // I am comparing the above calculated value with the averages 
@@ -105,23 +93,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
       if (distanceRanges.size() >  0 ) {
         for(int count = 0; count < distanceRanges.size(); count=count+2){
 
-          objectDistanceRange = new DistanceRange(distanceRanges.get(count),
+          distanceRange = new DistanceRange(distanceRanges.get(count),
           distanceRanges.get(count+1), getVisionPathNameByIndex(visionPathCount));
 
           visionPathCount++;
           
-          strVisionPathName = objectDistanceRange.isInRange(dblAverageDistance);
+          visionPathName = distanceRange.isInRange(averageDistance);
 
-          if (strVisionPathName != VisionPathName.CouldNotDeterminePath){
+          if (visionPathName != VisionPathName.CouldNotDeterminePath){
             break;
           }
           
         }
       }
 
-      objectAutonomousPath.setPathName(strVisionPathName);
+      autonomousPath.setPathName(visionPathName);
       
-      return objectAutonomousPath;
+      return autonomousPath;
 
     }
 
