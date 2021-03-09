@@ -13,7 +13,6 @@ public class PixyCameraConnector {
 
     public PixyCameraConnector() {
 
-      //pixy = new Pixy2();
       pixy = Pixy2.createInstance(new SPILink());
       pixy.init();
       //pixy.setLamp((byte) 1, (byte) 1); // Turns the LEDs on

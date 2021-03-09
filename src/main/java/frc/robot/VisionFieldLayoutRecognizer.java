@@ -19,7 +19,7 @@ import java.util.ArrayList;
       // PathRedA Bounds
       distanceRanges.add(10.00);
       distanceRanges.add(8.50);
-      
+
       // PathBlueA Bounds
       distanceRanges.add(16.30);
       distanceRanges.add(16.10);
@@ -31,6 +31,7 @@ import java.util.ArrayList;
       // PathBlueB Bounds
       distanceRanges.add(17.80);
       distanceRanges.add(17.50);
+      
   }
 
   private VisionPathName getVisionPathNameByIndex(int index){
@@ -42,9 +43,11 @@ import java.util.ArrayList;
         if (count == index) {
             return(s);
         }
+        count++;
     } 
 
     return VisionPathName.CouldNotDeterminePath;
+
   }
 
   public AutonomousPath detectPose(List<FieldVisionInput> fieldVisionInputParameter) {
@@ -91,6 +94,7 @@ import java.util.ArrayList;
       // I am comparing the above calculated value with the averages 
       // I calculated using the given galactic search measurements.   
       if (distanceRanges.size() >  0 ) {
+        
         for(int count = 0; count < distanceRanges.size(); count=count+2){
 
           distanceRange = new DistanceRange(distanceRanges.get(count),

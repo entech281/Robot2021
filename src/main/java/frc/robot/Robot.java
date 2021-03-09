@@ -25,10 +25,10 @@ public class Robot extends TimedRobot {
 
           //PixyCameraConnector objectPixyCameraConnector = new PixyCameraConnector();
           VisionFieldLayoutRecognizer objectVisionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
-          PixyCameraConnector objPixyCameraConnector = new PixyCameraConnector();
+          FieldVisionInputGenerator fieldVisionInputGenerator = new FieldVisionInputGenerator();
 
           List<FieldVisionInput> arraylistFieldVisionInput = 
-                    objPixyCameraConnector.getFieldVisionInput();
+                         fieldVisionInputGenerator.getFieldVisionInput();
 
           // Below is the object that will hold the returned path
           AutonomousPath objectAutonomousPath = objectVisionFieldLayoutRecognizer.detectPose(arraylistFieldVisionInput);

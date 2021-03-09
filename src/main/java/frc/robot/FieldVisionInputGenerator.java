@@ -5,15 +5,17 @@ import java.util.ArrayList;
 
 public class FieldVisionInputGenerator {
 
-    private FieldVisionInput fieldVisionInput;
-    private List<FieldVisionInput> arrayOfFieldVisionInput;
+    private List<FieldVisionInput> fieldVisionInputsList;
     private PixyCameraConnector pixyCameraConnector;
 
-    public FieldVisionInputGenerator(){
+    public List<FieldVisionInput> getFieldVisionInput(){
         
-        arrayOfFieldVisionInput = new ArrayList<FieldVisionInput>();
+        fieldVisionInputsList = new ArrayList<FieldVisionInput>();
         pixyCameraConnector = new PixyCameraConnector();
-        arrayOfFieldVisionInput = pixyCameraConnector.getFieldVisionInput();
+
+        fieldVisionInputsList = pixyCameraConnector.getFieldVisionInput();
+
+        return fieldVisionInputsList;
 
     }
 
