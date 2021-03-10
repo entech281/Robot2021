@@ -12,9 +12,5 @@ public class AutonomousPath{
       return pathName;
     }
 
-    public void setPathName(VisionPathName pathName) {
-      this.pathName = pathName;
-    }
-
 
 }

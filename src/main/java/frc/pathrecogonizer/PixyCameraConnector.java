@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import io.github.pseudoresonance.pixy2api.*;
 import io.github.pseudoresonance.pixy2api.links.*;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
-import  edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import  edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PixyCameraConnector {
 
@@ -35,6 +35,7 @@ public class PixyCameraConnector {
       
       List<Block> blocks = pixy.getCCC().getBlockCache();
       
+      // Not sure how to modify this loop
       if (blocks.size() >  0 )   
       {
         for(int count = 0; count < blocks.size(); count++){

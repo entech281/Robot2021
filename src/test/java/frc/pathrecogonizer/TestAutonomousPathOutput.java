@@ -24,7 +24,7 @@ public class TestAutonomousPathOutput {
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
-        //assertEquals(autonomousPath, autonomousPathTestResult);
+        assertEquals(autonomousPath, autonomousPathTestResult);
 
 
    }

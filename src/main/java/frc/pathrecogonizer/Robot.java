@@ -7,7 +7,7 @@
 
 package frc.pathrecogonizer;
 
-import java.util.List;
+//import java.util.List;
 import edu.wpi.first.wpilibj.TimedRobot;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,16 +22,16 @@ public class Robot extends TimedRobot {
      
      @Override
      public void teleopPeriodic(){
+          
+          // I will use the below in the subsystem
+          // VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
+          // PixyCameraConnector pixyCameraConnector = new PixyCameraConnector();
 
-          //PixyCameraConnector objectPixyCameraConnector = new PixyCameraConnector();
-          VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
-          FieldVisionInputGenerator fieldVisionInputGenerator = new FieldVisionInputGenerator();
+          // List<FieldVisionInput> fieldVisionInputList = 
+          //                pixyCameraConnector.getFieldVisionInput();
 
-          List<FieldVisionInput> arraylistFieldVisionInput = 
-                         fieldVisionInputGenerator.getFieldVisionInput();
-
-          // Below is the object that will hold the returned path
-          AutonomousPath autonomousPath = visionFieldLayoutRecognizer.detectPose(arraylistFieldVisionInput);
+          // // Below is the object that will hold the returned path
+          // AutonomousPath autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
           
           
           
