@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.pathrecogonizer;
 
 public class FieldVisionInput{
 

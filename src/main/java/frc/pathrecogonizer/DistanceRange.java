@@ -1,6 +1,6 @@
-package frc.robot;
+package frc.pathrecogonizer;
 
-public class DistanceRange implements DistanceRangeInterface{
+public class DistanceRange{
 
   private double lowerbound = 0;
   private double upperbound = 0;
@@ -14,16 +14,24 @@ public class DistanceRange implements DistanceRangeInterface{
   
   }
   
-  public VisionPathName isInRange(double value ){
+  public boolean isInRange(double value ){
 
     if (( value > lowerbound ) && (value < upperbound )){
-      return this.path;
+      return true;
     }
     else{
-      return VisionPathName.CouldNotDeterminePath;
+      return false;
     }
 
   }
 
-  
+public VisionPathName getPath() {
+	return path;
+}
+
+public void setPath(VisionPathName path) {
+	this.path = path;
+}
+
+    
 }

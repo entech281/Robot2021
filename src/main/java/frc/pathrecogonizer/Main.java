@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.pathrecogonizer;
 
 import edu.wpi.first.wpilibj.RobotBase;
 

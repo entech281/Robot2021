@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.pathrecogonizer;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -15,6 +15,9 @@ public class PixyCameraConnector {
 
       pixy = Pixy2.createInstance(new SPILink());
       pixy.init();
+
+      // Leaving the below lines for testing when we connect to roborio
+      // to see if the lights work.
       //pixy.setLamp((byte) 1, (byte) 1); // Turns the LEDs on
 		  //pixy.setLED(200, 30, 255); // Sets the RGB LED to purple
       //pixy.getCCC().getBlocks( false , 255 , 255 );  
@@ -23,21 +26,14 @@ public class PixyCameraConnector {
 
     public List<FieldVisionInput> getFieldVisionInput() {
 
-      int blockCount;
-      List<Block> blocks;
       List<FieldVisionInput> fieldVisionInputlist = new ArrayList<FieldVisionInput>();
       FieldVisionInput fieldVisionInput;
 
-      //assign the data to an ArrayList for convinience      
-      blockCount = pixy.getCCC().getBlocks();
-      SmartDashboard.putNumber("blockcount", blockCount);
-
+      // Not sure if we need the below code for the 
+      // getBlockCache to work so leaving it in here.
+      //pixy.getCCC().getBlocks();
       
-      if (blockCount <= 0) {
-        return fieldVisionInputlist; // If blocks were not found, stop processing
-      }
-      
-      blocks = pixy.getCCC().getBlockCache();
+      List<Block> blocks = pixy.getCCC().getBlockCache();
       
       if (blocks.size() >  0 )   
       {
