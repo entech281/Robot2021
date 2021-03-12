@@ -6,6 +6,8 @@ import java.util.ArrayList;
  public class VisionFieldLayoutRecognizer
     implements PixyFieldPoseResolverInterface{
 
+
+    //Cannot instantiate the type List if I say new List<DistanceRange>, I get this error
     private List<DistanceRange> distanceRanges;
     
     public VisionFieldLayoutRecognizer() {
@@ -21,41 +23,46 @@ import java.util.ArrayList;
       );
 
   }
+  private double ComputeAverageDistance(List<FieldVisionInput> fieldVisionInputParameter){
+    List<Integer> pixels = new ArrayList<Integer>();
+    double focalLength = 11.33;//pixels = 3mm
+    double width = 7; //inches
+    double distance = 0; 
+
+    if (fieldVisionInputParameter.size() >  0 ) {
+          for(FieldVisionInput fieldVisionInput: fieldVisionInputParameter){
+
+          pixels.add(fieldVisionInput.getObjectHeight() * 
+                                  fieldVisionInput.getObjectWidth());
+                                  
+        }
+      
+        for (Integer pixarea: pixels){
+        if (pixarea > 0){
+         distance = distance + (width*focalLength)/pixarea;
+        }
+      }
+
+      return distance/pixels.size();
+    }
+    else 
+      return 0;
+  }
 
   public AutonomousPath detectPose(List<FieldVisionInput> fieldVisionInputParameter) {
         
       AutonomousPath autonomousPath;
-      FieldVisionInput fieldVisionInput;
 
-      double focalLength = 11.33;//pixels = 3mm
-      double width = 7; //inches
-      double distance = 0; 
+      
       double averageDistance = 0;
-      List<Double> pixels = new ArrayList<Double>();
+      
       VisionPathName visionPathName = VisionPathName.CouldNotDeterminePath;
        
       // Just for refernce the formula to calculate the focal length
-      //dblFocalLength = (dblPixels*dblDistance)/dblWidth;
-
-      if (fieldVisionInputParameter.size() >  0 ) {
-        for(int count = 0; count < fieldVisionInputParameter.size(); count++){
-
-          fieldVisionInput = fieldVisionInputParameter.get(count);
-
-          pixels.add(Double.valueOf(fieldVisionInput.getObjectHeight() * 
-                                  fieldVisionInput.getObjectWidth()));
-                                  
-        }
-      }
+      //dblFocalLength = (dblPixels*dblDistance)/dblWidth;      
       
-      for (int i = 0; i < pixels.size(); i++) {
-        if (pixels.get(i) > 0){
-         distance = distance + (width*focalLength)/pixels.get(i);
-        }
-      }
-      
-      averageDistance = distance/3;
-      
+      averageDistance = ComputeAverageDistance(fieldVisionInputParameter);
+          
       if (distanceRanges.size() >  0 ) {
         
         for(DistanceRange dr:distanceRanges){

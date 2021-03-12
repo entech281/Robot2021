@@ -26,11 +26,11 @@ public class DistanceRange{
   }
 
 public VisionPathName getPath() {
-	return path;
+	  return path;
 }
 
 public void setPath(VisionPathName path) {
-	this.path = path;
+	  this.path = path;
 }
 
     

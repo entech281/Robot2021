@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface PixyFieldPoseResolverInterface{
 
-    public AutonomousPath detectPose(List<FieldVisionInput> arraylistFieldVisionInput);
+    public AutonomousPath detectPose(List<FieldVisionInput> fieldVisionInput);
     
 }

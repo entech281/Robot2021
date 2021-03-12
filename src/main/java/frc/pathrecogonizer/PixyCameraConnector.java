@@ -38,14 +38,15 @@ public class PixyCameraConnector {
       // Not sure how to modify this loop
       if (blocks.size() >  0 )   
       {
-        for(int count = 0; count < blocks.size(); count++){
+        //for(int count = 0; count < blocks.size(); count++){
+          for(Block block: blocks){
           
           fieldVisionInput = new FieldVisionInput(
-            blocks.get(count).getX(),
-            blocks.get(count).getY(),
-            blocks.get(count).getWidth(),
-            blocks.get(count).getHeight(),
-            blocks.get(count).getAngle()
+            block.getX(),
+            block.getY(),
+            block.getWidth(),
+            block.getHeight(),
+            block.getAngle()
           );
 
           fieldVisionInputlist.add(fieldVisionInput);
