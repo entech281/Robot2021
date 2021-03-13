@@ -1,4 +1,4 @@
-package frc.pathrecogonizer;
+package frc.pathrecognizer;
 
 import org.junit.Test;
 import java.util.List;

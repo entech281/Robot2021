@@ -1,4 +1,4 @@
-package frc.pathrecogonizer;
+package frc.pathrecognizer;
  
     public enum VisionPathName{
         PathRedA, 

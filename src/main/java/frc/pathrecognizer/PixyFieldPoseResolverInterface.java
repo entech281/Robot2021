@@ -1,4 +1,4 @@
-package frc.pathrecogonizer;
+package frc.pathrecognizer;
 
 import java.util.List;
 
