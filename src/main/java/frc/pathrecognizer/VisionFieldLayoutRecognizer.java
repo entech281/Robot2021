@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
     //Cannot instantiate the type List if I say new List<DistanceRange>, I get this error
     private List<DistanceRange> distanceRanges;
+    public static final double FOCAL_LENGTH = 11.33;
+    public static final double WIDTH = 7; //inches
+    public static double DISTANCE = 0; 
     
     public VisionFieldLayoutRecognizer() {
       setupInitialDistanceRanges();
@@ -23,13 +26,10 @@ import java.util.ArrayList;
       );
 
   }
-  private double ComputeAverageDistance(List<FieldVisionInput> fieldVisionInputParameter){
+  private double computeAverageDistance(List<FieldVisionInput> fieldVisionInputParameter){
+    
     List<Integer> pixels = new ArrayList<Integer>();
-    double focalLength = 11.33;//pixels = 3mm
-    double width = 7; //inches
-    double distance = 0; 
-
-    if (fieldVisionInputParameter.size() >  0 ) {
+    
           for(FieldVisionInput fieldVisionInput: fieldVisionInputParameter){
 
           pixels.add(fieldVisionInput.getObjectHeight() * 
@@ -39,32 +39,25 @@ import java.util.ArrayList;
       
         for (Integer pixarea: pixels){
         if (pixarea > 0){
-         distance = distance + (width*focalLength)/pixarea;
+         DISTANCE = DISTANCE + (WIDTH*FOCAL_LENGTH)/pixarea;
         }
       }
 
-      return distance/pixels.size();
-    }
-    else 
-      return 0;
+      return DISTANCE/pixels.size();
+
   }
 
   public AutonomousPath detectPose(List<FieldVisionInput> fieldVisionInputParameter) {
         
       AutonomousPath autonomousPath;
-
-      
-      double averageDistance = 0;
       
       VisionPathName visionPathName = VisionPathName.CouldNotDeterminePath;
        
       // Just for refernce the formula to calculate the focal length
       //dblFocalLength = (dblPixels*dblDistance)/dblWidth;      
       
-      averageDistance = ComputeAverageDistance(fieldVisionInputParameter);
-          
-      if (distanceRanges.size() >  0 ) {
-        
+      double averageDistance = computeAverageDistance(fieldVisionInputParameter);
+         
         for(DistanceRange dr:distanceRanges){
 
           if (dr.isInRange(averageDistance)){
@@ -72,8 +65,7 @@ import java.util.ArrayList;
           }
           
         }
-      }
-
+      
       autonomousPath = new AutonomousPath(visionPathName);
 
       return autonomousPath;

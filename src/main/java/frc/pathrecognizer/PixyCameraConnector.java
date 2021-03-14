@@ -35,11 +35,7 @@ public class PixyCameraConnector {
       
       List<Block> blocks = pixy.getCCC().getBlockCache();
       
-      // Not sure how to modify this loop
-      if (blocks.size() >  0 )   
-      {
-        //for(int count = 0; count < blocks.size(); count++){
-          for(Block block: blocks){
+        for(Block block: blocks){
           
           fieldVisionInput = new FieldVisionInput(
             block.getX(),
@@ -51,7 +47,7 @@ public class PixyCameraConnector {
 
           fieldVisionInputlist.add(fieldVisionInput);
         }
-      }
+      
 
         return fieldVisionInputlist;
 
