@@ -4,12 +4,12 @@ public class FieldVisionInput{
 
     private int xValue = 0;         
     private int yValue = 0;         
-    private int objectWidth = 0;    
-    private int objectHeight = 0;   
+    private double objectWidth = 0;    
+    private double objectHeight = 0;   
     private int objectAngle = 0;    
 
     public FieldVisionInput(int xValue, int yValue,
-    int width, int height, int angle){
+    double width, double height, int angle){
         this.xValue  = xValue;
         this.yValue =  yValue;
         this.objectWidth = width;
@@ -20,13 +20,13 @@ public class FieldVisionInput{
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
+        double result = 1;
         result = prime * result + objectAngle;
         result = prime * result + objectHeight;
         result = prime * result + objectWidth;
         result = prime * result + xValue;
         result = prime * result + yValue;
-        return result;
+        return (int)result;
     }
 
     @Override
@@ -61,11 +61,11 @@ public class FieldVisionInput{
         return yValue;
     }
 
-    public int getObjectWidth() {
+    public double getObjectWidth() {
         return objectWidth;
     }
 
-    public int getObjectHeight() {
+    public double getObjectHeight() {
         return objectHeight;
     }
 

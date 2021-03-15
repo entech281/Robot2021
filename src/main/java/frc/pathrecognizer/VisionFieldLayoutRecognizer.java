@@ -28,7 +28,7 @@ import java.util.ArrayList;
   }
   private double computeAverageDistance(List<FieldVisionInput> fieldVisionInputParameter){
     
-    List<Integer> pixels = new ArrayList<Integer>();
+    List<Double> pixels = new ArrayList<Double>();
     
           for(FieldVisionInput fieldVisionInput: fieldVisionInputParameter){
 
@@ -37,7 +37,7 @@ import java.util.ArrayList;
                                   
         }
       
-        for (Integer pixarea: pixels){
+        for (Double pixarea: pixels){
         if (pixarea > 0){
          DISTANCE = DISTANCE + (WIDTH*FOCAL_LENGTH)/pixarea;
         }
