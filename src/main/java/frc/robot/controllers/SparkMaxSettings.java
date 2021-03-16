@@ -62,7 +62,7 @@ public class SparkMaxSettings {
     public void configureSparkMax(CANSparkMax spark) {
         //Current Limits
         spark.restoreFactoryDefaults();
-//        pidController = new CANPIDController(spark);
+        pidController = new CANPIDController(spark);
 
         spark.setCANTimeout(TIMEOUT_MS);
         spark.setSmartCurrentLimit(currentLimits.smartLimit);
