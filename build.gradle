@@ -42,7 +42,7 @@ def includeDesktopSupport = true
 
 repositories {
     mavenCentral()
-    jcenter()
+    //jcenter()
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
