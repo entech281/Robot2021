@@ -2,7 +2,7 @@ language: java
 install: true
 
 os: linux
-dist: denial
+dist: focal
 jdk: openjdk11
 
 script:
