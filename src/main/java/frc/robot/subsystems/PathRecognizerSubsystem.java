@@ -18,14 +18,14 @@ public class PathRecognizerSubsystem extends BaseSubsystem {
     @Override
     public void initialize() {
 
-    }
-
-    public AutonomousPath getAutonomousPath(){
-        
         visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         pixyCameraConnector = new PixyCameraConnector();
         fieldVisionInputList = 
                          pixyCameraConnector.getFieldVisionInput();
+                         
+    }
+
+    public AutonomousPath getAutonomousPath(){
          
          AutonomousPath autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
          

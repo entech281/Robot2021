@@ -12,4 +12,5 @@ package frc.robot.pose;
 public interface PoseSource {
     public RobotPose getRobotPose();
     public FieldPose getFieldPose();
+    public String getVisionFieldPath();
 }

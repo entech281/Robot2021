@@ -7,6 +7,8 @@ import frc.robot.pose.FieldPoseManager;
 import frc.robot.pose.PoseSource;
 import frc.robot.pose.RobotPose;
 import frc.robot.pose.RobotPoseManager;
+import frc.robot.subsystems.PathRecognizerSubsystem;
+import frc.pathrecognizer.AutonomousPath;
 
 
 
@@ -55,7 +57,8 @@ public class SubsystemManager implements PoseSource{
 
     private final RobotPoseManager robotPoseManager = new RobotPoseManager();
     private final FieldPoseManager fieldPoseManager = new FieldPoseManager();
-    
+    private final PathRecognizerSubsystem pathRecognizerSubsystem = new PathRecognizerSubsystem();
+
     public void setHoodSubsystem(HoodSubsystem hoodSubsystem) {
         this.hoodSubsystem = hoodSubsystem;
     }
@@ -83,6 +86,10 @@ public class SubsystemManager implements PoseSource{
         robotPoseManager.updateNavxAngle(navXSubsystem.updateNavXAngle());
 //        robotPoseManager.updateVisionData(visionSubsystem.getVisionData());
         robotPoseManager.update();
+
+        pathRecognizerSubsystem.initialize();
+        AutonomousPath autonomousPath = pathRecognizerSubsystem.getAutonomousPath();
+        fieldPoseManager.setCurrentVisionFieldPath(autonomousPath);
     }
 
     @Override
@@ -93,5 +100,10 @@ public class SubsystemManager implements PoseSource{
     @Override
     public FieldPose getFieldPose() {
         return fieldPoseManager.getCurrentPose();
+    }
+
+    @Override
+    public String getVisionFieldPath() {
+        return fieldPoseManager.getCurrentVisionFieldPath();
     }
 }
