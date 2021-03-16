@@ -15,28 +15,19 @@ public class TestVisionFieldLayoutRecognizer {
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
         List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,4.4,4.4,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,4.4,2,25);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,3,4.4,4.4,30);
+        fieldVisionInput = new FieldVisionInput(1,3,4.4,2,30);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,5,4.4,4.4,45);
+        fieldVisionInput = new FieldVisionInput(1,5,4.4,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
         
-            try {
-            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-            System.out.println(autonomousPath.getPathName());
-            System.out.println(autonomousPathTestResult.getPathName());
-        }
-        catch (AssertionError ae) {
-            System.out.println("test");
-            System.out.println(ae.toString());
-        }
-
+        assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
 
    }
 
@@ -47,29 +38,21 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,3.85,3.85,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,3.85,2,25);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,3,3.85,3.85,30);
+        fieldVisionInput = new FieldVisionInput(1,3,3.85,2,30);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,5,3.85,3.85,45);
+        fieldVisionInput = new FieldVisionInput(1,5,3.85,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
 
    }
 
@@ -80,29 +63,21 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,2.4,2.4,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,2.45,2,25);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,3,2.4,2.4,30);
+        fieldVisionInput = new FieldVisionInput(1,3,2.45,2,30);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,5,2.4,2.4,45);
+        fieldVisionInput = new FieldVisionInput(1,5,2.45,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
 
    }
 
@@ -113,29 +88,21 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,4.5,4.5,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,2.25,2,25);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,2,4.5,4.5,25);
+        fieldVisionInput = new FieldVisionInput(1,2,2.25,2,25);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,2,4.5,4.5,45);
+        fieldVisionInput = new FieldVisionInput(1,2,2.25,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
-
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+            
+            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
 
    }
 
@@ -146,7 +113,7 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
         FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,40,20,25);
         fieldVisionInputList.add(fieldVisionInput);
@@ -160,15 +127,7 @@ public class TestVisionFieldLayoutRecognizer {
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
 
    }
 
@@ -179,7 +138,7 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
         FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,0,10,25);
         fieldVisionInputList.add(fieldVisionInput);
@@ -193,26 +152,18 @@ public class TestVisionFieldLayoutRecognizer {
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
 
    }
 
    @Test
     public void testVisionFieldLayoutRecognizerZeroHeight(){
 
-        AutonomousPath autonomousPath = new AutonomousPath(VisionPathName.PathBlueA);
+        AutonomousPath autonomousPath = new AutonomousPath(VisionPathName.CouldNotDeterminePath);
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
         FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,4,0,25);
         fieldVisionInputList.add(fieldVisionInput);
@@ -225,16 +176,9 @@ public class TestVisionFieldLayoutRecognizer {
 
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
-
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+        
+            assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
+        
    }
 
 
@@ -245,20 +189,14 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         
         // https://stackoverflow.com/questions/322715/when-to-use-linkedlist-over-arraylist-in-java
-        List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
+        List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
         AutonomousPath autonomousPathTestResult = 
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
-            try {
-                assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                System.out.println(autonomousPath.getPathName());
-                System.out.println(autonomousPathTestResult.getPathName());
-            }
-            catch (AssertionError ae) {
-                System.out.println("test");
-                System.out.println(ae.toString());
-            }
+        //AssertionError ae
+        assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
+                
 
 
    }

@@ -16,7 +16,7 @@ public class DistanceRange{
   
   public boolean isInRange(double value ){
 
-    if (( value > lowerbound ) && (value < upperbound )){
+    if (( value >= lowerbound ) && (value <= upperbound )){
       return true;
     }
     else{
