@@ -6,6 +6,7 @@ dist: bionic
 jdk: openjdk11
 
 script:
+  - export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
   - ./gradlew --no-daemon build check --stacktrace
   
 after_success:
