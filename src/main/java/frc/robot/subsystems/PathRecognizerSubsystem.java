@@ -17,35 +17,30 @@ public class PathRecognizerSubsystem extends BaseSubsystem {
     private List<FieldVisionInput> fieldVisionInputList; 
 
     @Override
-    public void initialize() {                         
+    public void initialize() {  
+        pixyCameraConnector = new PixyCameraConnector();                       
+        SmartDashboard.putBoolean("Pixy Camera Connection Status", pixyCameraConnector.getPixyConnectionStatus());
     }
 
     public AutonomousPath getAutonomousPath(){
          
+        AutonomousPath autonomousPath;
 
         visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
-        pixyCameraConnector = new PixyCameraConnector();
-
-        SmartDashboard.putBoolean("Pixy Camera Connection Status", pixyCameraConnector.getPixyConnectionStatus());
 
         if (pixyCameraConnector.getPixyConnectionStatus()){
 
             fieldVisionInputList = 
                          pixyCameraConnector.getFieldVisionInput();
 
-            AutonomousPath autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
-         
-            SmartDashboard.putString("DetectedPath ", autonomousPath.getPathName().toString());
-
-            return autonomousPath;
+            autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
         }
         else {
-            AutonomousPath autonomousPath = new AutonomousPath(VisionPathName.CouldNotDeterminePath);
-         
-            SmartDashboard.putString("DetectedPath ", autonomousPath.getPathName().toString());
-
-            return autonomousPath;
+            autonomousPath = new AutonomousPath(VisionPathName.CouldNotDeterminePath);
         }
+
+        SmartDashboard.putString("DetectedPath ", autonomousPath.getPathName().toString());
+        return autonomousPath;
          
     }
 

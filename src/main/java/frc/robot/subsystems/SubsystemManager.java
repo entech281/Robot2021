@@ -79,17 +79,21 @@ public class SubsystemManager implements PoseSource{
 //            visionSubsystem,
             shooterSubsystem,
             hoodSubsystem).forEach(subsystem -> subsystem.initialize());
- 
+        
+        updateVisionFieldPath();
     }
     public void updatePoses() {
         robotPoseManager.updateEncoders(driveSubsystem.getEncoderValues());
         robotPoseManager.updateNavxAngle(navXSubsystem.updateNavXAngle());
 //        robotPoseManager.updateVisionData(visionSubsystem.getVisionData());
         robotPoseManager.update();
-
+    }
+    public void updateVisionFieldPath() {
+        
         pathRecognizerSubsystem.initialize();
         AutonomousPath autonomousPath = pathRecognizerSubsystem.getAutonomousPath();
         fieldPoseManager.setCurrentVisionFieldPath(autonomousPath);
+
     }
 
     @Override
