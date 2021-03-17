@@ -54,11 +54,10 @@ public class SubsystemManager implements PoseSource{
     private ClimbSubsystem climbSubsystem;
 //    private VisionSubsystem visionSubsystem;
     private HoodSubsystem hoodSubsystem;
+    private PathRecognizerSubsystem pathRecognizerSubsystem;
 
     private final RobotPoseManager robotPoseManager = new RobotPoseManager();
     private final FieldPoseManager fieldPoseManager = new FieldPoseManager();
-    private final PathRecognizerSubsystem pathRecognizerSubsystem = new PathRecognizerSubsystem();
-
     public void setHoodSubsystem(HoodSubsystem hoodSubsystem) {
         this.hoodSubsystem = hoodSubsystem;
     }
@@ -71,16 +70,18 @@ public class SubsystemManager implements PoseSource{
         climbSubsystem = new ClimbSubsystem();
 //        visionSubsystem = new VisionSubsystem();
         hoodSubsystem  = new HoodSubsystem();
-        
+        pathRecognizerSubsystem = new PathRecognizerSubsystem(); 
+
         Arrays.asList(
             driveSubsystem, 
             intakeSubsystem, 
             navXSubsystem, 
 //            visionSubsystem,
             shooterSubsystem,
-            hoodSubsystem).forEach(subsystem -> subsystem.initialize());
+            hoodSubsystem,
+            pathRecognizerSubsystem).forEach(subsystem -> subsystem.initialize());
         
-        updateVisionFieldPath();
+        
     }
     public void updatePoses() {
         robotPoseManager.updateEncoders(driveSubsystem.getEncoderValues());
@@ -88,12 +89,8 @@ public class SubsystemManager implements PoseSource{
 //        robotPoseManager.updateVisionData(visionSubsystem.getVisionData());
         robotPoseManager.update();
     }
-    public void updateVisionFieldPath() {
-        
-        pathRecognizerSubsystem.initialize();
-        AutonomousPath autonomousPath = pathRecognizerSubsystem.getAutonomousPath();
-        fieldPoseManager.setCurrentVisionFieldPath(autonomousPath);
-
+    public void updateFieldPoses() {
+        fieldPoseManager.setCurrentVisionFieldPath(pathRecognizerSubsystem.getAutonomousPath());
     }
 
     @Override

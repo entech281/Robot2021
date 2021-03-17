@@ -63,6 +63,7 @@ import java.util.ArrayList;
 
           if (dr.isInRange(averageDistance)){
             visionPathName = dr.getPath();
+            break;
           }
           
         }

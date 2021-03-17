@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         //runs after everything else
         subsystemManager.updatePoses();
-
+        subsystemManager.updateFieldPoses();
         CommandScheduler.getInstance().run();
     }
 

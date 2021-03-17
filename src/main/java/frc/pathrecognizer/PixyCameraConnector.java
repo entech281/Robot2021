@@ -21,6 +21,7 @@ public class PixyCameraConnector {
       }
       catch (Exception ex){
         setPixyConnectionStatus(false);
+        ex.printStackTrace();
       }
       // Leaving the below lines for testing when we connect to roborio
       // to see if the lights work.

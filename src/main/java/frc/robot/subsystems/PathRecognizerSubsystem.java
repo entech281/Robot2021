@@ -12,37 +12,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PathRecognizerSubsystem extends BaseSubsystem {
 
-    private VisionFieldLayoutRecognizer visionFieldLayoutRecognizer;
+    private VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();    
     private PixyCameraConnector pixyCameraConnector;
     private List<FieldVisionInput> fieldVisionInputList; 
 
     @Override
     public void initialize() {  
         pixyCameraConnector = new PixyCameraConnector();                       
-        SmartDashboard.putBoolean("Pixy Camera Connection Status", pixyCameraConnector.getPixyConnectionStatus());
     }
 
     public AutonomousPath getAutonomousPath(){
-         
-        AutonomousPath autonomousPath;
-
-        visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
+        AutonomousPath autonomousPath = new AutonomousPath(VisionPathName.CouldNotDeterminePath);
 
         if (pixyCameraConnector.getPixyConnectionStatus()){
-
-            fieldVisionInputList = 
-                         pixyCameraConnector.getFieldVisionInput();
-
+            fieldVisionInputList = pixyCameraConnector.getFieldVisionInput();
             autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
         }
-        else {
-            autonomousPath = new AutonomousPath(VisionPathName.CouldNotDeterminePath);
-        }
-
+        
         SmartDashboard.putString("DetectedPath ", autonomousPath.getPathName().toString());
+        SmartDashboard.putBoolean("Pixy Camera Connection Status", pixyCameraConnector.getPixyConnectionStatus());
         return autonomousPath;
          
     }
-
-
 }
