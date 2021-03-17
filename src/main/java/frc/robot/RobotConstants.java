@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.revrobotics.CANPIDController;
+
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import frc.robot.controllers.SparkMaxSettings;
 import frc.robot.controllers.SparkMaxSettingsBuilder;
 import frc.robot.controllers.TalonSettings;
@@ -153,10 +155,12 @@ public class RobotConstants {
 
         public static final double ROBOT_WIDTH = 23.5;
         public static final double ROBOT_LENGTH = 25;
-        public static final double DRIVE_GEAR_RATIO = 10.7 * (48/50.5); //(23.5/25.5)
+        public static final double DRIVE_GEAR_RATIO = 12.75; //(23.5/25.5)
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double MOTOR_REVOLUTIONS_PER_INCH = (Math.PI * WHEEL_DIAMETER_INCHES)
                 / DRIVE_GEAR_RATIO;
+        public static final double CIRCUMFERENCE = 0.478536;
+        public static final double CONVERTER = CIRCUMFERENCE/DRIVE_GEAR_RATIO;
     }
 
     public interface PID{
@@ -202,6 +206,25 @@ public class RobotConstants {
         public static final boolean PNEUMATICS_MOUNTED = true;
         public static final boolean BALL_SENSOR = true;
 
+    }
+
+    public interface CHARACTERIZATION {
+        public static final double ksVolts = 0.14;
+        public static final double kvVoltSecondsPerMeter = 3.36;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.358;
+    
+        // Example value only - as above, this must be tuned for your drive!
+        public static final double kPDriveVel = 0.00249;
+    
+        public static final double kTrackwidthMeters = 1.4008171044067919;
+        public static final DifferentialDriveKinematics kDriveKinematics =
+            new DifferentialDriveKinematics(kTrackwidthMeters);
+    
+        public static final double kRamseteB = 2;
+        public static final double kRamseteZeta = 0.7;
+    
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     }
     
     public interface SHOOT_PRESETS{

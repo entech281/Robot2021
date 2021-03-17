@@ -10,6 +10,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.pose.NavXData;
 import frc.robot.utils.NavXDataProcessor;
 
@@ -61,6 +62,10 @@ public class NavXSubsystem extends BaseSubsystem {
         logger.driverinfo("Angle reported by NavX", calculateNavX(navX.getYaw()));
     }
     
+
+    public Rotation2d getRotation2d(){
+        return navX.getRotation2d();
+    }
 
     
     public double calculateNavX(double angle){

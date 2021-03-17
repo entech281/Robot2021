@@ -5,11 +5,16 @@
  */
 package frc.robot.pose;
 
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+
+
 /**
  *
  * @author dcowden
  */
 public interface PoseSource {
     public RobotPose getRobotPose();
+    public Pose2d getPose();
     public FieldPose getFieldPose();
 }

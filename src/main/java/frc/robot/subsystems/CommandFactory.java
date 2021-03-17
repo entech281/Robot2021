@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.AdjustHoodBackwardCommand;
 import frc.robot.commands.AdjustRaiseHoodCommand;
 import frc.robot.commands.AutoHoodShooterAdjust;
-import frc.robot.commands.DriveDistancePIDCommand;
-import frc.robot.commands.DriveToPositionCommand;
+import frc.robot.commands.EntechRamseteCommand;
 import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
 import frc.robot.pose.PoseSource;
@@ -59,6 +58,10 @@ public class CommandFactory {
                 .andThen(new PrintCommand("Deploying Arms"));
     }
 
+    public Command ramseteEntech(){
+        return new EntechRamseteCommand(sm.getDriveSubsystem(), sm);
+    }
+
     public Command raiseIntakeArms(){
         return new InstantCommand( sm.getIntakeSubsystem()::raiseIntakeArms, sm.getIntakeSubsystem())
                 .andThen(new PrintCommand("Raising Arms"));
@@ -96,83 +99,6 @@ public class CommandFactory {
     public Command zeroYawOfNavX(boolean inverted){
         return new InstantCommand ( () -> sm.getNavXSubsystem().zeroYawMethod(inverted));
     }
-    public Command middleSixBallAuto(){
-        return new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                        zeroYawOfNavX(false),
-                        hoodStartingLinePreset(),
-                        startShooter()
-                ),
-                fireCommand().withTimeout(1),
-                new WaitCommand(1.5),
-                new ParallelCommandGroup(
-                        driveForwardSpeedMode(-60, 1),
-                        stopElevator(),
-                        stopShooter()
-                ),
-                turnToDirection(90),
-                driveForwardSpeedMode(65, 1), //
-                new ParallelCommandGroup(
-                    intake3Balls(),
-                    new SequentialCommandGroup(
-                        turnToDirection(180).withTimeout(2),
-                        new ParallelCommandGroup(
-                                startShooter(),
-                                driveForwardSpeedMode(100, 0.5), //
-                                hoodTrenchPreset().withTimeout(0.01)
-                        )                
-                    )
-                ),
-                raiseAndStopIntake().withTimeout(0.01),
-                turnRight(160),
-                new ParallelCommandGroup(
-                    fireCommand(),
-                    stopDriving()
-                ),
-                new WaitCommand(2.5),
-                new ParallelCommandGroup(
-                        stopElevator(), 
-                        stopShooter()
-                )
-        );
-    }
-    
-    public Command leftEightBallAuto(){
-        throw new UnsupportedOperationException("Not yet Implemented");
-    }
-    
-    public Command doNothing(){
-        return new PrintCommand("Doing Nothing Skipper!");
-    }
-    //66.91 inches
-    public Command simpleForwardShoot3Auto(){
-        return new SequentialCommandGroup(
-                zeroYawOfNavX(false),
-                new ParallelCommandGroup(
-                        driveForwardSpeedMode(126.0, 0.75).withTimeout(5),
-                        startShooter(),
-                        hoodUpAgainstTargetPreset()
-                ),
-                fireCommand(),
-                new WaitCommand(3),
-                new ParallelCommandGroup(
-                        stopElevator(), 
-                        stopShooter())
-        );
-    }
-    
-    public Command driveForward(double inches){
-        return new DriveToPositionCommand(sm.getDriveSubsystem(), inches);
-    }
-    
-    public Command driveForwardSpeedMode(double distance){
-        return new DriveDistancePIDCommand(sm.getDriveSubsystem(), distance);
-    }
-
-    public Command driveForwardSpeedMode(double distance, double speed){
-        return new DriveDistancePIDCommand(sm.getDriveSubsystem(), distance, speed);
-    }
-
     
     public Command turnRight(double degrees){
         return new SnapToYawCommand(sm.getDriveSubsystem(), degrees, true, sm);

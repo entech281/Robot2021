@@ -4,10 +4,13 @@ import com.revrobotics.CANError;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 
+import frc.robot.RobotConstants;
+
 public class SparkPositionController extends BaseSparkController implements PositionController{
 
     public SparkPositionController(CANSparkMax spark, SparkMaxSettings settings, boolean reversed) {
         super(spark, settings,reversed);
+        configureConversion();
     }    
     
     private double desiredPosition = 0.0;
@@ -57,6 +60,11 @@ public class SparkPositionController extends BaseSparkController implements Posi
     @Override
     public void resetPosition(){
         spark.getEncoder().setPosition(0);
+    }
+
+    public void configureConversion(){
+        spark.getEncoder().setPositionConversionFactor(RobotConstants.DIMENSIONS.CONVERTER);
+        spark.getEncoder().setVelocityConversionFactor(RobotConstants.DIMENSIONS.CONVERTER/60);
     }
 
     

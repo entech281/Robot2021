@@ -17,8 +17,6 @@ import frc.robot.logger.DataLogger;
 import frc.robot.logger.DataLoggerFactory;
 import frc.robot.pose.FieldPoseManager;
 import frc.robot.pose.RobotPoseManager;
-import frc.robot.preferences.AutoCommandFactory;
-import frc.robot.preferences.SmartDashboardPathChooser;
 import frc.robot.subsystems.CommandFactory;
 import frc.robot.subsystems.SubsystemManager;
 
@@ -35,8 +33,6 @@ public class Robot extends TimedRobot {
     private SubsystemManager  subsystemManager;
     private CommandFactory commandFactory;
 
-
-    private SmartDashboardPathChooser optionChooser;
     OperatorInterface oi;
     Command autoCommand;
     private Compressor compressor;
@@ -53,7 +49,6 @@ public class Robot extends TimedRobot {
         subsystemManager = new SubsystemManager();
         subsystemManager.initAll();
 
-        optionChooser = new SmartDashboardPathChooser();
         commandFactory = new CommandFactory(subsystemManager);
     }
 
@@ -100,7 +95,7 @@ public class Robot extends TimedRobot {
             commandFactory.parkHood();
         }
 
-        autoCommand = new AutoCommandFactory(commandFactory).getSelectedCommand(optionChooser.getSelected());
+        autoCommand = commandFactory.ramseteEntech();
         CommandScheduler.getInstance().schedule(autoCommand);
         subsystemManager.getShooterSubsystem().initialize();
         subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));

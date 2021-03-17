@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import frc.robot.controllers.SparkMaxSettings;
 import frc.robot.controllers.SparkMaxSettingsBuilder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import frc.robot.RobotConstants;
 import frc.robot.controllers.SparkPositionController;
 
@@ -71,6 +73,7 @@ public class DriveSubsystem extends BaseSubsystem {
             .withClosedLoopError(RobotConstants.AUTONOMOUS.ACCEPTABLE_ERROR)
             .build();
 
+
     public void resetPosition() {
         frontLeftPositionController.resetPosition();
         frontRightPositionController.resetPosition();
@@ -99,6 +102,7 @@ public class DriveSubsystem extends BaseSubsystem {
         rearLeftPositionController = new SparkPositionController(rearLeftSpark, smartMotionSettings, REAR_LEFT_POSITION_INVERSE);
         rearRightPositionController = new SparkPositionController(rearRightSpark, smartMotionSettings, REAR_RIGHT_POSITION_INVERSE);
         
+
         setSpeedMode();
     }
 
@@ -156,40 +160,15 @@ public class DriveSubsystem extends BaseSubsystem {
         robotDrive.curvatureDrive(-forward, rotation, fastTurn);
     }
     public void drive(double forward, double rotation) {
-        robotDrive.arcadeDrive(forward, rotation);
-        
+        robotDrive.arcadeDrive(forward, rotation);        
     }
-    
-    public Position getCurrentPosition(){
-        EncoderValues v = getEncoderValues();
-        return new Position ( encoderConverter.toInches(v.getLeftFront()),
-                              encoderConverter.toInches(v.getRightFront()) );
-    }
-    
-    public double getDistanceTravelled(){
-        EncoderValues v = getEncoderValues();
-        return encoderConverter.toInches((v.getLeftFront() + v.getRightFront())/2.0);
-    }
-    
-    public void driveToPosition(Position targetPosition){
-        setPositionMode();
-        double encoderLeft = encoderConverter.toCounts(targetPosition.getLeftInches());
-        double encoderRight = encoderConverter.toCounts(targetPosition.getRightInches());
 
-        logger.log("Left Desired", encoderLeft);
-        logger.log("Right Desired", encoderRight);    
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        leftSpeedController.setVoltage(leftVolts);
+        rightSpeedController.setVoltage(-rightVolts);
+        robotDrive.feed();
+      }
         
-        frontRightPositionController.resetPosition();
-        frontLeftPositionController.resetPosition();
-        rearRightPositionController.resetPosition();
-        rearLeftPositionController.resetPosition();
-        
-        frontLeftPositionController.setDesiredPosition(encoderLeft);
-        frontRightPositionController.setDesiredPosition(encoderRight);
-        rearLeftPositionController.setDesiredPosition(encoderLeft);
-        rearRightPositionController.setDesiredPosition(encoderRight);
-    }
-    
     public void switchToBrakeMode(){
         if(frontLeftSpark.getIdleMode() == CANSparkMax.IdleMode.kCoast){
             frontLeftSpark.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -198,6 +177,10 @@ public class DriveSubsystem extends BaseSubsystem {
             rearRightSpark.setIdleMode(CANSparkMax.IdleMode.kBrake);
         }
     }
+
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(frontLeftEncoder.getVelocity(), frontRightEncoder.getVelocity());
+      }
     
     public void switchToCoastMode(){
         if(frontLeftSpark.getIdleMode() == CANSparkMax.IdleMode.kBrake){
