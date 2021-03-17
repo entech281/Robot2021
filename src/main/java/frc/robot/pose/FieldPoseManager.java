@@ -1,5 +1,7 @@
 package frc.robot.pose;
 
+import frc.pathrecognizer.AutonomousPath;
+
 public class FieldPoseManager {
 
     private ColorWheel colorWheel = new ColorWheel();
@@ -11,6 +13,14 @@ public class FieldPoseManager {
 
     public void setCurrentColorWheel(ColorWheel wheelColor) {
         this.colorWheel = wheelColor;
+    }
+
+    public void setCurrentVisionFieldPath(AutonomousPath autonomousPathParameter){
+        pose.setAutonomousPath(autonomousPathParameter);
+    }
+
+    public String getCurrentVisionFieldPath(){
+        return pose.getAutonomousPath().getPathName().toString();
     }
 
 }

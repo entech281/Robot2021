@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         //runs after everything else
         subsystemManager.updatePoses();
-
+        subsystemManager.updateFieldPoses();
         CommandScheduler.getInstance().run();
     }
 
@@ -86,6 +86,7 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         SmartDashboard.putNumber("Target Distance", subsystemManager.getRobotPose().getTargetLocation().getDistanceToTarget());
+        SmartDashboard.putString("Field Vision Path", subsystemManager.getVisionFieldPath());
     }
 
     @Override
