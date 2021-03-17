@@ -2,11 +2,12 @@ language: java
 install: true
 
 os: linux
-dist: focal
+dist: bionic
 jdk: openjdk11
 
 script:
-  - ./gradlew build check --stacktrace
+  - export JAVA_TOOL_OPTIONS=-Dhttps.protocols=TLSv1.2
+  - ./gradlew --no-daemon build check --stacktrace
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)
