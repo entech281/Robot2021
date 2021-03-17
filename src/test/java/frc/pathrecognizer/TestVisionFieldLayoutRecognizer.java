@@ -195,8 +195,7 @@ public class TestVisionFieldLayoutRecognizer {
             visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
 
         //AssertionError ae
-        assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());
-                
+        assertEquals(autonomousPath.getPathName(), autonomousPathTestResult.getPathName());                
 
 
    }

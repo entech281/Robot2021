@@ -9,13 +9,19 @@ import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
 
 public class PixyCameraConnector {
 
-    private Pixy2 pixy;    
+    private Pixy2 pixy;  
+    private boolean pixyConnectionStatus = false;  
 
     public PixyCameraConnector() {
 
-      pixy = Pixy2.createInstance(new SPILink());
-      pixy.init();
-
+      try {
+        pixy = Pixy2.createInstance(new SPILink());
+        pixy.init();
+        setPixyConnectionStatus(true);
+      }
+      catch (Exception ex){
+        setPixyConnectionStatus(false);
+      }
       // Leaving the below lines for testing when we connect to roborio
       // to see if the lights work.
       //pixy.setLamp((byte) 1, (byte) 1); // Turns the LEDs on
@@ -51,6 +57,14 @@ public class PixyCameraConnector {
 
         return fieldVisionInputlist;
 
+    }
+
+    public boolean getPixyConnectionStatus() {
+      return pixyConnectionStatus;
+    }
+
+    public void setPixyConnectionStatus(boolean pixyConnectionStatus) {
+      this.pixyConnectionStatus = pixyConnectionStatus;
     }
 
     
