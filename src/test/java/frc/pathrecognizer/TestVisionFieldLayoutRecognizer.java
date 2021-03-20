@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class TestVisionFieldLayoutRecognizer {
+    
     @Test
     public void testVisionFieldLayoutRecognizerPathRedA(){
 

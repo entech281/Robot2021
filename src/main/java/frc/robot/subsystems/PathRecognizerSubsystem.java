@@ -26,6 +26,7 @@ public class PathRecognizerSubsystem extends BaseSubsystem {
 
         if (pixyCameraConnector.getPixyConnectionStatus()){
             fieldVisionInputList = pixyCameraConnector.getFieldVisionInput();
+
             autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
         }
         

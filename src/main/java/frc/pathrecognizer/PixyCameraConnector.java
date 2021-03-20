@@ -5,10 +5,12 @@ import java.util.ArrayList;
 import io.github.pseudoresonance.pixy2api.*;
 import io.github.pseudoresonance.pixy2api.links.*;
 import io.github.pseudoresonance.pixy2api.Pixy2CCC.Block;
-//import  edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.logger.DataLogger;
+import frc.robot.logger.DataLoggerFactory;
 
 public class PixyCameraConnector {
 
+  private DataLogger logger = DataLoggerFactory.getLoggerFactory().createDataLogger(PixyCameraConnector.class.getName()); 
     private Pixy2 pixy;  
     private boolean pixyConnectionStatus = false;  
 
@@ -38,10 +40,10 @@ public class PixyCameraConnector {
 
       // Not sure if we need the below code for the 
       // getBlockCache to work so leaving it in here.
-      //pixy.getCCC().getBlocks();
+      pixy.getCCC().getBlocks();
       
       List<Block> blocks = pixy.getCCC().getBlockCache();
-      
+      int count = 1;
         for(Block block: blocks){
           
           fieldVisionInput = new FieldVisionInput(
@@ -51,6 +53,29 @@ public class PixyCameraConnector {
             block.getHeight(),
             block.getAngle()
           );
+
+          switch  (count){
+          case 1:
+          {
+          logger.log("Pixel Width 1:", block.getWidth());
+          logger.log("PixelHeight 1:", block.getHeight());
+          break;
+          }
+          case 2:
+          {
+          logger.log("Pixel Width 2: ", block.getWidth());
+          logger.log("PixelHeight: 2: ", block.getHeight());
+          break;
+          }
+          case 3:
+          {
+          logger.log("Pixel Width 3: ", block.getWidth());
+          logger.log("PixelHeight 3: ", block.getHeight());
+          break;
+          }
+        }
+
+          count = count + 1;
 
           fieldVisionInputlist.add(fieldVisionInput);
         }

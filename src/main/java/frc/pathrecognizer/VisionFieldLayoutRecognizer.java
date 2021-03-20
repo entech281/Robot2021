@@ -2,11 +2,14 @@ package frc.pathrecognizer;
 
 import java.util.List;
 import java.util.ArrayList;
+import frc.robot.logger.DataLogger;
+import frc.robot.logger.DataLoggerFactory;
+
 
  public class VisionFieldLayoutRecognizer
     implements PixyFieldPoseResolverInterface{
 
-
+    private DataLogger logger = DataLoggerFactory.getLoggerFactory().createDataLogger(VisionFieldLayoutRecognizer.class.getName()); 
     //Cannot instantiate the type List if I say new List<DistanceRange>, I get this error
     private List<DistanceRange> distanceRanges;
     public static final double FOCAL_LENGTH = 11.33;
@@ -16,7 +19,6 @@ import java.util.ArrayList;
     public VisionFieldLayoutRecognizer() {
       setupInitialDistanceRanges();
     }
-
     public void setupInitialDistanceRanges(){
         
       this.distanceRanges = List.of(new DistanceRange(8.50, 10.0, VisionPathName.PathRedA),
@@ -44,20 +46,23 @@ import java.util.ArrayList;
         }
       }
 
-      return DISTANCE/pixels.size();
-
+      if (pixels.size() > 0){
+        DISTANCE = DISTANCE/pixels.size();
+      }
+      return DISTANCE;
   }
 
   public AutonomousPath detectPose(List<FieldVisionInput> fieldVisionInputParameter) {
         
       AutonomousPath autonomousPath;
-      
       VisionPathName visionPathName = VisionPathName.CouldNotDeterminePath;
        
-      // Just for refernce the formula to calculate the focal length
+      // Just for reference the formula to calculate the focal length
       //dblFocalLength = (dblPixels*dblDistance)/dblWidth;   
       
       double averageDistance = computeAverageDistance(fieldVisionInputParameter);
+      logger.log("Number of Blocks:", fieldVisionInputParameter.size());
+      logger.log("Average Distance:", averageDistance);
 
         for(DistanceRange dr:distanceRanges){
 
