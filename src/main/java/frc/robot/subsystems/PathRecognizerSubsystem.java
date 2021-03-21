@@ -31,7 +31,7 @@ public class PathRecognizerSubsystem extends BaseSubsystem {
         
         SmartDashboard.putString("DetectedPath ", autonomousPath.getPathName().toString());
         SmartDashboard.putBoolean("Pixy Camera Connection Status", pixyCameraConnector.getPixyConnectionStatus());
-        return autonomousPath;
-         
+     
+        return autonomousPath;         
     }
 }
