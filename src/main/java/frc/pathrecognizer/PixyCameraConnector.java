@@ -43,7 +43,7 @@ public class PixyCameraConnector {
       pixy.getCCC().getBlocks();
       
       List<Block> blocks = pixy.getCCC().getBlockCache();
-      int count = 1;
+
         for(Block block: blocks){
           
           fieldVisionInput = new FieldVisionInput(
@@ -54,28 +54,8 @@ public class PixyCameraConnector {
             block.getAngle()
           );
 
-          switch  (count){
-          case 1:
-          {
-          logger.log("Pixel Width 1:", block.getWidth());
-          logger.log("PixelHeight 1:", block.getHeight());
-          break;
-          }
-          case 2:
-          {
-          logger.log("Pixel Width 2: ", block.getWidth());
-          logger.log("PixelHeight: 2: ", block.getHeight());
-          break;
-          }
-          case 3:
-          {
-          logger.log("Pixel Width 3: ", block.getWidth());
-          logger.log("PixelHeight 3: ", block.getHeight());
-          break;
-          }
-        }
-
-          count = count + 1;
+          logger.log("Pixel Width " + block.getIndex() + " :", block.getWidth());
+          logger.log("Pixel Height " + block.getIndex() + " :", block.getHeight());
 
           fieldVisionInputlist.add(fieldVisionInput);
         }
