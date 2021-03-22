@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
-public class TestVisionFieldLayoutRecognizer {    
+public class TestVisionFieldLayoutRecognizer {  
     @Test
     public void testVisionFieldLayoutRecognizerPathRedA(){
         AutonomousPath autonomousPath = new AutonomousPath(VisionPathName.PathRedA);
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         List<FieldVisionInput> fieldVisionInputList = new ArrayList<FieldVisionInput>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,4.4,2,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,17.58,2,25);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,3,4.4,2,30);
+        fieldVisionInput = new FieldVisionInput(1,3,17.58,2,30);
         fieldVisionInputList.add(fieldVisionInput);
 
-        fieldVisionInput = new FieldVisionInput(1,5,4.4,2,45);
+        fieldVisionInput = new FieldVisionInput(1,5,17.58,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
@@ -32,11 +32,11 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,3.85,2,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,10.84,2,25);
         fieldVisionInputList.add(fieldVisionInput);
-        fieldVisionInput = new FieldVisionInput(1,3,3.85,2,30);
+        fieldVisionInput = new FieldVisionInput(1,3,10.84,2,30);
         fieldVisionInputList.add(fieldVisionInput);
-        fieldVisionInput = new FieldVisionInput(1,5,3.85,2,45);
+        fieldVisionInput = new FieldVisionInput(1,5,10.84,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
@@ -50,11 +50,11 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,2.45,2,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,9.14,2,25);
         fieldVisionInputList.add(fieldVisionInput);
-        fieldVisionInput = new FieldVisionInput(1,3,2.45,2,30);
+        fieldVisionInput = new FieldVisionInput(1,3,9.14,2,30);
         fieldVisionInputList.add(fieldVisionInput);
-        fieldVisionInput = new FieldVisionInput(1,5,2.45,2,45);
+        fieldVisionInput = new FieldVisionInput(1,5,9.14,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 
@@ -68,11 +68,11 @@ public class TestVisionFieldLayoutRecognizer {
         VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();
         List<FieldVisionInput> fieldVisionInputList = new ArrayList<>();
 
-        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,2.25,2,25);
+        FieldVisionInput fieldVisionInput = new FieldVisionInput(1,2,8.16,2,25);
         fieldVisionInputList.add(fieldVisionInput);
-        fieldVisionInput = new FieldVisionInput(1,2,2.25,2,25);
+        fieldVisionInput = new FieldVisionInput(1,2,8.16,2,25);
         fieldVisionInputList.add(fieldVisionInput);
-        fieldVisionInput = new FieldVisionInput(1,2,2.25,2,45);
+        fieldVisionInput = new FieldVisionInput(1,2,8.16,2,45);
         fieldVisionInputList.add(fieldVisionInput);
 
         AutonomousPath autonomousPathTestResult = 

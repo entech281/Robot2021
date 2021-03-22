@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
         this.logger = DataLoggerFactory.getLoggerFactory().createDataLogger("Robot Main Loop");
         subsystemManager = new SubsystemManager();
         subsystemManager.initAll();
-
+        
         optionChooser = new SmartDashboardPathChooser();
         commandFactory = new CommandFactory(subsystemManager);
     }
