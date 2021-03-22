@@ -54,8 +54,8 @@ public class PixyCameraConnector {
             block.getAngle()
           );
 
-          logger.log("Pixel Width " + block.getIndex() + " :", block.getWidth());
-          logger.log("Pixel Height " + block.getIndex() + " :", block.getHeight());
+         // logger.log("Pixel Width " + block.getIndex() + " :", block.getWidth());
+         // logger.log("Pixel Height " + block.getIndex() + " :", block.getHeight());
 
           fieldVisionInputlist.add(fieldVisionInput);
         }

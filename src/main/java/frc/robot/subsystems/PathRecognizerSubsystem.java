@@ -29,7 +29,7 @@ public class PathRecognizerSubsystem extends BaseSubsystem {
             autonomousPath = visionFieldLayoutRecognizer.detectPose(fieldVisionInputList);
         }
         
-        SmartDashboard.putString("DetectedPath ", autonomousPath.getPathName().toString());
+        SmartDashboard.putString("Pixy Detected Path ", autonomousPath.getPathName().toString());
         SmartDashboard.putBoolean("Pixy Camera Connection Status", pixyCameraConnector.getPixyConnectionStatus());
      
         return autonomousPath;         

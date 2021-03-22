@@ -12,19 +12,19 @@ import frc.robot.logger.DataLoggerFactory;
     private DataLogger logger = DataLoggerFactory.getLoggerFactory().createDataLogger(VisionFieldLayoutRecognizer.class.getName()); 
     //Cannot instantiate the type List if I say new List<DistanceRange>, I get this error
     private List<DistanceRange> distanceRanges;
-    public static final double FOCAL_LENGTH = 11.33;
-    public static final double WIDTH = 7; //inches
+    public static final double FOCAL_LENGTH = 257.14;
+    public static final double WIDTH = 177.8; //millimeters
      
     
     public VisionFieldLayoutRecognizer() {
       setupInitialDistanceRanges();
     }
-    public void setupInitialDistanceRanges(){
-        
-      this.distanceRanges = List.of(new DistanceRange(8.50, 10.0, VisionPathName.PathRedA),
-      new DistanceRange(16.10, 16.30, VisionPathName.PathRedB),
-      new DistanceRange(10.30, 10.40, VisionPathName.PathBlueA),
-      new DistanceRange(17.50, 17.80, VisionPathName.PathBlueB)
+    public void setupInitialDistanceRanges(){  
+      this.distanceRanges = List.of(new DistanceRange(2590.8, 3048, VisionPathName.PathRedA),
+      new DistanceRange(4907.28, 5168.24, VisionPathName.PathRedB),
+      new DistanceRange(4100, 4400.92, VisionPathName.PathBlueA),
+      new DistanceRange(5334, 5725.55, VisionPathName.PathBlueB)
+    
       );
 
   }
@@ -35,8 +35,7 @@ import frc.robot.logger.DataLoggerFactory;
     
           for(FieldVisionInput fieldVisionInput: fieldVisionInputParameter){
 
-          pixels.add(fieldVisionInput.getObjectHeight() * 
-                                  fieldVisionInput.getObjectWidth());
+          pixels.add(fieldVisionInput.getObjectWidth());
                             
         }
       
