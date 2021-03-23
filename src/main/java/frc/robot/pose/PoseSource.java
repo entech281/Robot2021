@@ -17,4 +17,5 @@ public interface PoseSource {
     public RobotPose getRobotPose();
     public Pose2d getPose();
     public FieldPose getFieldPose();
+    public void resetOdometry(Pose2d pose);
 }

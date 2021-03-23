@@ -97,7 +97,7 @@ public class SubsystemManager implements PoseSource {
 
     public void resetOdometry(Pose2d pose) {
         robotPoseManager.resetOdometry(pose);
-        driveSubsystem.resetPosition();
+        driveSubsystem.resetEncoders();
     }
 
     @Override

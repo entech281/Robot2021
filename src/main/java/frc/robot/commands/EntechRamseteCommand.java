@@ -39,24 +39,24 @@ public class EntechRamseteCommand extends EntechCommandBase{
                                     RobotConstants.CHARACTERIZATION.kDriveKinematics,
                                 12);
         config = new TrajectoryConfig(RobotConstants.CHARACTERIZATION.kMaxSpeedMetersPerSecond,
-        RobotConstants.CHARACTERIZATION.kMaxAccelerationMetersPerSecondSquared)
+                                      RobotConstants.CHARACTERIZATION.kMaxAccelerationMetersPerSecondSquared)
                                         // Add kinematics to ensure max speed is actually obeyed
                                         .setKinematics(RobotConstants.CHARACTERIZATION.kDriveKinematics)
                                         // Apply the voltage constraint
                                         .addConstraint(autoVoltageConstraint);
-                                        String trajectoryJSON = "paths/Slalom.wpilib.json";
-                                        try {
-                                          Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-                                          trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-                                        } catch (IOException ex) {
-                                          DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-                                        }
+        String trajectoryJSON = "paths/Slalom.wpilib.json";
+        try {
+          Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+          trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        } catch (IOException ex) {
+          DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+        }
                         
     }
 
     @Override
     public void execute() {
-      ramsete.andThen(() -> drive.tankDriveVolts(0, 0));
+
     }
 
     @Override
@@ -76,6 +76,8 @@ public class EntechRamseteCommand extends EntechCommandBase{
           drive::tankDriveVolts,
           drive
       );
+      poseSource.resetOdometry(trajectory.getInitialPose());
+      ramsete.andThen(() -> drive.tankDriveVolts(0, 0));
     }
     
     

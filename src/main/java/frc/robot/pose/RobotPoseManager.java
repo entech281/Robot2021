@@ -41,7 +41,7 @@ public class RobotPoseManager {
                         encoderDeltaLeft(), 
                         getEncodersRight())), vData);
         
-        m_odometry.update(rotation, encoders.getLeftFront(), encoders.getRightFront());
+        m_odometry.update(rotation, encoders.getLeftFront(), -encoders.getRightFront());
         
         if (navXWorking) {
             RobotPosition withNavXPosition = new RobotPosition(pose.getRobotPosition().getForward(), pose.getRobotPosition().getHorizontal(), navXData.getAngle());

@@ -34,8 +34,7 @@ public class StopDrivingCommand extends EntechCommandBase{
     
     @Override
     public void execute() {
-        drive.drive(0, 0);
-        drive.feedWatchDog();
+        drive.tankDriveVolts(0, 0);
     }
 
     

@@ -18,12 +18,13 @@ public class TankDriveCommand extends EntechCommandBase {
 
     @Override
     public void initialize(){
-        drive.switchToCoastMode();
     }
     
     @Override
     public void execute() {
-        drive.drive(-driveStick.getY(), driveStick.getX());        
+        // drive.drive(-driveStick.getY(), driveStick.getX());        
+        drive.arcadeDrive(-driveStick.getY(), driveStick.getX());
+
     }
     
     @Override

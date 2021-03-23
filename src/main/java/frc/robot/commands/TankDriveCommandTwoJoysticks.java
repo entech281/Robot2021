@@ -21,13 +21,13 @@ public class TankDriveCommandTwoJoysticks extends EntechCommandBase {
 
     @Override
     public void initialize(){
-        drive.switchToCoastMode();
     }
     
     @Override
     public void execute() {
-        //drive.drive(-driveStick.getY(), driveStick.getX());
-        drive.doubleTankDrive(-driveStick2.getY(), -driveStick1.getY());
+        // drive.drive(-driveStick.getY(), driveStick.getX());
+        // drive.doubleTankDrive(-driveStick2.getY(), -driveStick1.getY());
+        drive.arcadeDrive(driveStick1.getY(), driveStick1.getX());
     }
     
     @Override

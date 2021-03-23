@@ -1,5 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.controller.RamseteController;
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -11,13 +19,17 @@ import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.RobotConstants;
+import frc.robot.RobotConstants.AUTONOMOUS;
 import frc.robot.commands.AdjustHoodBackwardCommand;
 import frc.robot.commands.AdjustRaiseHoodCommand;
 import frc.robot.commands.AutoHoodShooterAdjust;
 import frc.robot.commands.EntechRamseteCommand;
-import frc.robot.commands.SnapToVisionTargetCommand;
-import frc.robot.commands.SnapToYawCommand;
 import frc.robot.pose.PoseSource;
+
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.function.BooleanSupplier;
 
 
@@ -62,15 +74,54 @@ public class CommandFactory {
         return new EntechRamseteCommand(sm.getDriveSubsystem(), sm);
     }
 
+    public Command getAutonomousCommand() {
+
+        // Create a voltage constraint to ensure we don't accelerate too fast
+        var autoVoltageConstraint = RobotConstants.AUTONOMOUS.autoVoltageConstraint;
+    
+        // Create config for trajectory
+        TrajectoryConfig config = RobotConstants.AUTONOMOUS.config;
+    
+        String trajectoryJSON = "paths/Slalom.wpilib.json";
+        Trajectory trajectory = new Trajectory();
+        try {
+          Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+          trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+        } catch (IOException ex) {
+          DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
+        }
+
+
+        RamseteCommand ramsete =  new RamseteCommand(
+            trajectory,
+              sm::getPose,
+              new RamseteController(RobotConstants.CHARACTERIZATION.kRamseteB, RobotConstants.CHARACTERIZATION.kRamseteZeta),
+              new SimpleMotorFeedforward(RobotConstants.CHARACTERIZATION.ksVolts,
+              RobotConstants.CHARACTERIZATION.kvVoltSecondsPerMeter,
+              RobotConstants.CHARACTERIZATION.kaVoltSecondsSquaredPerMeter),
+              RobotConstants.CHARACTERIZATION.kDriveKinematics,
+              sm.getDriveSubsystem()::getWheelSpeeds,
+              new PIDController(RobotConstants.CHARACTERIZATION.kPDriveVel, 0, 0),
+              new PIDController(RobotConstants.CHARACTERIZATION.kPDriveVel, 0, 0),
+              // RamseteCommand passes volts to the callback
+              sm.getDriveSubsystem()::tankDriveVolts,
+              sm.getDriveSubsystem()
+          );
+    
+    
+        // Reset odometry to the starting pose of the trajectory.
+        sm.resetOdometry(trajectory.getInitialPose());
+    
+        // Run path following command, then stop at the end.
+        return ramsete.andThen(() -> sm.getDriveSubsystem().tankDriveVolts(0, 0));
+      }
+    
+
     public Command raiseIntakeArms(){
         return new InstantCommand( sm.getIntakeSubsystem()::raiseIntakeArms, sm.getIntakeSubsystem())
                 .andThen(new PrintCommand("Raising Arms"));
     }
-    
-    public Command snapToTargetVision(){
-        return new SnapToVisionTargetCommand(sm.getDriveSubsystem(), sm);
-    }
-    
+        
     public Command spinIntake(){
         return new InstantCommand ( sm.getIntakeSubsystem()::intakeOn, sm.getIntakeSubsystem());
     }
@@ -100,31 +151,13 @@ public class CommandFactory {
         return new InstantCommand ( () -> sm.getNavXSubsystem().zeroYawMethod(inverted));
     }
     
-    public Command turnRight(double degrees){
-        return new SnapToYawCommand(sm.getDriveSubsystem(), degrees, true, sm);
-    }
-
-    public Command turnLeft(double degrees){
-        return new SnapToYawCommand(sm.getDriveSubsystem(), -degrees, true, sm);
-    }
-
-    public Command turnToDirection(double degrees){
-        return new SnapToYawCommand(sm.getDriveSubsystem(), degrees, false, sm);        
-    }
     
     public Command stopDriving(){
-        return new InstantCommand(() -> sm.getDriveSubsystem().stopDriving(), sm.getDriveSubsystem());
+        return new InstantCommand(() -> sm.getDriveSubsystem().tankDriveVolts(0, 0), sm.getDriveSubsystem());
     }
         
     public Command snapAndShootCommand(){
-        return snapToVisionTargetCommand()
-                .alongWith(fireCommand());
-    }
-    public Command snapToVisionTargetCommand(){
-        return new SnapToVisionTargetCommand(sm.getDriveSubsystem(),sm);
-    }
-    public Command snapToYawCommand(double desiredAngle, boolean relative){
-        return new SnapToYawCommand(sm.getDriveSubsystem(),  desiredAngle,  relative, sm );
+        return fireCommand();
     }
     
     

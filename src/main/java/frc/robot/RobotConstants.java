@@ -2,7 +2,10 @@ package frc.robot;
 
 import com.revrobotics.CANPIDController;
 
+import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
+import edu.wpi.first.wpilibj.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import frc.robot.controllers.SparkMaxSettings;
 import frc.robot.controllers.SparkMaxSettingsBuilder;
 import frc.robot.controllers.TalonSettings;
@@ -200,11 +203,25 @@ public class RobotConstants {
         public static final int MAX_ACCELLERATION = 30000;
         public static final int ACCEPTABLE_ERROR = 0;
         public static final int POSITION_TOLERANCE_INCHES = 1;
+        public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
+                    new SimpleMotorFeedforward(RobotConstants.CHARACTERIZATION.ksVolts,
+                    RobotConstants.CHARACTERIZATION.kvVoltSecondsPerMeter,
+                    RobotConstants.CHARACTERIZATION.kaVoltSecondsSquaredPerMeter),
+                    RobotConstants.CHARACTERIZATION.kDriveKinematics,
+                12);
+        public static final TrajectoryConfig config = new TrajectoryConfig(RobotConstants.CHARACTERIZATION.kMaxSpeedMetersPerSecond,
+                                                                            RobotConstants.CHARACTERIZATION.kMaxAccelerationMetersPerSecondSquared)
+                                                                                // Add kinematics to ensure max speed is actually obeyed
+                                                                            .setKinematics(RobotConstants.CHARACTERIZATION.kDriveKinematics)
+                                                                            // Apply the voltage constraint
+                                                                            .addConstraint(autoVoltageConstraint);
+
+
     }
 
     public interface AVAILABILITY {
-        public static final boolean PNEUMATICS_MOUNTED = true;
-        public static final boolean BALL_SENSOR = true;
+        public static final boolean PNEUMATICS_MOUNTED = false;
+        public static final boolean BALL_SENSOR = false;
 
     }
 

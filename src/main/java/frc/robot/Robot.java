@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
             commandFactory.parkHood();
         }
 
-        autoCommand = commandFactory.ramseteEntech();
+        autoCommand = commandFactory.getAutonomousCommand();
         CommandScheduler.getInstance().schedule(autoCommand);
         subsystemManager.getShooterSubsystem().initialize();
         subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
@@ -103,7 +103,8 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousPeriodic() {
-        subsystemManager.getDriveSubsystem().feedWatchDog();
+        CommandScheduler.getInstance().run();
+        // subsystemManager.getDriveSubsystem().feedWatchDog();
 
     }
 

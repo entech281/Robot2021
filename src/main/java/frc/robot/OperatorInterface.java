@@ -3,8 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.SnapToVisionTargetCommand;
-import frc.robot.commands.SnapToYawCommand;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.commands.TankDriveCommandTwoJoysticks;
 import frc.robot.commands.TankDriveCurvatureCommand;
@@ -78,14 +76,7 @@ public class OperatorInterface {
                 .whenReleased(commandFactory.stopEverything())
                 .add();
 
-        
-        joystickManager.addButton(6)
-                .whenPressed(commandFactory.snapToYawCommand( 90, true))
-                .add();
-        
-        joystickManager.addButton(5)
-                .whenPressed(commandFactory.snapToYawCommand( -90, true))
-                .add();
+
         
         joystickManager.addButton(9)
                 .whenPressed(commandFactory.hoodHomeCommand())
