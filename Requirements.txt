@@ -7,3 +7,48 @@ the angle range of the turret itself.
 Should have a reverse or stop motion function after the limit switch has been hit.
 
 Should be able to recieve a value for where the turret is with regards to relative position within a set bounds.
+
+My notes after our Discussion Sir, along with updated requirements:
+
+Command to go to particular angle, have to know what angle we're at
+What is the coordinate system for angle, the turret has 300 degrees of motion
+Define coordinate system, when I say 0 degrees, where does it point forward, right, or left. 
+300 degrees, r u under, offset based on turret symmetry
+more iterations of over 360? 
+Limit switches - should never hit
+homing switch - start up process, allows you to locate where you are before you start (0 is forward, 300 degrees, switch at -150 and 150)
+Homing routine - move counter clockwise until you hit -150 degrees/the switch and then set encoder count to 0
+Gear ratio, every turn of the motor moves the turret x degrees. Every rotation of the motor gives 1/x of the rotation of the turret
+After homing routine, go to home position, in this case can be 0 or -150 degrees
+Limit switches shouldn't be hit, as that can cause damage
+Homing switch should be at (-148, 148) and can be hit
+In this case, due to money, do hit the limit switch at the beginning during homing routine to know where you are, then they become limit switches which you do not hit.
+Hood Subsystem does this twice, one quickly and one a good bit slower for accuracy. 
+hit the switch quickly and move back a tiny bit, then move back and slow the compression to know where you are,
+If limit switch hit, shutdown the full program. 
+Don't let user give an angle greater in magnitude than the bounds or ignore it and move it to a default.
+Encoder counts per revolution based on gear ratio.
+
+The turret has to constantly keep the target centered, even when the robot base is turning.
+Change the angle relative to the position of the base of the robot (Look at vision and see the signal)
+
+PID controller: Monitoring a signal, cruise control signal ex. set speed
+3 components: commanded value, current value (same unit of measure) output: in the case of motor, amount of voltage needed to get to this commanded value)
+commanded - actual = error 
+this is vs. time, proportional, integral, and derivative
+
+proportional: error*constant(proportional gain) = one part of net output
+integral: integral of error/time * experimentally defined constant
+derivative: experimentally defined constant * derivative of error function
+
+o/p, i/p, commanded
+vision Subsystem
+
+cmd = angle, measured = current angle error = diff output = motor volt to change angle 
+
+snap to angle, set the speed so that it is not too fast or too slow
+
+Look in vision subsytem for tracking a target, input: vision target, output: twist the whole robot
+                                               input: vision target output: what angle do I want, based on the relative position of base
+                                                                    
+
