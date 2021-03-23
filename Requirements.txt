@@ -8,6 +8,14 @@ Should have a reverse or stop motion function after the limit switch has been hi
 
 Should be able to recieve a value for where the turret is with regards to relative position within a set bounds.
 
+Updated Requirements:
+
+1. Set the coordinate system, whihc direction is zero pointing. 
+2. Homing routine similar to that of last years
+3. Ignore user inputs greater than the magnitude of the bounds
+4. get gear ration between motor and turret ring
+5. PID Controller and the input and outputs defined as the vision input and what angle I want for turret
+
 My notes after our Discussion Sir, along with updated requirements:
 
 Command to go to particular angle, have to know what angle we're at
@@ -21,7 +29,7 @@ Homing routine - move counter clockwise until you hit -150 degrees/the switch an
 Gear ratio, every turn of the motor moves the turret x degrees. Every rotation of the motor gives 1/x of the rotation of the turret
 After homing routine, go to home position, in this case can be 0 or -150 degrees
 Limit switches shouldn't be hit, as that can cause damage
-Homing switch should be at (-148, 148) and can be hit
+Homing switch should be before and can be hit
 In this case, due to money, do hit the limit switch at the beginning during homing routine to know where you are, then they become limit switches which you do not hit.
 Hood Subsystem does this twice, one quickly and one a good bit slower for accuracy. 
 hit the switch quickly and move back a tiny bit, then move back and slow the compression to know where you are,
