@@ -1,0 +1,9 @@
+The turret needs to turn enough to where it has a decent range of motion but also does not
+rip the wires out. 
+
+In addition, we should probably know how many encoder clicks the range of the turret is and 
+the angle range of the turret itself.
+
+Should have a reverse or stop motion function after the limit switch has been hit.
+
+Should be able to recieve a value for where the turret is with regards to relative position within a set bounds.
