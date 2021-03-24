@@ -13,7 +13,7 @@ Updated Requirements:
 1. Set the coordinate system, whihc direction is zero pointing. 
 2. Homing routine similar to that of last years
 3. Ignore user inputs greater than the magnitude of the bounds
-4. get gear ration between motor and turret ring
+4. get gear ratio between motor and turret ring
 5. PID Controller and the input and outputs defined as the vision input and what angle I want for turret
 
 My notes after our Discussion Sir, along with updated requirements:
