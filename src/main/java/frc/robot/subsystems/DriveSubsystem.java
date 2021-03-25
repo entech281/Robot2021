@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.pose.EncoderValues;
 import edu.wpi.first.wpilibj.SPI;
 
-public class DriveSubsystem extends BaseSubsystem {
+public class DriveSubsystem extends SubsystemBase {
   // The motors on the left side of the drive.
 
   private CANSparkMax frontLeftSpark = new CANSparkMax(3, MotorType.kBrushless);
@@ -62,6 +62,7 @@ public class DriveSubsystem extends BaseSubsystem {
    */
   public DriveSubsystem() {
     // Sets the distance per pulse for the encoders
+    init();
     m_odometry = new DifferentialDriveOdometry(m_gyro.getRotation2d());
   }
 
@@ -69,6 +70,8 @@ public class DriveSubsystem extends BaseSubsystem {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
+
+    m_drive.feed();
     m_odometry.update(m_gyro.getRotation2d(), m_leftEncoder.getPosition(),
                       -m_rightEncoder.getPosition());
                       
@@ -81,6 +84,7 @@ public class DriveSubsystem extends BaseSubsystem {
     SmartDashboard.putNumber("y", getPose().getTranslation().getY());
     SmartDashboard.putNumber("Angle", m_gyro.getRotation2d().getDegrees());
 
+    m_drive.feed();
   }
 
   /**
@@ -98,7 +102,7 @@ public class DriveSubsystem extends BaseSubsystem {
    * @return The current wheel speeds.
    */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), m_rightEncoder.getVelocity());
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getVelocity(), -m_rightEncoder.getVelocity());
   }
 
   /**
@@ -206,8 +210,8 @@ public class DriveSubsystem extends BaseSubsystem {
     return -m_gyro.getRate();
   }
 
-  @Override
-  public void initialize() {
+
+  public void init() {
       // TODO Auto-generated method stub
       double converter = circumference/(gear_ratio);
       SmartDashboard.putNumber("Converter", converter);

@@ -21,57 +21,60 @@ public class SubsystemManager implements PoseSource {
         return driveSubsystem;
     }
 
-    public IntakeSubsystem getIntakeSubsystem() {
-        return intakeSubsystem;
-    }
+    // public IntakeSubsystem getIntakeSubsystem() {
+    //     return intakeSubsystem;
+    // }
 
     public NavXSubsystem getNavXSubsystem() {
         return navXSubsystem;
     }
 
-    public ClimbSubsystem getClimbSubsystem() {
-        return climbSubsystem;
-    }
+    // public ClimbSubsystem getClimbSubsystem() {
+    //     return climbSubsystem;
+    // }
 
-    public ShooterSubsystem getShooterSubsystem() {
-        return shooterSubsystem;
-    }
+    // public ShooterSubsystem getShooterSubsystem() {
+    //     return shooterSubsystem;
+    // }
 
     // public VisionSubsystem getVisionSubsystem(){
     // return visionSubsystem;
     // }
 
-    public HoodSubsystem getHoodSubsystem() {
-        return hoodSubsystem;
-    }
+    // public HoodSubsystem getHoodSubsystem() {
+    //     return hoodSubsystem;
+    // }
 
     private DriveSubsystem driveSubsystem;
-    private IntakeSubsystem intakeSubsystem;
+    // private IntakeSubsystem intakeSubsystem;
     private NavXSubsystem navXSubsystem;
-    private ShooterSubsystem shooterSubsystem;
-    private ClimbSubsystem climbSubsystem;
+    // private ShooterSubsystem shooterSubsystem;
+    // private ClimbSubsystem climbSubsystem;
     // private VisionSubsystem visionSubsystem;
-    private HoodSubsystem hoodSubsystem;
+    // private HoodSubsystem hoodSubsystem;
 
     private RobotPoseManager robotPoseManager;
     private final FieldPoseManager fieldPoseManager = new FieldPoseManager();
 
-    public void setHoodSubsystem(HoodSubsystem hoodSubsystem) {
-        this.hoodSubsystem = hoodSubsystem;
-    }
+    // public void setHoodSubsystem(HoodSubsystem hoodSubsystem) {
+    //     this.hoodSubsystem = hoodSubsystem;
+    // }
 
     public void initAll() {
         driveSubsystem = new DriveSubsystem();
-        intakeSubsystem = new IntakeSubsystem();
+        // intakeSubsystem = new IntakeSubsystem();
         navXSubsystem = new NavXSubsystem();
-        shooterSubsystem = new ShooterSubsystem();
-        climbSubsystem = new ClimbSubsystem();
+        // shooterSubsystem = new ShooterSubsystem();
+        // climbSubsystem = new ClimbSubsystem();
         // visionSubsystem = new VisionSubsystem();
-        hoodSubsystem = new HoodSubsystem();
+        // hoodSubsystem = new HoodSubsystem();
 
-        Arrays.asList(driveSubsystem, intakeSubsystem, navXSubsystem,
+        Arrays.asList(
+            // driveSubsystem, 
+                //intakeSubsystem, 
                 // visionSubsystem,
-                shooterSubsystem, hoodSubsystem).forEach(subsystem -> subsystem.initialize());
+                //shooterSubsystem, hoodSubsystem,
+                navXSubsystem).forEach(subsystem -> subsystem.initialize());
 
         robotPoseManager = new RobotPoseManager(navXSubsystem.getRotation2d());
 

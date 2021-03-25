@@ -5,9 +5,8 @@
  */
 package frc.robot.commands;
 
-
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.logger.DataLogger;
 import frc.robot.logger.DataLoggerFactory;
 import frc.robot.subsystems.BaseSubsystem;
@@ -22,6 +21,12 @@ public class EntechCommandBase extends CommandBase {
         logger = DataLoggerFactory.getLoggerFactory().createDataLogger(this.getName());
     }
 
+    public EntechCommandBase(SubsystemBase sub) {
+        this(sub, DEFAULT_TIMEOUT_SECONDS);
+        logger = DataLoggerFactory.getLoggerFactory().createDataLogger(this.getName());
+    }
+
+
     public EntechCommandBase(BaseSubsystem sub1, BaseSubsystem sub2) {
         addRequirements(sub1, sub2);
         logger = DataLoggerFactory.getLoggerFactory().createDataLogger(this.getName());
@@ -29,6 +34,10 @@ public class EntechCommandBase extends CommandBase {
     
     
     public EntechCommandBase(BaseSubsystem subsystem, double timeout) {
+        addRequirements(subsystem);
+    }
+
+    public EntechCommandBase(SubsystemBase subsystem, double timeout) {
         addRequirements(subsystem);
     }
 }

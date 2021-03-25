@@ -66,15 +66,15 @@ public class Robot extends TimedRobot {
         if (autoCommand != null) {
             autoCommand.cancel();
         }
-        if(!subsystemManager.getHoodSubsystem().knowsHome()){
-            commandFactory.hoodHomeCommand().schedule();
-        }else{
-            commandFactory.parkHood();
-        }
+        // if(!subsystemManager.getHoodSubsystem().knowsHome()){
+        //     commandFactory.hoodHomeCommand().schedule();
+        // }else{
+        //     commandFactory.parkHood();
+        // }
 
         oi = new OperatorInterface(subsystemManager);
 //        subsystemManager.getVisionSubsystem().ensureConnected();
-        subsystemManager.getShooterSubsystem().initialize();
+        // subsystemManager.getShooterSubsystem().initialize();
 
     }
 
@@ -89,16 +89,16 @@ public class Robot extends TimedRobot {
 
 
 
-        if(!subsystemManager.getHoodSubsystem().knowsHome()){
-            commandFactory.hoodHomeCommand().schedule();
-        }else{
-            commandFactory.parkHood();
-        }
+        // if(!subsystemManager.getHoodSubsystem().knowsHome()){
+        //     commandFactory.hoodHomeCommand().schedule();
+        // }else{
+        //     commandFactory.parkHood();
+        // }
 
         autoCommand = commandFactory.getAutonomousCommand();
         CommandScheduler.getInstance().schedule(autoCommand);
-        subsystemManager.getShooterSubsystem().initialize();
-        subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
+        // subsystemManager.getShooterSubsystem().initialize();
+        // subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
     }
 
     @Override

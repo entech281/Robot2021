@@ -30,7 +30,7 @@ public class TankDriveCurvatureCommand extends EntechCommandBase {
             forward = Math.pow(forward, 2);
         }
         
-        drive.arcadeDrive(forward, driveStick.getX());
+        drive.arcadeDrive(-forward, -driveStick.getX());
     }
     
     @Override
