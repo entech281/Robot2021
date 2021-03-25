@@ -31,7 +31,7 @@ public class TankDriveCurvatureCommand extends EntechCommandBase {
             forward = Math.pow(forward, 2);
         }
         
-        drive.curveDrive(forward, driveStick.getX(), tightButton.get());
+        drive.curveDrive(forward, driveStick.getTwist(), tightButton.get());
     }
     
     @Override
