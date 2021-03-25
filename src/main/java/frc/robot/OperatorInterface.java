@@ -82,7 +82,7 @@ public class OperatorInterface {
         //         .whenPressed(commandFactory.hoodHomeCommand())
         //         .add();
         
-        drive.setDefaultCommand(new TankDriveCurvatureCommand(drive, driveStick, 
+        subsystemManager.getDriveSubsystem().setDefaultCommand(new TankDriveCurvatureCommand(drive, driveStick, 
                 new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
         //drive.setDefaultCommand ( new TankDriveCommand(drive,driveStick));
         //drive.setDefaultCommand ( new TankDriveCommandTwoJoysticks(drive,driveStick,driveStick2));

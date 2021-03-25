@@ -204,7 +204,8 @@ public class RobotConstants {
         public static final int ACCEPTABLE_ERROR = 0;
         public static final int POSITION_TOLERANCE_INCHES = 1;
         public static final DifferentialDriveVoltageConstraint autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
-                    new SimpleMotorFeedforward(RobotConstants.CHARACTERIZATION.ksVolts,
+                    new SimpleMotorFeedforward(0.0843,
+                        //RobotConstants.CHARACTERIZATION.ksVolts,
                     RobotConstants.CHARACTERIZATION.kvVoltSecondsPerMeter,
                     RobotConstants.CHARACTERIZATION.kaVoltSecondsSquaredPerMeter),
                     RobotConstants.CHARACTERIZATION.kDriveKinematics,

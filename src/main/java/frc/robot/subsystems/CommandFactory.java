@@ -107,26 +107,26 @@ public class CommandFactory {
 
         RamseteCommand ramsete =  new RamseteCommand(
             trajectory,
-              sm.getDriveSubsystem()::getPose,
+              sm.driveSubsystem::getPose,
               new RamseteController(RobotConstants.CHARACTERIZATION.kRamseteB, RobotConstants.CHARACTERIZATION.kRamseteZeta),
               new SimpleMotorFeedforward(RobotConstants.CHARACTERIZATION.ksVolts,
               RobotConstants.CHARACTERIZATION.kvVoltSecondsPerMeter,
               RobotConstants.CHARACTERIZATION.kaVoltSecondsSquaredPerMeter),
               RobotConstants.CHARACTERIZATION.kDriveKinematics,
-              sm.getDriveSubsystem()::getWheelSpeeds,
+              sm.driveSubsystem::getWheelSpeeds,
               new PIDController(RobotConstants.CHARACTERIZATION.kPDriveVel, 0, 0),
               new PIDController(RobotConstants.CHARACTERIZATION.kPDriveVel, 0, 0),
               // RamseteCommand passes volts to the callback
-              sm.getDriveSubsystem()::tankDriveVolts,
-              sm.getDriveSubsystem()
+              sm.driveSubsystem::tankDriveVolts,
+              sm.driveSubsystem
           );
     
     
         // Reset odometry to the starting pose of the trajectory.
-        sm.getDriveSubsystem().resetOdometry(trajectory.getInitialPose());
+        sm.driveSubsystem.resetOdometry(trajectory.getInitialPose());
     
         // Run path following command, then stop at the end.
-        return ramsete.andThen(() -> sm.getDriveSubsystem().tankDriveVolts(0, 0));
+        return ramsete.andThen(() -> sm.driveSubsystem.tankDriveVolts(0, 0));
       }
     
 
@@ -160,13 +160,13 @@ public class CommandFactory {
     //     return new InstantCommand ( sm.getIntakeSubsystem()::intakeOff, sm.getIntakeSubsystem());
     // }    
     
-    public Command zeroYawOfNavX(boolean inverted){
-        return new InstantCommand ( () -> sm.getNavXSubsystem().zeroYawMethod(inverted));
-    }
+    // public Command zeroYawOfNavX(boolean inverted){
+    //     return new InstantCommand ( () -> sm.getNavXSubsystem().zeroYawMethod(inverted));
+    // }
     
     
     public Command stopDriving(){
-        return new InstantCommand(() -> sm.getDriveSubsystem().tankDriveVolts(0, 0), sm.getDriveSubsystem());
+        return new InstantCommand(() -> sm.driveSubsystem.tankDriveVolts(0, 0), sm.driveSubsystem);
     }
         
     // public Command snapAndShootCommand(){

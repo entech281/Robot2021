@@ -25,9 +25,9 @@ public class SubsystemManager implements PoseSource {
     //     return intakeSubsystem;
     // }
 
-    public NavXSubsystem getNavXSubsystem() {
-        return navXSubsystem;
-    }
+    // public NavXSubsystem getNavXSubsystem() {
+    //     return navXSubsystem;
+    // }
 
     // public ClimbSubsystem getClimbSubsystem() {
     //     return climbSubsystem;
@@ -45,9 +45,9 @@ public class SubsystemManager implements PoseSource {
     //     return hoodSubsystem;
     // }
 
-    private DriveSubsystem driveSubsystem;
+    public DriveSubsystem driveSubsystem;
     // private IntakeSubsystem intakeSubsystem;
-    private NavXSubsystem navXSubsystem;
+    //private NavXSubsystem navXSubsystem;
     // private ShooterSubsystem shooterSubsystem;
     // private ClimbSubsystem climbSubsystem;
     // private VisionSubsystem visionSubsystem;
@@ -63,43 +63,43 @@ public class SubsystemManager implements PoseSource {
     public void initAll() {
         driveSubsystem = new DriveSubsystem();
         // intakeSubsystem = new IntakeSubsystem();
-        navXSubsystem = new NavXSubsystem();
+        // navXSubsystem = new NavXSubsystem();
         // shooterSubsystem = new ShooterSubsystem();
         // climbSubsystem = new ClimbSubsystem();
         // visionSubsystem = new VisionSubsystem();
         // hoodSubsystem = new HoodSubsystem();
 
-        Arrays.asList(
-            // driveSubsystem, 
-                //intakeSubsystem, 
-                // visionSubsystem,
-                //shooterSubsystem, hoodSubsystem,
-                navXSubsystem).forEach(subsystem -> subsystem.initialize());
+        // Arrays.asList(
+        //     // driveSubsystem, 
+        //         //intakeSubsystem, 
+        //         // visionSubsystem,
+        //         //shooterSubsystem, hoodSubsystem,
+        //         navXSubsystem).forEach(subsystem -> subsystem.initialize());
 
-        robotPoseManager = new RobotPoseManager(navXSubsystem.getRotation2d());
+        //robotPoseManager = new RobotPoseManager(navXSubsystem.getRotation2d());
 
     }
 
     public void updatePoses() {
-        robotPoseManager.updateEncoders(driveSubsystem.getEncoderValues());
-        robotPoseManager.updateNavxAngle(navXSubsystem.updateNavXAngle());
-        robotPoseManager.updateRotation2D(navXSubsystem.getRotation2d());
-        robotPoseManager.updateWheelSpeed(driveSubsystem.getWheelSpeeds());
+        //robotPoseManager.updateEncoders(driveSubsystem.getEncoderValues());
+        //robotPoseManager.updateNavxAngle(navXSubsystem.updateNavXAngle());
+        //robotPoseManager.updateRotation2D(navXSubsystem.getRotation2d());
+        //robotPoseManager.updateWheelSpeed(driveSubsystem.getWheelSpeeds());
         // robotPoseManager.updateVisionData(visionSubsystem.getVisionData());
-        robotPoseManager.update();
+        //robotPoseManager.update();
     }
 
-    @Override
-    public RobotPose getRobotPose() {
-        return robotPoseManager.getCurrentPose();
-    }
+    // @Override
+    // public RobotPose getRobotPose() {
+    //     return robotPoseManager.getCurrentPose();
+    // }
 
-    public Pose2d getPose() {
-        return robotPoseManager.getPose();
-    }
+    // public Pose2d getPose() {
+    //     return robotPoseManager.getPose();
+    // }
 
     public void resetOdometry(Pose2d pose) {
-        robotPoseManager.resetOdometry(pose);
+        // robotPoseManager.resetOdometry(pose);
         driveSubsystem.resetEncoders();
     }
 

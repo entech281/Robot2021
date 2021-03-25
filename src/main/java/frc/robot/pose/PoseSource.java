@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
  * @author dcowden
  */
 public interface PoseSource {
-    public RobotPose getRobotPose();
-    public Pose2d getPose();
+    //public RobotPose getRobotPose();
+    //public Pose2d getPose();
     public FieldPose getFieldPose();
-    public void resetOdometry(Pose2d pose);
+    //public void resetOdometry(Pose2d pose);
 }

@@ -34,14 +34,14 @@ public class AutoHoodShooterAdjust extends EntechCommandBase{
 
     @Override
     public void execute(){
-        double distance = poseSource.getRobotPose().getTargetLocation().getDistanceToTarget();
+    //     double distance = poseSource.getRobotPose().getTargetLocation().getDistanceToTarget();
         
-        if(poseSource.getRobotPose().getVisionDataValidity()){
-            customSpeed = ShooterCalculations.calculateAutoShooterSpeed(distance);
-            customPosition = ShooterCalculations.hoodEncoderPosition(distance);
-        }
-        shooter.setShooterSpeed(customSpeed);
-        hood.setHoodPosition(customPosition);
+    //     if(poseSource.getRobotPose().getVisionDataValidity()){
+    //         customSpeed = ShooterCalculations.calculateAutoShooterSpeed(distance);
+    //         customPosition = ShooterCalculations.hoodEncoderPosition(distance);
+    //     }
+    //     shooter.setShooterSpeed(customSpeed);
+    //     hood.setHoodPosition(customPosition);
     }
 
     @Override

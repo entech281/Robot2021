@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
-        subsystemManager.getNavXSubsystem().zeroYawMethod(false);
+        // subsystemManager.getNavXSubsystem().zeroYawMethod(false);
         if (autoCommand != null) {
             autoCommand.cancel();
         }
@@ -80,7 +80,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        SmartDashboard.putNumber("Target Distance", subsystemManager.getRobotPose().getTargetLocation().getDistanceToTarget());
+        // SmartDashboard.putNumber("Target Distance", subsystemManager.getRobotPose().getTargetLocation().getDistanceToTarget());
     }
 
     @Override
