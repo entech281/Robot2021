@@ -79,6 +79,18 @@ public class RobotConstants {
                 .noMotorStartupRamping()
                 .useSpeedControl()
                 .build();
+
+            
+        public static TalonSettings TURRET = TalonSettingsBuilder.defaults()
+        .withCurrentLimits(1, 1, 1)
+        .brakeInNeutral()
+        .withDirections(false, false)
+        .noMotorOutputLimits()
+        .noMotorStartupRamping()
+        .usePositionControl()
+        .withGains(4, 2.56 * 3, 0, 0)
+        .withMotionProfile(1000, 1000, 5)
+        .enableLimitSwitch(false).build();
      
     }
     
@@ -89,7 +101,8 @@ public class RobotConstants {
         public static final int REAR_LEFT_MOTOR = 4;
         public static final int REAR_RIGHT_MOTOR = 2;
         public static final int SHOOTER_MOTOR = 7;
-        public static final int HOOD_MOTOR = 5;
+        public static final int HOOD_MOTOR = 5; // We might not need this
+        public static final int TURRET_MOTOR = 9; // We have to set this value
         public static final int INTAKE_MOTOR = 6;
         public static final int ELEVATOR_MOTOR = 8;
         public static final int PCM_ID = 0;
