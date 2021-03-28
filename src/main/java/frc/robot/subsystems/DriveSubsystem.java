@@ -125,6 +125,7 @@ public class DriveSubsystem extends BaseSubsystem {
 
     public void stopDriving(){
         robotDrive.tankDrive(0, 0);
+        robotDrive.feed();
     }
     
     public void feedWatchDog(){
@@ -150,14 +151,16 @@ public class DriveSubsystem extends BaseSubsystem {
     
     public void doubleTankDrive(double forwardLeft, double forwardRight ){
         robotDrive.tankDrive(forwardLeft, forwardRight);
+        robotDrive.feed();
     }
 
     public void curveDrive(double forward, double rotation, boolean fastTurn){
         robotDrive.curvatureDrive(-forward, rotation, fastTurn);
+        robotDrive.feed();
     }
     public void drive(double forward, double rotation) {
         robotDrive.arcadeDrive(forward, rotation);
-        
+        robotDrive.feed();
     }
     
     public Position getCurrentPosition(){

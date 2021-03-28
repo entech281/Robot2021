@@ -18,7 +18,7 @@ public class TankDriveCurvatureCommand extends EntechCommandBase {
 
     @Override
     public void initialize(){
-        drive.switchToCoastMode();
+        drive.switchToBrakeMode();
     }
     
     @Override
@@ -32,7 +32,7 @@ public class TankDriveCurvatureCommand extends EntechCommandBase {
         }
         
         if(tightButton.get()){
-            drive.drive(0, driveStick.getTwist());
+            drive.drive(0.0, driveStick.getTwist());
         } else {
             drive.curveDrive(forward, driveStick.getX(), false);
         }
