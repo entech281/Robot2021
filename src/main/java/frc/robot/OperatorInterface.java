@@ -5,9 +5,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
-import frc.robot.commands.TankDriveCommand;
-import frc.robot.commands.TankDriveCommandTwoJoysticks;
+import frc.robot.commands.ToggleBrakeModeCommand;
+import frc.robot.commands.ToggleCurvatureDriveCommand;
 import frc.robot.commands.TankDriveCurvatureCommand;
+import frc.robot.commands.ToggleDriveCommand;
 import frc.robot.subsystems.CommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SubsystemManager;
@@ -95,8 +96,18 @@ public class OperatorInterface {
                 .whenPressed(commandFactory.hoodHomeCommand())
                 .add();
         
-        drive.setDefaultCommand(new TankDriveCurvatureCommand(drive, driveStick, 
-                new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
+        joystickManager.addButton(10)
+                .whenPressed(commandFactory.toggleBrakeModeCommand())
+                .add();
+
+        joystickManager.addButton(11)
+                .whenPressed(commandFactory.toggleCurvatureDriveCommand())
+                .add();
+        
+        
+        drive.setDefaultCommand ( new ToggleDriveCommand(drive,driveStick));
+        //drive.setDefaultCommand(new ToggleDriveCurvatureCommand(drive, driveStick, 
+        //        new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
         //drive.setDefaultCommand ( new TankDriveCommand(drive,driveStick));
         //drive.setDefaultCommand ( new TankDriveCommandTwoJoysticks(drive,driveStick,driveStick2));
     }

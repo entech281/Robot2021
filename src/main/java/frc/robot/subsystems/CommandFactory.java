@@ -18,6 +18,8 @@ import frc.robot.commands.DriveDistancePIDCommand;
 import frc.robot.commands.DriveToPositionCommand;
 import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
+import frc.robot.commands.ToggleBrakeModeCommand;
+import frc.robot.commands.ToggleCurvatureDriveCommand;
 import frc.robot.pose.PoseSource;
 import java.util.function.BooleanSupplier;
 
@@ -204,6 +206,14 @@ public class CommandFactory {
     
     public Command hoodAdjustToAngleCommand(double angle){
         return new InstantCommand ( () -> sm.getHoodSubsystem().setHoodPosition(angle) , sm.getHoodSubsystem());
+    }
+    
+    public Command toggleBrakeModeCommand(){
+        return new ToggleBrakeModeCommand(sm.getDriveSubsystem());
+    }
+    
+    public Command toggleCurvatureDriveCommand(){
+        return new ToggleCurvatureDriveCommand(sm.getDriveSubsystem());
     }
         
     public Command intakeOnCommand(){

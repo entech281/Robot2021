@@ -39,6 +39,8 @@ public class DriveSubsystem extends BaseSubsystem {
 
     private EncoderInchesConverter encoderConverter = new EncoderInchesConverter(1 / RobotConstants.DIMENSIONS.MOTOR_REVOLUTIONS_PER_INCH);
 
+    private boolean useBrakeMode = true;
+    private boolean useCurvatureDrive = false;
     
     public static final boolean FRONT_RIGHT_POSITION_INVERSE = true;
     public static final boolean FRONT_LEFT_POSITION_INVERSE = false;
@@ -78,7 +80,24 @@ public class DriveSubsystem extends BaseSubsystem {
         rearRightPositionController.resetPosition();        
     }
 
-    
+    public void toggleBrakeMode() {
+        if (useBrakeMode) {
+            useBrakeMode = false;
+            switchToCoastMode();
+        } else {
+            useBrakeMode = true;
+            switchToBrakeMode();
+        }
+    }
+
+    public void toggleCurvatureDrive() {
+        if (useCurvatureDrive) {
+            useCurvatureDrive = false;
+        } else {
+            useCurvatureDrive = true;
+        }
+    }
+
     @Override
     public void initialize() {
         frontLeftSpark = new CANSparkMax(RobotConstants.CAN.FRONT_LEFT_MOTOR, MotorType.kBrushless);
@@ -100,6 +119,11 @@ public class DriveSubsystem extends BaseSubsystem {
         rearRightPositionController = new SparkPositionController(rearRightSpark, smartMotionSettings, REAR_RIGHT_POSITION_INVERSE);
         
         setSpeedMode();
+        if (useBrakeMode) {
+            switchToBrakeMode();
+        } else {
+            switchToCoastMode();
+        }
     }
 
     private void setSpeedMode() {
@@ -147,6 +171,8 @@ public class DriveSubsystem extends BaseSubsystem {
         logger.log("Faults", frontLeftSpark.getFaults());
         logger.log("Stick Faults", frontLeftSpark.getStickyFaults());
         logger.log("Last error", frontLeftSpark.getLastError());
+        logger.log("Use Brake Mode", useBrakeMode);
+        logger.log("Use Curvature Drive", useCurvatureDrive);
     }
     
     public void doubleTankDrive(double forwardLeft, double forwardRight ){
@@ -156,6 +182,14 @@ public class DriveSubsystem extends BaseSubsystem {
 
     public void curveDrive(double forward, double rotation, boolean fastTurn){
         robotDrive.curvatureDrive(-forward, rotation, fastTurn);
+        robotDrive.feed();
+    }
+    public void toggle_drive(double forward, double rotation) {
+        if (useCurvatureDrive) {
+            robotDrive.curvatureDrive(-forward, rotation, false);
+        } else {
+            robotDrive.arcadeDrive(forward, rotation);
+        }
         robotDrive.feed();
     }
     public void drive(double forward, double rotation) {
