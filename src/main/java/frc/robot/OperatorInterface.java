@@ -88,19 +88,19 @@ public class OperatorInterface {
                 .whenPressed(commandFactory.snapToYawCommand( -90, true))
                 .add();
 
-        joystickManager.addButton(12)
-                .whenPressed(commandFactory.driveForwardSpeedMode(126, 1))
-                .add();
+        // joystickManager.addButton(12)
+        //         .whenPressed(commandFactory.driveForwardSpeedMode(126, 1))
+        //         .add();
         
         joystickManager.addButton(9)
                 .whenPressed(commandFactory.hoodHomeCommand())
                 .add();
         
-        joystickManager.addButton(10)
+        joystickManager.addButton(11)
                 .whenPressed(commandFactory.toggleBrakeModeCommand())
                 .add();
 
-        joystickManager.addButton(11)
+        joystickManager.addButton(12)
                 .whenPressed(commandFactory.toggleCurvatureDriveCommand())
                 .add();
         
