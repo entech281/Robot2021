@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -7,65 +12,127 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.RobotConstants;
 import frc.robot.controllers.TalonPositionController;
 import frc.robot.utils.ClampedDouble;
+import frc.robot.commands.SnapToVisionTargetCommand;
+import frc.robot.pose.PoseSource;
 
-public class TurretSubsystem extends BaseSubsystem{
+/**
+ *
+ * @author aryan - for hoodSubsystem
+ * @modifiedBy rohit for turretSubsytem
+ */
+public class TurretSubsystem extends BaseSubsystem {
 
-        private WPI_TalonSRX turretMotor;   
-        private TalonPositionController turretMotorController; 
-        private static boolean isLimitHit = false;
-        private final ClampedDouble turretPositioner = ClampedDouble.builder().build();
+    private WPI_TalonSRX turretMotor;
+    private TalonPositionController turretMotorController;
+    public static final double TURRET_TOLERANCE_COUNTS = 50;
+    public static final double HOME_OFFSET = 15.0;
+    public static final double CLOSE_PRESET = 375;
+    public static final double FAR_PRESET = 911;
+    public static final double STARTING_LINE_PRESET = 940;
+    private boolean turretHomedAlready = false;
+    
+    private final ClampedDouble desiredTurretPositionEncoder = ClampedDouble.builder()
+            .bounds(0, 1500)
+            .withIncrement(5.0)
+            .withValue(0.0).build();
 
-        @Override
-        public void initialize() {
+    @Override
+    public void initialize() {
+        turretMotor = new WPI_TalonSRX(RobotConstants.CAN.TURRET_MOTOR);
 
-                turretMotor = new WPI_TalonSRX(RobotConstants.CAN.TURRET_MOTOR);
-                turretMotorController = new TalonPositionController(turretMotor, 
-                                                frc.robot.RobotConstants.MOTOR_SETTINGS.TURRET, true);
-                turretMotorController.configure();                
-                turretMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-                        0);
-                turretMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-                        0);
-                turretMotor.overrideLimitSwitchesEnable(true);
+        turretMotorController = new TalonPositionController(turretMotor, frc.robot.RobotConstants.MOTOR_SETTINGS.TURRET, true);
+        turretMotorController.configure();
+        
+        turretMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+                0);
+        turretMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
+                0);
 
-        }
+        turretMotor.overrideLimitSwitchesEnable(true);
+    }
 
-        // Sets the appropriate output on the talon, depending on the mode. 
-        public void homeTurret(){
-        /*move towards and hit limit switch to know position.
-         In Position mode, output value is in encoder ticks or an analog value, depending on the sensor
-        I am setting the value to 0 for now*/
-        turretMotor.set(ControlMode.PercentOutput, 0);
+    public boolean isUpperLimitHit() {
+        return turretMotor.getSensorCollection().isFwdLimitSwitchClosed();
+    }
+    
+    public boolean knowsHome(){
+        return turretHomedAlready;
+    }
 
-        }
-        public void setTurretAngle(double angle){
-                /*give an angle*/
-                turretPositioner.setValue(angle);
-                turretMotorController.setDesiredPosition(angle);
-        }
-        public void resetTurretPosition(){
-                turretMotorController.resetPosition();
-        }
-        public double getTurretError(){
-        /* it's calculus and PID so I got it, by tomorrow night.*/
-        return 0; //just for now
-        }
-        public boolean isLimitHit(){
-                /*boolean of whether limit switch is hit*/
-                isLimitHit = false;
-                if ((turretMotor.getSensorCollection().isRevLimitSwitchClosed()) &&
-                        (turretMotor.getSensorCollection().isFwdLimitSwitchClosed())){
-                                isLimitHit = true;
-                        }
+    public void reset(){
+        turretMotorController.resetPosition();
+        desiredTurretPositionEncoder.setValue(0.0);
+    }
+    
+    public boolean isLowerLimitHit() {
+        return turretMotor.getSensorCollection().isRevLimitSwitchClosed();
+    }
 
-                return isLimitHit;
-        }
-        public void adjustActualPosition(){
-        /*use error and adjust angle, succeeds the next method*/
-        }
-        public double pidOutput(){
-        /*again, adjusting voltage after error calc, I got this part, by tomorrow night*/
-                turretMotor.setVoltage(0); // setting it to zero for now
-                return 0; // just for now
-        }
+    public void goToHomePosition(){
+        turretMotor.set(ControlMode.PercentOutput, 0.2);
+        turretHomedAlready = true;
+    }
+    
+    public void goToHomeOffset(){
+        setTurretPosition(HOME_OFFSET);
+    }
+    
+    private void update() {
+        turretMotorController.setDesiredPosition(desiredTurretPositionEncoder.getValue());
+    }
+
+    public void setTurretPosition(double desiredAngle) {
+        desiredTurretPositionEncoder.setValue(desiredAngle);
+        update();
+    }
+    
+    public void park(){
+        desiredTurretPositionEncoder.setValue(HOME_OFFSET);
+        update();
+    }
+    // RR
+    public boolean atTurretPosition() {
+        return Math.abs(turretMotorController.getDesiredPosition() - turretMotorController.getActualPosition()) < TURRET_TOLERANCE_COUNTS;
+    }
+
+    public void adjustTurretForward() {
+        desiredTurretPositionEncoder.increment();
+        update();
+    }
+    
+    public void upAgainstTargetPreset(){
+        desiredTurretPositionEncoder.setValue(CLOSE_PRESET);
+        update();
+    }
+
+    public void trenchPreset(){
+        desiredTurretPositionEncoder.setValue(FAR_PRESET);
+        update();
+    }
+
+    public void startinfLinePreset(){
+        desiredTurretPositionEncoder.setValue(STARTING_LINE_PRESET);
+        update();
+    }
+    
+    public void adjustTurretBackward() {
+        desiredTurretPositionEncoder.decrement();
+        update();
+    }
+
+    @Override
+    public void periodic() {
+        logger.log("Turret current position1", turretMotorController.getActualPosition());
+        logger.log("Turret Desired Position1", turretMotorController.getDesiredPosition());
+        logger.log("Turret Current Command", getCurrentCommand());
+        logger.log("Control Mode", RobotConstants.MOTOR_SETTINGS.INTAKE.getControlMode());
+        logger.log("upper limit switch", isUpperLimitHit());
+        logger.log("Clamped double", desiredTurretPositionEncoder.getValue());
+    }
+
+    private static class LimitSwitchState {
+        public static int closed = 1;
+        public static int open = 0;
+    }
+
 }

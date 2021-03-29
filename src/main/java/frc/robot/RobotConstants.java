@@ -92,8 +92,17 @@ public class RobotConstants {
         .withMotionProfile(1000, 1000, 5)
         .enableLimitSwitch(false).build();
      
+        public static TalonSettings TURRET_HOMING_SPEED = TalonSettingsBuilder.defaults()
+                .withCurrentLimits(1, 1, 1)
+                .brakeInNeutral()
+                .withDirections(false, false)
+                .limitMotorOutputs(0.3, 0)
+                .noMotorStartupRamping()
+                .useSpeedControl()
+                .build();
     }
     
+
     public interface CAN {
 
         public static final int FRONT_LEFT_MOTOR = 3;

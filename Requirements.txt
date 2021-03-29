@@ -60,3 +60,11 @@ Look in vision subsytem for tracking a target, input: vision target, output: twi
                                                input: vision target output: what angle do I want, based on the relative position of base
                                                                     
 
+
+Questions: PID implementation
+Use TalonController to find actual and compare it with desired position
+
+Logic: if no target, go to where target was found last and supply power to the motor. once the boolean value targetfound() is 
+returned true, stop supplying voltage
+General formula already found
+Change PID control to supply proper voltage for change.

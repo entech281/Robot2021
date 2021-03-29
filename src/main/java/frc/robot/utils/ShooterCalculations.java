@@ -8,6 +8,7 @@ package frc.robot.utils;
 /**
  *
  * @author aryan
+ * @modifiedby rohit
  */
 public class ShooterCalculations {
     public static final double SLOPE = 4.722222222;
@@ -20,6 +21,14 @@ public class ShooterCalculations {
     public static double hoodEncoderPosition(double distance){
         double targetHeight = 86;
         double percent = (Math.PI/2 - Math.atan(targetHeight/distance))/(2*Math.PI);
+        double encoderClicks = (percent)*2100*4 - 300;
+        encoderClicks = Math.max(encoderClicks, 1100);
+        return encoderClicks;
+    }
+
+    /*When it can see the target*/
+    public static double turretEncoderPosition(double distance, double lateralOffset){
+        double percent = (Math.PI/2 - Math.atan(lateralOffset/distance))/(2*Math.PI);
         double encoderClicks = (percent)*2100*4 - 300;
         encoderClicks = Math.max(encoderClicks, 1100);
         return encoderClicks;
