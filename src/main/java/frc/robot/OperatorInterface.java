@@ -7,7 +7,6 @@ import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
 import frc.robot.commands.ToggleBrakeModeCommand;
 import frc.robot.commands.ToggleCurvatureDriveCommand;
-import frc.robot.commands.TankDriveCurvatureCommand;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.CommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
@@ -32,30 +31,30 @@ public class OperatorInterface {
         this.operatorPanel = new Joystick(RobotConstants.GAMEPAD.OPERATOR_PANEL);
         this.joystickManager = new JoystickButtonManager(driveStick);
         this.operatorPanelManager = new JoystickButtonManager(operatorPanel);
-        
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.TURN_SHOOTER_ON)
                 .whenPressed(commandFactory.startShooter())
                 .whenReleased(commandFactory.stopShooter())
                 .add();
-        
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.ENABLE_AUTO_HOOD)
                 .whenPressed(commandFactory.enableAutoShooterAndHood())
                 .whenReleased(commandFactory.disableAutoShooterAndHood())
                 .add();
-        
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
                 .whileHeldContinous(commandFactory.deployAndStartIntake())
                 .whenReleased(commandFactory.raiseAndStopIntake())
                 .add();
-        
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_FORWARD_ADJUST)
                 .whileHeld(commandFactory.nudgeHoodForward())
                 .add();
-        
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_BACKWARD_ADJUST)
                 .whileHeld(commandFactory.nudgeHoodBackward())
                 .add();
-                
+
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_1)
                 .whenPressed(commandFactory.hoodUpAgainstTargetPreset())
@@ -64,26 +63,26 @@ public class OperatorInterface {
         operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_2)
                 .whenPressed(commandFactory.hoodTrenchPreset())
                 .add();
-        
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.FIRE)
                 .whenPressed(commandFactory.fireCommand())
                 .whenReleased(commandFactory.stopElevator())
                 .add();
-        
+
 
         drive = subsystemManager.getDriveSubsystem();
-                               
-        
+
+
         joystickManager.addButton(RobotConstants.BUTTONS.OUTAKE)
                 .whenPressed(commandFactory.reverse())
                 .whenReleased(commandFactory.stopEverything())
                 .add();
 
-        
+
         joystickManager.addButton(6)
                 .whenPressed(commandFactory.snapToYawCommand( 90, true))
                 .add();
-        
+
         joystickManager.addButton(5)
                 .whenPressed(commandFactory.snapToYawCommand( -90, true))
                 .add();
@@ -91,11 +90,11 @@ public class OperatorInterface {
         // joystickManager.addButton(12)
         //         .whenPressed(commandFactory.driveForwardSpeedMode(126, 1))
         //         .add();
-        
+
         joystickManager.addButton(9)
                 .whenPressed(commandFactory.hoodHomeCommand())
                 .add();
-        
+
         joystickManager.addButton(11)
                 .whenPressed(commandFactory.toggleBrakeModeCommand())
                 .add();
@@ -103,10 +102,10 @@ public class OperatorInterface {
         joystickManager.addButton(12)
                 .whenPressed(commandFactory.toggleCurvatureDriveCommand())
                 .add();
-        
-        
+
+
         drive.setDefaultCommand ( new TankDriveCommand(drive,driveStick) );
-        //drive.setDefaultCommand(new ToggleDriveCurvatureCommand(drive, driveStick, 
+        //drive.setDefaultCommand(new ToggleDriveCurvatureCommand(drive, driveStick,
         //        new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
     }
 
