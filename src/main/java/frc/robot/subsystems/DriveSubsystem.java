@@ -180,20 +180,12 @@ public class DriveSubsystem extends BaseSubsystem {
         robotDrive.feed();
     }
 
-    public void curveDrive(double forward, double rotation, boolean fastTurn){
-        robotDrive.curvatureDrive(-forward, rotation, fastTurn);
-        robotDrive.feed();
-    }
-    public void toggle_drive(double forward, double rotation) {
+    public void drive(double forward, double rotation) {
         if (useCurvatureDrive) {
-            robotDrive.curvatureDrive(-forward, rotation, false);
+            robotDrive.curvatureDrive(forward, rotation, false);
         } else {
             robotDrive.arcadeDrive(forward, rotation);
         }
-        robotDrive.feed();
-    }
-    public void drive(double forward, double rotation) {
-        robotDrive.arcadeDrive(forward, rotation);
         robotDrive.feed();
     }
     
