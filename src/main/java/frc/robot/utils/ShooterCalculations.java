@@ -26,11 +26,5 @@ public class ShooterCalculations {
         return encoderClicks;
     }
 
-    /*When it can see the target*/
-    public static double turretEncoderPosition(double distance, double lateralOffset){
-        double percent = (Math.PI/2 - Math.atan(lateralOffset/distance))/(2*Math.PI);
-        double encoderClicks = (percent)*2100*4 - 300;
-        encoderClicks = Math.max(encoderClicks, 1100);
-        return encoderClicks;
-    }
 }
+

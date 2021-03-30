@@ -127,6 +127,7 @@ public class TurretSubsystem extends BaseSubsystem {
         logger.log("Turret Current Command", getCurrentCommand());
         logger.log("Control Mode", RobotConstants.MOTOR_SETTINGS.INTAKE.getControlMode());
         logger.log("upper limit switch", isUpperLimitHit());
+        logger.log("lower limit switch", isLowerLimitHit());
         logger.log("Clamped double", desiredTurretPositionEncoder.getValue());
     }
 

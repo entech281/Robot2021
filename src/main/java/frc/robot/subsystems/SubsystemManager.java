@@ -7,8 +7,6 @@ import frc.robot.pose.FieldPoseManager;
 import frc.robot.pose.PoseSource;
 import frc.robot.pose.RobotPose;
 import frc.robot.pose.RobotPoseManager;
-import frc.robot.subsystems.PathRecognizerSubsystem;
-import frc.pathrecognizer.AutonomousPath;
 
 
 
@@ -55,6 +53,7 @@ public class SubsystemManager implements PoseSource{
 //    private VisionSubsystem visionSubsystem;
     private HoodSubsystem hoodSubsystem;
     private PathRecognizerSubsystem pathRecognizerSubsystem;
+    private TurretSubsystem turretSubsystem; 
 
     private final RobotPoseManager robotPoseManager = new RobotPoseManager();
     private final FieldPoseManager fieldPoseManager = new FieldPoseManager();
@@ -71,6 +70,7 @@ public class SubsystemManager implements PoseSource{
 //        visionSubsystem = new VisionSubsystem();
         hoodSubsystem  = new HoodSubsystem();
         pathRecognizerSubsystem = new PathRecognizerSubsystem(); 
+        turretSubsystem = new TurretSubsystem();
 
         Arrays.asList(
             driveSubsystem, 
@@ -79,7 +79,8 @@ public class SubsystemManager implements PoseSource{
 //            visionSubsystem,
             shooterSubsystem,
             hoodSubsystem,
-            pathRecognizerSubsystem).forEach(subsystem -> subsystem.initialize());
+            pathRecognizerSubsystem,
+            turretSubsystem).forEach(subsystem -> subsystem.initialize());
         
         
     }
