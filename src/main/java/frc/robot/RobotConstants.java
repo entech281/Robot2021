@@ -109,14 +109,14 @@ public class RobotConstants {
         public static final int FRONT_RIGHT_MOTOR = 1;
         public static final int REAR_LEFT_MOTOR = 4;
         public static final int REAR_RIGHT_MOTOR = 2;
-        public static final int SHOOTER_MOTOR = 7;
-        public static final int HOOD_MOTOR = 5; // We might not need this
-        public static final int TURRET_MOTOR = 9; // We have to set this value
+        public static final int SHOOTER_MOTOR = 10;
+        public static final int HOOD_MOTOR = 5; 
+        public static final int TURRET_MOTOR = 7; // We have to set this value
         public static final int INTAKE_MOTOR = 6;
         public static final int ELEVATOR_MOTOR = 8;
         public static final int PCM_ID = 0;
         public static final int FORWARD = 6;
-        public static final int REVERSE = 7;
+        public static final int REVERSE = 11;
     }
 
     public interface PNEUMATICS {
@@ -152,6 +152,9 @@ public class RobotConstants {
         public static final int NUDGE_YAW_LEFT = 15;
         public static final int NUDGE_HOOD_FORWARD = 16;
         public static final int NUDGE_HOOD_BACKWARD = 17;
+        public static final int ENABLE_TURRET = 18;
+        public static final int TURRET_LEFT_ADJUST  = 3;
+        public static final int TURRET_RIGHT_ADJUST = 4;
         
     }
 

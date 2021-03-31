@@ -45,6 +45,10 @@ public class SubsystemManager implements PoseSource{
         return hoodSubsystem;
     }
 
+    public TurretSubsystem getTurretSubsystem() {
+        return turretSubsystem;
+    }
+
     private DriveSubsystem driveSubsystem;
     private IntakeSubsystem intakeSubsystem;
     private NavXSubsystem navXSubsystem;

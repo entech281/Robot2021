@@ -55,6 +55,13 @@ public class OperatorInterface {
                 .whileHeld(commandFactory.nudgeHoodBackward())
                 .add();
                 
+        joystickManager.addButton(RobotConstants.BUTTONS.TURRET_LEFT_ADJUST)
+                .whileHeld(commandFactory.nudgeTurretLeft())
+                .add();
+        
+        joystickManager.addButton(RobotConstants.BUTTONS.TURRET_RIGHT_ADJUST)
+                .whileHeld(commandFactory.nudgeTurretRight())
+                .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_1)
                 .whenPressed(commandFactory.hoodUpAgainstTargetPreset())

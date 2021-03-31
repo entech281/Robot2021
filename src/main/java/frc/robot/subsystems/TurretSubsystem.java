@@ -95,7 +95,7 @@ public class TurretSubsystem extends BaseSubsystem {
         return Math.abs(turretMotorController.getDesiredPosition() - turretMotorController.getActualPosition()) < TURRET_TOLERANCE_COUNTS;
     }
 
-    public void adjustTurretForward() {
+    public void adjustTurretRight() {
         desiredTurretPositionEncoder.increment();
         update();
     }
@@ -115,7 +115,7 @@ public class TurretSubsystem extends BaseSubsystem {
         update();
     }
     
-    public void adjustTurretBackward() {
+    public void adjustTurretLeft() {
         desiredTurretPositionEncoder.decrement();
         update();
     }

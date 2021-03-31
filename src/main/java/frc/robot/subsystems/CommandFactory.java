@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.AdjustHoodBackwardCommand;
 import frc.robot.commands.AdjustRaiseHoodCommand;
+import frc.robot.commands.AdjustTurretLeftCommand;
+import frc.robot.commands.AdjustTurretRightCommand;
 import frc.robot.commands.AutoHoodShooterAdjust;
 import frc.robot.commands.DriveDistancePIDCommand;
 import frc.robot.commands.DriveToPositionCommand;
@@ -244,6 +246,14 @@ public class CommandFactory {
     
     public Command nudgeHoodForward(){
         return new AdjustRaiseHoodCommand(sm.getHoodSubsystem());
+    }
+
+    public Command nudgeTurretLeft() {
+        return new AdjustTurretLeftCommand(sm.getTurretSubsystem());
+    }
+
+    public Command nudgeTurretRight() {
+        return new AdjustTurretRightCommand(sm.getTurretSubsystem());
     }
     
     public Command hoodHomeCommand(){
