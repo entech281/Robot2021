@@ -15,6 +15,7 @@ public class RobotConstants {
 
     public interface DIGITIAL_INPUT{
         public static final int BALL_SENSOR = 0;
+        public static final int SHOOTER_SENSOR = 1;
     }
 
     public interface MOTOR_SETTINGS {
@@ -95,6 +96,8 @@ public class RobotConstants {
         public static final int PCM_ID = 0;
         public static final int FORWARD = 6;
         public static final int REVERSE = 7;
+        public static final int FORWARD_S = 4;
+        public static final int REVERSE_S = 5;        
     }
 
     public interface PNEUMATICS {

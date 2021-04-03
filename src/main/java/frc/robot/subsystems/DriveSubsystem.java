@@ -128,10 +128,11 @@ public class DriveSubsystem extends BaseSubsystem {
     }
     
     public void feedWatchDog(){
-        robotDrive.feedWatchdog();
+        robotDrive.feed();
     }
     @Override
     public void periodic() {
+        feedWatchDog();
         logger.log("Front Left Encoder Ticks", frontLeftEncoder.getPosition());
         logger.log("Front Right Encoder Ticks", frontRightEncoder.getPosition());
         logger.log("Rear Left Encoder Ticks", rearLeftEncoder.getPosition());

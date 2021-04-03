@@ -48,7 +48,7 @@ public class CommandFactory {
         return new SequentialCommandGroup(
             new InstantCommand(() -> sm.getIntakeSubsystem().toggleIntakeArms()),
             new ParallelRaceGroup(
-                new PerpetualCommand(new InstantCommand(() -> sm.getIntakeSubsystem().updateSolenoidPosition())),
+                new PerpetualCommand(new InstantCommand(() -> sm.getIntakeSubsystem().updateIntakeSolenoidPosition())),
                 new WaitCommand(0.25)
                 )
             ).andThen(new PrintCommand("Toggling Arms"));
@@ -228,7 +228,7 @@ public class CommandFactory {
                     sm.getShooterSubsystem().atShootSpeed() &&
                     sm.getHoodSubsystem().atHoodPosition() ),
 //            snapToTargetVision(),
-            new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(ELEVEATOR_SLOW_SPEED) )        
+            new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )        
         );
     }
     
