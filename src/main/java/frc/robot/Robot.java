@@ -78,8 +78,7 @@ public class Robot extends TimedRobot {
         // }
 
         oi = new OperatorInterface(subsystemManager);
-//        subsystemManager.getVisionSubsystem().ensureConnected();
-        subsystemManager.getShooterSubsystem().initialize();
+       subsystemManager.getVisionSubsystem().ensureConnected();
 
     }
 
@@ -91,7 +90,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-//        subsystemManager.getVisionSubsystem().ensureConnected();
+       subsystemManager.getVisionSubsystem().ensureConnected();
 
 
 
@@ -103,7 +102,6 @@ public class Robot extends TimedRobot {
 
         autoCommand = new AutoCommandFactory(commandFactory).getSelectedCommand(optionChooser.getSelected());
         CommandScheduler.getInstance().schedule(autoCommand);
-        subsystemManager.getShooterSubsystem().initialize();
         subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
     }
 
