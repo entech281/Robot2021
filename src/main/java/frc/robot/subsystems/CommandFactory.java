@@ -16,6 +16,7 @@ import frc.robot.commands.AdjustRaiseHoodCommand;
 import frc.robot.commands.AdjustTurretLeftCommand;
 import frc.robot.commands.AdjustTurretRightCommand;
 import frc.robot.commands.AutoHoodShooterAdjust;
+import frc.robot.commands.AutoTurretAdjust;
 import frc.robot.commands.DriveDistancePIDCommand;
 import frc.robot.commands.DriveToPositionCommand;
 import frc.robot.commands.SnapToVisionTargetCommand;
@@ -70,6 +71,10 @@ public class CommandFactory {
         return new SnapToVisionTargetCommand(sm.getDriveSubsystem(), sm);
     }
     
+    public Command autoTurretAdjust() {
+        return new AutoTurretAdjust(sm.getTurretSubsystem(), sm);
+    }
+
     public Command spinIntake(){
         return new InstantCommand ( sm.getIntakeSubsystem()::intakeOn, sm.getIntakeSubsystem());
     }

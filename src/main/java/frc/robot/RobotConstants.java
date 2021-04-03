@@ -89,8 +89,8 @@ public class RobotConstants {
         .noMotorStartupRamping()
         .usePositionControl()
         .withGains(4, 2.56 * 3, 0, 0)
-        .withMotionProfile(1000, 1000, 5)
-        .enableLimitSwitch(false).build();
+        .withMotionProfile(200, 200, 5)
+        .enableLimitSwitch(true).build();
      
         public static TalonSettings TURRET_HOMING_SPEED = TalonSettingsBuilder.defaults()
                 .withCurrentLimits(1, 1, 1)
@@ -109,14 +109,14 @@ public class RobotConstants {
         public static final int FRONT_RIGHT_MOTOR = 1;
         public static final int REAR_LEFT_MOTOR = 4;
         public static final int REAR_RIGHT_MOTOR = 2;
-        public static final int SHOOTER_MOTOR = 10;
+        public static final int SHOOTER_MOTOR = 7;
         public static final int HOOD_MOTOR = 5; 
-        public static final int TURRET_MOTOR = 7; // We have to set this value
+        public static final int TURRET_MOTOR = 9; // We have to set this value
         public static final int INTAKE_MOTOR = 6;
         public static final int ELEVATOR_MOTOR = 8;
         public static final int PCM_ID = 0;
         public static final int FORWARD = 6;
-        public static final int REVERSE = 11;
+        public static final int REVERSE = 7;
     }
 
     public interface PNEUMATICS {
