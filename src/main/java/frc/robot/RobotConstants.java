@@ -176,9 +176,9 @@ public class RobotConstants {
     public interface DIMENSIONS {
         // Must be in inches
 
-        public static final double ROBOT_WIDTH = 23.5;
-        public static final double ROBOT_LENGTH = 25;
-        public static final double DRIVE_GEAR_RATIO = 10.7 * (48/50.5); //(23.5/25.5)
+        public static final double ROBOT_WIDTH = 23;
+        public static final double ROBOT_LENGTH = 23;
+        public static final double DRIVE_GEAR_RATIO = 12.7; //10.7 * (48/50.5); //(23.5/25.5)
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double MOTOR_REVOLUTIONS_PER_INCH = (Math.PI * WHEEL_DIAMETER_INCHES)
                 / DRIVE_GEAR_RATIO;

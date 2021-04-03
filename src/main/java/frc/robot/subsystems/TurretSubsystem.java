@@ -64,6 +64,10 @@ public class TurretSubsystem extends BaseSubsystem {
         desiredTurretPositionEncoder.setValue(0.0);
     }
     
+    public void turnTurret(Double speed){
+        turretMotor.set(ControlMode.PercentOutput, speed);
+    }
+
     public boolean isCounterClockLimitHit() {
         return turretMotor.getSensorCollection().isRevLimitSwitchClosed();
     }
