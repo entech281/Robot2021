@@ -71,11 +71,11 @@ public class Robot extends TimedRobot {
         if (autoCommand != null) {
             autoCommand.cancel();
         }
-        if(!subsystemManager.getHoodSubsystem().knowsHome()){
-            commandFactory.hoodHomeCommand().schedule();
-        }else{
-            commandFactory.parkHood();
-        }
+        // if(!subsystemManager.getHoodSubsystem().knowsHome()){
+        //     commandFactory.hoodHomeCommand().schedule();
+        // }else{
+        //     commandFactory.parkHood();
+        // }
 
         oi = new OperatorInterface(subsystemManager);
 //        subsystemManager.getVisionSubsystem().ensureConnected();
@@ -95,11 +95,11 @@ public class Robot extends TimedRobot {
 
 
 
-        if(!subsystemManager.getHoodSubsystem().knowsHome()){
-            commandFactory.hoodHomeCommand().schedule();
-        }else{
-            commandFactory.parkHood();
-        }
+        // if(!subsystemManager.getHoodSubsystem().knowsHome()){
+        //     commandFactory.hoodHomeCommand().schedule();
+        // }else{
+        //     commandFactory.parkHood();
+        // }
 
         autoCommand = new AutoCommandFactory(commandFactory).getSelectedCommand(optionChooser.getSelected());
         CommandScheduler.getInstance().schedule(autoCommand);

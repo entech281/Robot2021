@@ -95,7 +95,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     }
   
     public boolean isBallAtIntake(){
-        return !intakeBallSensor.get();
+        return intakeBallSensor.get();
     }
     
     public void setIntakeMotorSpeed(double desiredSpeed) {

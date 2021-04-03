@@ -44,7 +44,6 @@ public class HoodSubsystem extends BaseSubsystem {
                 0);
         hoodMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
                 0);
-
         hoodMotor.overrideLimitSwitchesEnable(true);
     }
 
@@ -122,9 +121,12 @@ public class HoodSubsystem extends BaseSubsystem {
         logger.log("Hood current position1", hoodMotorController.getActualPosition());
         logger.log("Hood Desired Position1", hoodMotorController.getDesiredPosition());
         logger.log("Hood Current Command", getCurrentCommand());
-        logger.log("Control Mode", RobotConstants.MOTOR_SETTINGS.INTAKE.getControlMode());
+        logger.log("Control Mode", RobotConstants.MOTOR_SETTINGS.HOOD.getControlMode());
         logger.log("upper limit switch", isUpperLimitHit());
+        logger.log("lower limit switch", isLowerLimitHit());
         logger.log("Clamped double", desiredHoodPositionEncoder.getValue());
+        
+        logger.log("Known home", knowsHome());
     }
 
     private static class LimitSwitchState {
