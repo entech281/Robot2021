@@ -82,7 +82,6 @@ public class SparkMaxSettings {
         pidController.setSmartMotionAllowedClosedLoopError(profile.allowableClosedLoopError, PID_SLOT);
         pidController.setSmartMotionMaxAccel(profile.maxAccel, PID_SLOT);
         pidController.setSmartMotionMaxVelocity(profile.cruiseVelocityRPM, PID_SLOT);
-        pidController.setSmartMotionMinOutputVelocity(-profile.cruiseVelocityRPM, PID_SLOT);
 
     }
 
@@ -103,7 +102,7 @@ public class SparkMaxSettings {
         }
     }
 
-    
+
     public ControlType getControlType(){
         return this.ctrlType;
     }

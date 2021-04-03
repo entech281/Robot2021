@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
             compressor = new Compressor(RobotConstants.CAN.PCM_ID);
             compressor.start();
         }
-        
+
         DataLoggerFactory.configureForMatch();
         this.logger = DataLoggerFactory.getLoggerFactory().createDataLogger("Robot Main Loop");
         subsystemManager = new SubsystemManager();
@@ -79,7 +79,6 @@ public class Robot extends TimedRobot {
 
         oi = new OperatorInterface(subsystemManager);
 //        subsystemManager.getVisionSubsystem().ensureConnected();
-        subsystemManager.getShooterSubsystem().initialize();
 
     }
 
@@ -102,7 +101,6 @@ public class Robot extends TimedRobot {
 
         autoCommand = new AutoCommandFactory(commandFactory).getSelectedCommand(optionChooser.getSelected());
         CommandScheduler.getInstance().schedule(autoCommand);
-        subsystemManager.getShooterSubsystem().initialize();
         subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
     }
 
@@ -125,5 +123,5 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {
 
     }
-    
+
 }

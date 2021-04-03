@@ -76,10 +76,10 @@ public class OperatorInterface {
         drive = subsystemManager.getDriveSubsystem();
 
 
-        joystickManager.addButton(RobotConstants.BUTTONS.OUTAKE)
-                .whenPressed(commandFactory.reverse())
-                .whenReleased(commandFactory.stopEverything())
-                .add();
+        //joystickManager.addButton(RobotConstants.BUTTONS.OUTAKE)
+        //        .whenPressed(commandFactory.reverse())
+        //        .whenReleased(commandFactory.stopEverything())
+        //        .add();
 
 
         joystickManager.addButton(5)
