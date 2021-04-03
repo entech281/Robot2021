@@ -20,6 +20,7 @@ import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
 import frc.robot.pose.PoseSource;
 import java.util.function.BooleanSupplier;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -207,8 +208,9 @@ public class CommandFactory {
     }
         
     public Command intakeOnCommand(){
-        double DELAY1 = 0.5;
-        double DELAY2 = 0.15;    
+        
+        double DELAY1 = SmartDashboard.getNumber("delay1", 0.25);
+        double DELAY2 = SmartDashboard.getNumber("delay2", 0.05);   
         return new SequentialCommandGroup(
             setIntakeSpeed(1),
             setElevatorSpeed(0),
@@ -220,16 +222,25 @@ public class CommandFactory {
             setElevatorSpeed(0.5),  
             new WaitCommand(DELAY2)
         );
-        // return new SequentialCommandGroup(setIntakeSpeed(1));
     }
+
+//     public Command fireCommand(){
+//         return new SequentialCommandGroup(
+//             new WaitUntilCommand ( () ->  
+//                     sm.getShooterSubsystem().atShootSpeed() &&
+//                     sm.getHoodSubsystem().atHoodPosition() ),
+// //            snapToTargetVision(),
+//             new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )        
+//         );
+//     }
+
 
     public Command fireCommand(){
         return new SequentialCommandGroup(
-            new WaitUntilCommand ( () ->  
-                    sm.getShooterSubsystem().atShootSpeed() &&
-                    sm.getHoodSubsystem().atHoodPosition() ),
-//            snapToTargetVision(),
-            new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )        
+            new InstantCommand(() -> sm.getIntakeSubsystem().fire()),
+            new WaitCommand(0.2),
+            new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
+
         );
     }
     
@@ -265,7 +276,7 @@ public class CommandFactory {
         return new AdjustHoodBackwardCommand(sm.getHoodSubsystem());
     }    
 
-    private Command startShooterNoShift(){
+    public Command startShooterNoShift(){
         return new InstantCommand(() ->  sm.getShooterSubsystem().startShooterPresetSpeed(), sm.getShooterSubsystem());
     }
     

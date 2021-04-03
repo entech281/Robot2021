@@ -125,6 +125,16 @@ public class IntakeSubsystem extends BaseSubsystem {
         }
     }
     
+    public void fire(){
+        currentStateFlapper = DoubleSolenoid.Value.kForward;
+        updateFlapperSolenoidPosition();
+    }
+
+    public void deactivate(){
+        currentStateFlapper = DoubleSolenoid.Value.kReverse;
+        updateFlapperSolenoidPosition();
+    }
+
     public void setIntakeMotorSpeed(double desiredSpeed) {
         intakeMotorController.setDesiredSpeed(desiredSpeed);
     }

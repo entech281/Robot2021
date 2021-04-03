@@ -33,7 +33,7 @@ public class OperatorInterface {
         this.operatorPanelManager = new JoystickButtonManager(operatorPanel);
         
         operatorPanelManager.addButton(RobotConstants.BUTTONS.TURN_SHOOTER_ON)
-                .whenPressed(commandFactory.startShooter())
+                .whenPressed(commandFactory.startShooterNoShift())
                 .whenReleased(commandFactory.stopShooter())
                 .add();
         
