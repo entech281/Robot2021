@@ -220,6 +220,7 @@ public class CommandFactory {
             setElevatorSpeed(0.5),  
             new WaitCommand(DELAY2)
         );
+        // return new SequentialCommandGroup(setIntakeSpeed(1));
     }
 
     public Command fireCommand(){

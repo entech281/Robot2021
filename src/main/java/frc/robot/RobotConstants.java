@@ -57,6 +57,17 @@ public class RobotConstants {
                 .useSpeedControl()
                 .build();
         
+        public static TalonSettings TURRET = TalonSettingsBuilder.defaults()
+                .withCurrentLimits(1, 1, 1)
+                .brakeInNeutral()
+                .withDirections(false, false)
+                .noMotorOutputLimits()
+                .noMotorStartupRamping()
+                .usePositionControl()
+                .withGains(4, 2.56 * 3, 0, 0)
+                .withMotionProfile(1000, 1000, 5)
+                .enableLimitSwitch(false)
+                .build();
         
         public static SparkMaxSettings SHOOTER_CLOSED_LOOP = SparkMaxSettingsBuilder.defaults()
                 .withCurrentLimits(35)
@@ -97,7 +108,8 @@ public class RobotConstants {
         public static final int FORWARD = 6;
         public static final int REVERSE = 7;
         public static final int FORWARD_S = 4;
-        public static final int REVERSE_S = 5;        
+        public static final int REVERSE_S = 5;
+        public static final int TURRET_MOTOR = 9;        
     }
 
     public interface PNEUMATICS {

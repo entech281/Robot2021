@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
         // }
 
         oi = new OperatorInterface(subsystemManager);
-//        subsystemManager.getVisionSubsystem().ensureConnected();
+       subsystemManager.getVisionSubsystem().ensureConnected();
         subsystemManager.getShooterSubsystem().initialize();
 
     }
@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-//        subsystemManager.getVisionSubsystem().ensureConnected();
+       subsystemManager.getVisionSubsystem().ensureConnected();
 
 
 
