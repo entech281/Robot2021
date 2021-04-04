@@ -5,73 +5,68 @@
  */
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.SerialPort.Port;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotConstants;
+import frc.robot.pose.*;
 import frc.robot.vision.VisionData;
-import frc.robot.vision.WpilibSerialProvider;
-import frc.robot.vision.ByteUpdatedCameraServer;
-import frc.robot.vision.SerialProvider;
-import frc.robot.vision.VisionCommManager;
-
-import frc.robot.RobotConstants.DEFAULTS.VISION;
+import frc.robot.vision.VisionDataProcessor;
+import java.io.StringReader;
+import java.util.*;
 
 /**
  *
- * @author aryan,plaba
+ * @author aryan
  */
 public class VisionSubsystem extends BaseSubsystem {
 
     private static final int BAUD_RATE = 115200;
-    private static final int TIMEOUT = 1;
-    private static final Port PORT = Port.kUSB1;
-    private SerialProvider connection;
-    private VisionCommManager communication;
-    private ByteUpdatedCameraServer visionStream;
 
-    private boolean connected = false;
+    
+    
+    private SerialPort visionPort;
+
+    private VisionData visionData = VisionData.DEFAULT_VISION_DATA;
+    private VisionDataProcessor processor;
+
+    private boolean isConnected = false;
 
     @Override
     public void initialize() {
         logger.log("initialized", true);
-        visionStream = new ByteUpdatedCameraServer(false);
         tryConnect();
+        processor = new VisionDataProcessor();
     }
 
     @Override
     public void periodic() {
-        if(connected){
-            communication.update();
-            logger.log("Target width", getVisionData().getTargetWidth());
-            // visionStream.addFrame(communication.getLatestImage());
+        if(isConnected){
+            String reading = visionPort.readString();
+            logger.log("Input", reading);
+            processor.addInput(reading);
+            visionData = processor.getCurrentVisionData();
+            logger.log("Vertical offset", visionData.getVerticalOffset());
+            logger.driverinfo("Horizontal Offset", visionData.getLateralOffset());
         }
     }
 
     public VisionData getVisionData() {
-        return communication.getLatestTargetData();
+        return visionData;
     }
 
-    public byte[] getImageData(){
-        return communication.getLatestImage();
-    }
-
-    public boolean ensureConnected(){
-        if ( ! connected){
-            tryConnect();
+    public void tryConnect(){
+        try{
+            visionPort = new SerialPort(BAUD_RATE, SerialPort.Port.kUSB1);
+            visionPort.setTimeout(1);
+            logger.driverinfo("Vision connection initialization succeded", "SUCCESS");
+            isConnected = true;
+        } catch(Exception e){
+            logger.driverinfo("Vision connection initialization failed", "FAILED");
         }
-        return connected;
     }
-    
-    private void tryConnect(){
-        if ( ! connected){
-            try{
-                connection = new WpilibSerialProvider(BAUD_RATE, TIMEOUT, PORT);
-                communication = new VisionCommManager(connection);
-                visionStream.initialize(VISION.FRAME_HEIGHT, VISION.FRAME_WIDTH, VISION.STREAM_FPS, VISION.STREAM_PORT);
-                logger.driverinfo("Vision connection initialization", "SUCCESS");
-                connected = true;
-            } catch(Exception e){
-                logger.driverinfo("Vision connection initialization", "FAILED");
-            }
-        }            
+
+    public boolean isConnected(){
+        return isConnected;
     }
 
 }

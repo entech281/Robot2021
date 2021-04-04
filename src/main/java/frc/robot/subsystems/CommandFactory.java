@@ -70,7 +70,7 @@ public class CommandFactory {
     }
     
     public Command snapToTargetVision(){
-        return new SnapToVisionTargetCommand(sm.getDriveSubsystem(), sm);
+        return new SnapToVisionTargetCommand(sm.getTurretSubsystem(), sm);
     }
     
     public Command autoTurretAdjust() {
@@ -209,7 +209,7 @@ public class CommandFactory {
                 .alongWith(fireCommand());
     }
     public Command snapToVisionTargetCommand(){
-        return new SnapToVisionTargetCommand(sm.getDriveSubsystem(),sm);
+        return new SnapToVisionTargetCommand(sm.getTurretSubsystem(),sm);
     }
     public Command snapToYawCommand(double desiredAngle, boolean relative){
         return new SnapToYawCommand(sm.getDriveSubsystem(),  desiredAngle,  relative, sm );

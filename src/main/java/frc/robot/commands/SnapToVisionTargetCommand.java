@@ -10,6 +10,7 @@ import frc.robot.RobotConstants;
 import frc.robot.pose.PoseSource;
 import frc.robot.pose.RobotPose;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.utils.PIDControlOutputProcessor;
 
 /**
@@ -18,7 +19,7 @@ import frc.robot.utils.PIDControlOutputProcessor;
  */
 public class SnapToVisionTargetCommand extends EntechCommandBase {
 
-    private DriveSubsystem drive;
+    private TurretSubsystem turret;
     private PIDController controller;
     private double offset;
     private double output = 0.0;
@@ -26,9 +27,9 @@ public class SnapToVisionTargetCommand extends EntechCommandBase {
     public static final double TIMEOUT_SECONDS=2;
     private int count = 0;
 
-    public SnapToVisionTargetCommand(DriveSubsystem drive, PoseSource poseSource) {
-        super(drive,TIMEOUT_SECONDS);
-        this.drive = drive;
+    public SnapToVisionTargetCommand(TurretSubsystem turret, PoseSource poseSource) {
+        super(turret,TIMEOUT_SECONDS);
+        this.turret = turret;
         this.poseSource = poseSource;
         this.controller = new PIDController(RobotConstants.PID.AUTO_TURN.P,
             RobotConstants.PID.AUTO_TURN.I,
@@ -47,8 +48,7 @@ public class SnapToVisionTargetCommand extends EntechCommandBase {
             offset = rp.getTargetLateralOffset();
             output = controller.calculate(offset);
             output = PIDControlOutputProcessor.constrainWithMinBounds(output, 0.8, 0.25);
-            drive.drive(0, output);
-            drive.feedWatchDog();
+            turret.turnTurret(output);
         }
 
     }
