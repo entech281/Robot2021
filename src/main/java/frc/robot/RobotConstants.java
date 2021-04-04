@@ -57,17 +57,6 @@ public class RobotConstants {
                 .useSpeedControl()
                 .build();
         
-        public static TalonSettings TURRET = TalonSettingsBuilder.defaults()
-                .withCurrentLimits(1, 1, 1)
-                .brakeInNeutral()
-                .withDirections(false, false)
-                .noMotorOutputLimits()
-                .noMotorStartupRamping()
-                .usePositionControl()
-                .withGains(4, 2.56 * 3, 0, 0)
-                .withMotionProfile(1000, 1000, 5)
-                .enableLimitSwitch(false)
-                .build();
         
         public static SparkMaxSettings SHOOTER_CLOSED_LOOP = SparkMaxSettingsBuilder.defaults()
                 .withCurrentLimits(35)
@@ -91,9 +80,30 @@ public class RobotConstants {
                 .noMotorStartupRamping()
                 .useSpeedControl()
                 .build();
+
+            
+        public static TalonSettings TURRET = TalonSettingsBuilder.defaults()
+        .withCurrentLimits(1, 1, 1)
+        .brakeInNeutral()
+        .withDirections(false, false)
+        .noMotorOutputLimits()
+        .noMotorStartupRamping()
+        .usePositionControl()
+        .withGains(4, 2.56 * 3, 0, 0)
+        .withMotionProfile(200, 200, 5)
+        .enableLimitSwitch(true).build();
      
+        public static TalonSettings TURRET_HOMING_SPEED = TalonSettingsBuilder.defaults()
+                .withCurrentLimits(1, 1, 1)
+                .brakeInNeutral()
+                .withDirections(false, false)
+                .limitMotorOutputs(0.3, 0)
+                .noMotorStartupRamping()
+                .useSpeedControl()
+                .build();
     }
     
+
     public interface CAN {
 
         public static final int FRONT_LEFT_MOTOR = 3;
@@ -101,15 +111,15 @@ public class RobotConstants {
         public static final int REAR_LEFT_MOTOR = 4;
         public static final int REAR_RIGHT_MOTOR = 2;
         public static final int SHOOTER_MOTOR = 7;
-        public static final int HOOD_MOTOR = 5;
+        public static final int HOOD_MOTOR = 5; 
+        public static final int TURRET_MOTOR = 9; // We have to set this value
         public static final int INTAKE_MOTOR = 6;
         public static final int ELEVATOR_MOTOR = 8;
         public static final int PCM_ID = 0;
         public static final int FORWARD = 6;
         public static final int REVERSE = 7;
         public static final int FORWARD_S = 4;
-        public static final int REVERSE_S = 5;
-        public static final int TURRET_MOTOR = 9;        
+        public static final int REVERSE_S = 5;    
     }
 
     public interface PNEUMATICS {
@@ -145,6 +155,9 @@ public class RobotConstants {
         public static final int NUDGE_YAW_LEFT = 15;
         public static final int NUDGE_HOOD_FORWARD = 16;
         public static final int NUDGE_HOOD_BACKWARD = 17;
+        public static final int ENABLE_TURRET = 18;
+        public static final int TURRET_LEFT_ADJUST  = 3;
+        public static final int TURRET_RIGHT_ADJUST = 4;
         
     }
 
@@ -166,9 +179,9 @@ public class RobotConstants {
     public interface DIMENSIONS {
         // Must be in inches
 
-        public static final double ROBOT_WIDTH = 23.5;
-        public static final double ROBOT_LENGTH = 25;
-        public static final double DRIVE_GEAR_RATIO = 10.7 * (48/50.5); //(23.5/25.5)
+        public static final double ROBOT_WIDTH = 23;
+        public static final double ROBOT_LENGTH = 23;
+        public static final double DRIVE_GEAR_RATIO = 12.7; //10.7 * (48/50.5); //(23.5/25.5)
         public static final double WHEEL_DIAMETER_INCHES = 6;
         public static final double MOTOR_REVOLUTIONS_PER_INCH = (Math.PI * WHEEL_DIAMETER_INCHES)
                 / DRIVE_GEAR_RATIO;

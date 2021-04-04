@@ -40,6 +40,7 @@ public class VisionSubsystem extends BaseSubsystem {
     public void periodic() {
         if(connected){
             communication.update();
+            logger.log("Target width", getVisionData().getTargetWidth());
             // visionStream.addFrame(communication.getLatestImage());
         }
     }

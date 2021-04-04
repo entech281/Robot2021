@@ -11,6 +11,7 @@ import frc.robot.commands.TankDriveCurvatureCommand;
 import frc.robot.subsystems.CommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SubsystemManager;
+import frc.robot.path.Position;
 
 public class OperatorInterface {
 
@@ -55,6 +56,15 @@ public class OperatorInterface {
                 .whileHeld(commandFactory.nudgeHoodBackward())
                 .add();
                 
+        joystickManager.addButton(RobotConstants.BUTTONS.TURRET_LEFT_ADJUST)
+                .whileHeld(commandFactory.nudgeTurretLeft())
+                .whenReleased(commandFactory.turretStop())
+                .add();
+        
+        joystickManager.addButton(RobotConstants.BUTTONS.TURRET_RIGHT_ADJUST)
+                .whileHeld(commandFactory.nudgeTurretRight())
+                .whenReleased(commandFactory.turretStop())
+                .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_1)
                 .whenPressed(commandFactory.hoodUpAgainstTargetPreset())
@@ -88,7 +98,7 @@ public class OperatorInterface {
                 .add();
 
         joystickManager.addButton(12)
-                .whenPressed(commandFactory.driveForwardSpeedMode(126, 1))
+                .whenPressed(commandFactory.driveForward(new Position(122.5, 194.77)))
                 .add();
         
         joystickManager.addButton(9)

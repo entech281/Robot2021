@@ -8,6 +8,7 @@ package frc.robot.utils;
 /**
  *
  * @author aryan
+ * @modifiedby rohit
  */
 public class ShooterCalculations {
     public static final double SLOPE = 4.722222222;
@@ -24,4 +25,6 @@ public class ShooterCalculations {
         encoderClicks = Math.max(encoderClicks, 1100);
         return encoderClicks;
     }
+
 }
+

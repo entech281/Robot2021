@@ -32,7 +32,7 @@ public class TurretSubsystem extends BaseSubsystem {
     private boolean turretHomedAlready = false;
     
     private final ClampedDouble desiredTurretPositionEncoder = ClampedDouble.builder()
-            .bounds(0, 1500)
+            .bounds(0, 500)
             .withIncrement(5.0)
             .withValue(0.0).build();
 
@@ -51,7 +51,7 @@ public class TurretSubsystem extends BaseSubsystem {
         turretMotor.overrideLimitSwitchesEnable(true);
     }
 
-    public boolean isUpperLimitHit() {
+    public boolean isClockLimitHit() {
         return turretMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
     
@@ -64,7 +64,11 @@ public class TurretSubsystem extends BaseSubsystem {
         desiredTurretPositionEncoder.setValue(0.0);
     }
     
-    public boolean isLowerLimitHit() {
+    public void turnTurret(Double speed){
+        turretMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public boolean isCounterClockLimitHit() {
         return turretMotor.getSensorCollection().isRevLimitSwitchClosed();
     }
 
@@ -126,8 +130,8 @@ public class TurretSubsystem extends BaseSubsystem {
         logger.log("Turret Desired Position1", turretMotorController.getDesiredPosition());
         logger.log("Turret Current Command", getCurrentCommand());
         logger.log("Control Mode", RobotConstants.MOTOR_SETTINGS.INTAKE.getControlMode());
-        logger.log("turret upper limit switch", isUpperLimitHit());
-        logger.log("turret lower limit switch", isLowerLimitHit());
+        logger.log("clockwise limit switch", isClockLimitHit());
+        logger.log("counterclockwise limit switch", isCounterClockLimitHit());
         logger.log("Clamped double", desiredTurretPositionEncoder.getValue());
     }
 

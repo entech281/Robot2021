@@ -8,7 +8,10 @@ package frc.robot.commands;
 import frc.robot.pose.PoseSource;
 import frc.robot.subsystems.HoodSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.utils.ShooterCalculations;
+import frc.robot.utils.TurretCalculations;
+import frc.robot.pose.RobotPose;
 
 /**
  *
@@ -35,15 +38,15 @@ public class AutoHoodShooterAdjust extends EntechCommandBase{
     @Override
     public void execute(){
         double distance = poseSource.getRobotPose().getTargetLocation().getDistanceToTarget();
-        
+
         if(poseSource.getRobotPose().getVisionDataValidity()){
             customSpeed = ShooterCalculations.calculateAutoShooterSpeed(distance);
             customPosition = ShooterCalculations.hoodEncoderPosition(distance);
         }
         shooter.setShooterSpeed(customSpeed);
         hood.setHoodPosition(customPosition);
-    }
-
+        }
+    
     @Override
     public boolean isFinished(){
         return !shooter.isShooterOn();

@@ -13,15 +13,19 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.AdjustHoodBackwardCommand;
 import frc.robot.commands.AdjustRaiseHoodCommand;
+import frc.robot.commands.AdjustTurretLeftCommand;
+import frc.robot.commands.SpinTurretSpeedCommand;
 import frc.robot.commands.AutoHoodShooterAdjust;
+import frc.robot.commands.AutoTurretAdjust;
 import frc.robot.commands.DriveDistancePIDCommand;
 import frc.robot.commands.DriveToPositionCommand;
 import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
 import frc.robot.pose.PoseSource;
 import java.util.function.BooleanSupplier;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.path.Position;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -69,6 +73,10 @@ public class CommandFactory {
         return new SnapToVisionTargetCommand(sm.getDriveSubsystem(), sm);
     }
     
+    public Command autoTurretAdjust() {
+        return new AutoTurretAdjust(sm.getTurretSubsystem(), sm);
+    }
+
     public Command spinIntake(){
         return new InstantCommand ( sm.getIntakeSubsystem()::intakeOn, sm.getIntakeSubsystem());
     }
@@ -165,7 +173,12 @@ public class CommandFactory {
     public Command driveForward(double inches){
         return new DriveToPositionCommand(sm.getDriveSubsystem(), inches);
     }
-    
+
+    public Command driveForward(Position position){
+        return new DriveToPositionCommand(sm.getDriveSubsystem(), position);
+    }
+
+
     public Command driveForwardSpeedMode(double distance){
         return new DriveDistancePIDCommand(sm.getDriveSubsystem(), distance);
     }
@@ -256,6 +269,18 @@ public class CommandFactory {
     
     public Command nudgeHoodForward(){
         return new AdjustRaiseHoodCommand(sm.getHoodSubsystem());
+    }
+
+    public Command nudgeTurretLeft() {
+        return new SpinTurretSpeedCommand(sm.getTurretSubsystem(), 0.2);
+    }
+
+    public Command nudgeTurretRight() {
+        return new SpinTurretSpeedCommand(sm.getTurretSubsystem(), -0.2);
+    }
+
+    public Command turretStop() {
+        return new SpinTurretSpeedCommand(sm.getTurretSubsystem(), 0);
     }
     
     public Command hoodHomeCommand(){
