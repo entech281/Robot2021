@@ -47,15 +47,15 @@ public class Robot extends TimedRobot {
             compressor = new Compressor(RobotConstants.CAN.PCM_ID);
             compressor.start();
         }
-        
+
         DataLoggerFactory.configureForMatch();
         this.logger = DataLoggerFactory.getLoggerFactory().createDataLogger("Robot Main Loop");
         subsystemManager = new SubsystemManager();
         subsystemManager.initAll();
-        
+
         optionChooser = new SmartDashboardPathChooser();
         commandFactory = new CommandFactory(subsystemManager);
-        
+
     }
 
     @Override
@@ -116,5 +116,5 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {
 
     }
-    
+
 }
