@@ -78,7 +78,7 @@ public class OperatorInterface {
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.FIRE)
-                .whenPressed(commandFactory.fireCommand())
+                .whileHeld(commandFactory.fireCommand())
                 .whenReleased(commandFactory.stopElevator())
                 .add();
 
@@ -92,13 +92,13 @@ public class OperatorInterface {
         //        .add();
 
 
-        joystickManager.addButton(5)
-                .whenPressed(commandFactory.snapToYawCommand( -90, true))
-                .add();
+        //joystickManager.addButton(5)
+        //        .whenPressed(commandFactory.snapToYawCommand( -90, true))
+        //        .add();
 
-        joystickManager.addButton(6)
-                .whenPressed(commandFactory.snapToYawCommand( 90, true))
-                .add();
+        //joystickManager.addButton(6)
+        //        .whenPressed(commandFactory.snapToYawCommand( 90, true))
+        //        .add();
 
         joystickManager.addButton(7)
                 .whenPressed(commandFactory.startDriveLogging())

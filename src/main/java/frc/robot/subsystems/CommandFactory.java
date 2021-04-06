@@ -273,7 +273,7 @@ public class CommandFactory {
     public Command fireCommand(){
         return new SequentialCommandGroup(
             new InstantCommand(() -> sm.getIntakeSubsystem().fire()),
-            new WaitCommand(0.2),
+            new WaitCommand(0.5),
             new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
 
         );
