@@ -78,7 +78,7 @@ public class OperatorInterface {
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.FIRE)
-                .whileHeld(commandFactory.fireCommand())
+                .whenPressed(commandFactory.fireCommand())
                 .whenReleased(commandFactory.stopElevator())
                 .add();
 
@@ -113,7 +113,8 @@ public class OperatorInterface {
                 .add();
 
         joystickManager.addButton(10)
-                .whenPressed(commandFactory.startDriveReplay())
+                .whenPressed(commandFactory.autonomousSlalomPathCommand())
+            // .whenPressed(commandFactory.startDriveReplay())
                 .add();
 
         joystickManager.addButton(11)

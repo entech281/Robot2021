@@ -54,6 +54,32 @@ public class CommandFactory {
         this.sm = subsystemManager;
     }
 
+    public Command autonomousSlalomPathCommand() {
+        return new SequentialCommandGroup(
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(90.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(0.0).withTimeout(5.0),
+            driveForwardSpeedMode(6*30.0,0.25).withTimeout(10.0),
+            turnToDirection(-90.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(0.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(90.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(180.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(-90.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(180.0).withTimeout(5.0),
+            driveForwardSpeedMode(6*30.0,0.25).withTimeout(10.0),
+            turnToDirection(90.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0),
+            turnToDirection(180.0).withTimeout(5.0),
+            driveForward(2*30.0).withTimeout(5.0)
+            );
+    }
+
     public Command toggleIntakeArms(){
         return new SequentialCommandGroup(
             new InstantCommand(() -> sm.getIntakeSubsystem().toggleIntakeArms()),
@@ -270,12 +296,19 @@ public class CommandFactory {
 //     }
 
 
-    public Command fireCommand(){
+    public Command fireCommand_Orig(){
         return new SequentialCommandGroup(
             new InstantCommand(() -> sm.getIntakeSubsystem().fire()),
             new WaitCommand(0.5),
             new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
 
+        );
+    }
+
+    public Command fireCommand(){
+        return new SequentialCommandGroup(
+            new PerpetualCommand(new InstantCommand(() -> sm.getIntakeSubsystem().fire())).withTimeout(0.5),
+            new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
         );
     }
 
