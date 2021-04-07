@@ -83,15 +83,16 @@ public class RobotConstants {
 
 
         public static TalonSettings TURRET = TalonSettingsBuilder.defaults()
-        .withCurrentLimits(1, 1, 1)
-        .brakeInNeutral()
-        .withDirections(false, false)
-        .noMotorOutputLimits()
-        .noMotorStartupRamping()
-        .usePositionControl()
-        .withGains(4, 0.0, 0, 0)
-        .withMotionProfile(20000, 2000, 5000)
-        .enableLimitSwitch(true).build();
+                .withCurrentLimits(1, 1, 1)
+                .brakeInNeutral()
+                .withDirections(true, false)
+                .noMotorOutputLimits()
+                .noMotorStartupRamping()
+                .usePositionControl()
+                .withGains(0.0, 0.5, 0, 0)
+                .withMotionProfile(20000, 2000, 5000)
+                .enableLimitSwitch(true)
+                .build();
 
         public static TalonSettings TURRET_HOMING_SPEED = TalonSettingsBuilder.defaults()
                 .withCurrentLimits(1, 1, 1)
@@ -196,7 +197,7 @@ public class RobotConstants {
         }
 
         public interface AUTO_TURN{
-            public static final double P = 2e-2; //1e-2
+            public static final double P = 3e-2; //2e-2
             public static final double I = 1e-7;
             public static final double D = 0;
             public static final double F = 0;

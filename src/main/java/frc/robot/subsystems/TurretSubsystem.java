@@ -24,10 +24,12 @@ public class TurretSubsystem extends BaseSubsystem {
 
     private WPI_TalonSRX turretMotor;
     private TalonPositionController turretMotorController;
+    // private ControlMode turretMode = ControlMode.MotionMagic;
+    private ControlMode turretMode = ControlMode.PercentOutput;
 
     private final ClampedDouble desiredTurretPositionEncoder = ClampedDouble.builder()
             .bounds(-5000000, 5000000)
-            .withIncrement(5000.0)
+            .withIncrement(10000.0)
             .withValue(0.0).build();
 
     @Override
@@ -45,15 +47,18 @@ public class TurretSubsystem extends BaseSubsystem {
         reset();
     }
 
-
     public boolean isClockLimitHit() {
         return turretMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
     public void reset(){
-        turretMotorController.resetPosition();
-        desiredTurretPositionEncoder.setValue(turretMotorController.getActualPosition());
-        update();
+        if (turretMode == ControlMode.PercentOutput) {
+            turretMotor.set(ControlMode.PercentOutput,0.0);
+        } else {
+            // turretMotorController.resetPosition();
+            desiredTurretPositionEncoder.setValue(turretMotorController.getActualPosition());
+            update();
+        }
     }
 
     //public void turnTurret(Double speed){
@@ -63,16 +68,42 @@ public class TurretSubsystem extends BaseSubsystem {
     public boolean isCounterClockLimitHit() {
         return turretMotor.getSensorCollection().isRevLimitSwitchClosed();
     }
-    
+
+
     public void adjustTurretCounterClockwise() {
+        if (turretMode == ControlMode.PercentOutput) {
+            adjustTurretCounterClockwisePercent();
+        } else {
+            adjustTurretCounterClockwisePosition();
+        }
+    }
+
+    public void adjustTurretClockwise() {
+        if (turretMode == ControlMode.PercentOutput) {
+            adjustTurretClockwisePercent();
+        } else {
+            adjustTurretClockwisePosition();
+        }
+    }
+
+    private void adjustTurretCounterClockwisePosition() {
         desiredTurretPositionEncoder.increment();
         update();
     }
 
-    public void adjustTurretClockwise() {
+    private void adjustTurretClockwisePosition() {
         desiredTurretPositionEncoder.decrement();
         update();
     }
+
+    private void adjustTurretCounterClockwisePercent() {
+        turretMotor.set(ControlMode.PercentOutput,-0.2);
+    }
+
+    private void adjustTurretClockwisePercent() {
+        turretMotor.set(ControlMode.PercentOutput,0.2);
+    }
+
     private void update() {
         turretMotorController.setDesiredPosition(desiredTurretPositionEncoder.getValue());
     }
@@ -91,6 +122,7 @@ public class TurretSubsystem extends BaseSubsystem {
         logger.log("clockwise limit switch", isClockLimitHit());
         logger.log("counterclockwise limit switch", isCounterClockLimitHit());
         logger.log("Clamped double", desiredTurretPositionEncoder.getValue());
+        logger.log("Turrent Talon Error", turretMotor.getClosedLoopError(0));
     }
 
     private static class LimitSwitchState {

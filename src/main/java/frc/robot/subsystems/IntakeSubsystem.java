@@ -20,6 +20,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     private DoubleSolenoid.Value currentStateFlapper;
     private DigitalInput intakeBallSensor;
     private DigitalInput shooterBallSensor;
+    private double elevator_speed = 0.;
     
     public static final double INTAKE_ON= 1.0;
     public static final double INTAKE_OFF=0.0;
@@ -102,7 +103,7 @@ public class IntakeSubsystem extends BaseSubsystem {
         logger.log("Current command", getCurrentCommand());
         logger.log("Ball sensor", isBallAtIntake());
         logger.log("Shooter sensor", isBallAtShooter());
-
+        elevatorMotorController.setDesiredSpeed(elevator_speed);
     }
   
     public boolean isBallAtIntake(){
@@ -116,12 +117,13 @@ public class IntakeSubsystem extends BaseSubsystem {
     public void fireSequenceEnable(double desiredSpeed){
         if(isBallAtShooter()){
             setIntakeMotorSpeed(0);
+            setElevatorSpeed(0.0);
             currentStateFlapper = DoubleSolenoid.Value.kForward;
             updateFlapperSolenoidPosition();
         } else {
             currentStateFlapper = DoubleSolenoid.Value.kReverse;
             updateFlapperSolenoidPosition();
-            setIntakeMotorSpeed(desiredSpeed);
+            setElevatorSpeed(desiredSpeed);
         }
     }
     
@@ -140,7 +142,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     }
     
     public void setElevatorSpeed(double desiredSpeed) {
-       elevatorMotorController.setDesiredSpeed(desiredSpeed);
+        elevator_speed = desiredSpeed;
     }
 
     public void updateIntakeSolenoidPosition() {

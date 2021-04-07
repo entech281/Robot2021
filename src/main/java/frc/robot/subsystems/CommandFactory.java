@@ -55,28 +55,32 @@ public class CommandFactory {
 
     public Command autonomousSlalomPathCommand() {
         return new SequentialCommandGroup(
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(-90.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(0.0).withTimeout(5.0),
-            driveForwardSpeedMode(6*30.0,0.25).withTimeout(10.0),
+            driveForwardSpeedMode(6*30.0,0.5).withTimeout(10.0),
             turnToDirection(90.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(0.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(-90.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(180.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(90.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(180.0).withTimeout(5.0),
-            driveForwardSpeedMode(6*30.0,0.25).withTimeout(10.0),
+            driveForwardSpeedMode(6*30.0,0.5).withTimeout(10.0),
             turnToDirection(-90.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0),
             turnToDirection(180.0).withTimeout(5.0),
-            driveForward(2*30.0).withTimeout(5.0)
+            driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0)
             );
+    }
+
+    public Command autonomousReplayPathCommand() {
+        return new StartDriveReplayCommand(sm.getDriveSubsystem());
     }
 
     public Command toggleIntakeArms(){
@@ -269,28 +273,30 @@ public class CommandFactory {
 
     public Command intakeOnCommand(){
 
-        double DELAY1 = SmartDashboard.getNumber("delay1", 0.25);
-        double DELAY2 = SmartDashboard.getNumber("delay2", 0.05);
+        double DELAY1 = SmartDashboard.getNumber("delay1", 0.3);
+        double DELAY2 = SmartDashboard.getNumber("delay2", 0.1);
         return new SequentialCommandGroup(
             setIntakeSpeed(1),
             setElevatorSpeed(0),
             new WaitUntilCommand ( sm.getIntakeSubsystem()::isBallAtIntake),
             setIntakeSpeed(0.4),
-            new PerpetualCommand(setElevatorSpeed(0.3)).withTimeout(DELAY1),
+            setElevatorSpeed(0.3),
+            new WaitCommand(DELAY1),
             setIntakeSpeed(0.0),
-            new PerpetualCommand(setElevatorSpeed(0.5)).withTimeout(DELAY2)
+            setElevatorSpeed(0.5),
+            new WaitCommand(DELAY2)
         );
     }
 
-//     public Command fireCommand(){
-//         return new SequentialCommandGroup(
-//             new WaitUntilCommand ( () ->
-//                     sm.getShooterSubsystem().atShootSpeed() &&
-//                     sm.getHoodSubsystem().atHoodPosition() ),
-// //            snapToTargetVision(),
-//             new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )
-//         );
-//     }
+    public Command fireCommand(){
+        return new SequentialCommandGroup(
+            new WaitUntilCommand ( () ->
+                    sm.getShooterSubsystem().atShootSpeed() &&
+                    sm.getHoodSubsystem().atHoodPosition() ),
+            // snapToTargetVision(),
+            new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )
+        );
+    }
 
 
     public Command fireCommand_Orig(){
@@ -302,12 +308,12 @@ public class CommandFactory {
         );
     }
 
-    public Command fireCommand(){
-        return new SequentialCommandGroup(
-            new PerpetualCommand(new InstantCommand(() -> sm.getIntakeSubsystem().fire())).withTimeout(0.5),
-            new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
-        );
-    }
+    // public Command fireCommand(){
+    //     return new SequentialCommandGroup(
+    //         new PerpetualCommand(new InstantCommand(() -> sm.getIntakeSubsystem().fire())).withTimeout(0.5),
+    //         new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
+    //     );
+    // }
 
     public Command enableAutoShooterAndHood(){
         BooleanSupplier shooterOn = () -> sm.getShooterSubsystem().isShooterOn();
@@ -324,15 +330,15 @@ public class CommandFactory {
     }
 
     public Command nudgeTurretCounterClockwise() {
-        return new InstantCommand(() -> sm.getTurretSubsystem().adjustTurretCounterClockwise());
+        return new InstantCommand(() -> sm.getTurretSubsystem().adjustTurretCounterClockwise(),sm.getTurretSubsystem());
     }
 
     public Command nudgeTurretClockwise() {
-        return new InstantCommand(() -> sm.getTurretSubsystem().adjustTurretClockwise());
+        return new InstantCommand(() -> sm.getTurretSubsystem().adjustTurretClockwise(),sm.getTurretSubsystem());
     }
 
     public Command turretStop() {
-        return new InstantCommand(() -> sm.getTurretSubsystem().reset());
+        return new InstantCommand(() -> sm.getTurretSubsystem().reset(),sm.getTurretSubsystem());
     }
 
     public Command hoodHomeCommand(){

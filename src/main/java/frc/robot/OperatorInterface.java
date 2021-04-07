@@ -46,6 +46,10 @@ public class OperatorInterface {
                 .whenReleased(commandFactory.disableAutoShooterAndHood())
                 .add();
 
+        joystickManager.addButton(2)
+                 .whenPressed(commandFactory.snapToTargetVision())
+                .add();
+
         operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
                 .whileHeldContinous(commandFactory.deployAndStartIntake())
                 .whenReleased(commandFactory.raiseAndStopIntake())
@@ -60,6 +64,7 @@ public class OperatorInterface {
                 .add();
 
         joystickManager.addButton(RobotConstants.BUTTONS.TURRET_LEFT_ADJUST)
+                // .whileHeld(new AdjustTurretCounterClockwiseCommand(subsystemManager.getTurretSubsystem()))
                 .whileHeld(commandFactory.nudgeTurretCounterClockwise())
                 .whenReleased(commandFactory.turretStop())
                 .add();
@@ -104,10 +109,6 @@ public class OperatorInterface {
                 .whenPressed(commandFactory.startDriveLogging())
                 .add();
 
-                joystickManager.addButton(2)
-                .whenPressed(commandFactory.snapToTargetVision())
-                .add();
-
         joystickManager.addButton(8)
                 .whenPressed(commandFactory.endDriveLogging())
                 .add();
@@ -118,7 +119,7 @@ public class OperatorInterface {
 
         joystickManager.addButton(10)
                 .whenPressed(commandFactory.autonomousSlalomPathCommand())
-            // .whenPressed(commandFactory.startDriveReplay())
+            //    .whenPressed(commandFactory.startDriveReplay())
                 .add();
 
         joystickManager.addButton(11)
