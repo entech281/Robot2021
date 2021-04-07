@@ -26,8 +26,8 @@ public class TurretSubsystem extends BaseSubsystem {
     private TalonPositionController turretMotorController;
 
     private final ClampedDouble desiredTurretPositionEncoder = ClampedDouble.builder()
-            .bounds(-500000, 500000)
-            .withIncrement(50000.0)
+            .bounds(-5000000, 5000000)
+            .withIncrement(5000.0)
             .withValue(0.0).build();
 
     @Override
@@ -52,7 +52,8 @@ public class TurretSubsystem extends BaseSubsystem {
 
     public void reset(){
         turretMotorController.resetPosition();
-        desiredTurretPositionEncoder.setValue(0.0);
+        desiredTurretPositionEncoder.setValue(turretMotorController.getActualPosition());
+        update();
     }
 
     //public void turnTurret(Double speed){

@@ -89,8 +89,8 @@ public class RobotConstants {
         .noMotorOutputLimits()
         .noMotorStartupRamping()
         .usePositionControl()
-        .withGains(4, 2.56 * 3, 0, 0)
-        .withMotionProfile(200, 200, 5)
+        .withGains(4, 0.0, 0, 0)
+        .withMotionProfile(20000, 2000, 5000)
         .enableLimitSwitch(true).build();
 
         public static TalonSettings TURRET_HOMING_SPEED = TalonSettingsBuilder.defaults()

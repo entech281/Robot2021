@@ -104,6 +104,10 @@ public class OperatorInterface {
                 .whenPressed(commandFactory.startDriveLogging())
                 .add();
 
+                joystickManager.addButton(2)
+                .whenPressed(commandFactory.snapToTargetVision())
+                .add();
+
         joystickManager.addButton(8)
                 .whenPressed(commandFactory.endDriveLogging())
                 .add();
