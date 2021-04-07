@@ -26,8 +26,8 @@ public class TurretSubsystem extends BaseSubsystem {
     private TalonPositionController turretMotorController;
 
     private final ClampedDouble desiredTurretPositionEncoder = ClampedDouble.builder()
-            .bounds(-500000, 50000)
-            .withIncrement(500.0)
+            .bounds(-500000, 500000)
+            .withIncrement(50000.0)
             .withValue(0.0).build();
 
     @Override
@@ -41,7 +41,10 @@ public class TurretSubsystem extends BaseSubsystem {
         turretMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
 
         turretMotor.overrideLimitSwitchesEnable(true);
+
+        reset();
     }
+
 
     public boolean isClockLimitHit() {
         return turretMotor.getSensorCollection().isFwdLimitSwitchClosed();
@@ -52,14 +55,23 @@ public class TurretSubsystem extends BaseSubsystem {
         desiredTurretPositionEncoder.setValue(0.0);
     }
 
-    public void turnTurret(Double speed){
-        turretMotor.set(ControlMode.PercentOutput, speed);
-    }
+    //public void turnTurret(Double speed){
+     //   turretMotor.set(ControlMode.PercentOutput, speed);
+    //}
 
     public boolean isCounterClockLimitHit() {
         return turretMotor.getSensorCollection().isRevLimitSwitchClosed();
     }
+    
+    public void adjustTurretCounterClockwise() {
+        desiredTurretPositionEncoder.increment();
+        update();
+    }
 
+    public void adjustTurretClockwise() {
+        desiredTurretPositionEncoder.decrement();
+        update();
+    }
     private void update() {
         turretMotorController.setDesiredPosition(desiredTurretPositionEncoder.getValue());
     }

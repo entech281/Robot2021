@@ -60,12 +60,12 @@ public class OperatorInterface {
                 .add();
 
         joystickManager.addButton(RobotConstants.BUTTONS.TURRET_LEFT_ADJUST)
-                .whileHeld(commandFactory.nudgeTurretLeft())
+                .whileHeld(commandFactory.nudgeTurretCounterClockwise())
                 .whenReleased(commandFactory.turretStop())
                 .add();
 
         joystickManager.addButton(RobotConstants.BUTTONS.TURRET_RIGHT_ADJUST)
-                .whileHeld(commandFactory.nudgeTurretRight())
+                .whileHeld(commandFactory.nudgeTurretClockwise())
                 .whenReleased(commandFactory.turretStop())
                 .add();
 

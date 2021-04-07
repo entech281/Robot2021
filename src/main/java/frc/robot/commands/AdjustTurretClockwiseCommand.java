@@ -2,17 +2,15 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.TurretSubsystem;
 
-public class SpinTurretSpeedCommand extends EntechCommandBase {
+public class AdjustTurretClockwiseCommand extends EntechCommandBase {
     private TurretSubsystem turret;
-    private double speed;
-    public SpinTurretSpeedCommand(TurretSubsystem turret, double speed){
+    public AdjustTurretClockwiseCommand(TurretSubsystem turret){
         super(turret);
         this.turret = turret;
-        this.speed = speed;
     }
     @Override
     public void execute() {
-        turret.turnTurret(speed);
+        turret.adjustTurretClockwise();
     }
     @Override
     public void initialize() {

@@ -26,6 +26,7 @@ public class SnapToVisionTargetCommand extends EntechCommandBase {
     private PoseSource poseSource;
     public static final double TIMEOUT_SECONDS=2;
     private int count = 0;
+    private double TOLERANCE = 5;
 
     public SnapToVisionTargetCommand(TurretSubsystem turret, PoseSource poseSource) {
         super(turret,TIMEOUT_SECONDS);
@@ -46,9 +47,20 @@ public class SnapToVisionTargetCommand extends EntechCommandBase {
         RobotPose rp = poseSource.getRobotPose();
         if(rp.getVisionDataValidity()){
             offset = rp.getTargetLateralOffset();
-            output = controller.calculate(offset);
-            output = PIDControlOutputProcessor.constrainWithMinBounds(output, 0.2, 0.0);
-            turret.turnTurret(output);
+            // output = controller.calculate(offset);
+            // output = PIDControlOutputProcessor.constrainWithMinBounds(output, 0.2, 0.0);
+            // turret.turnTurret(output);
+
+            if (offset < -TOLERANCE){
+                turret.adjustTurretClockwise();
+            }
+            else if (offset > TOLERANCE){
+                turret.adjustTurretCounterClockwise();
+            }
+            else{
+                turret.reset();
+            }
+
         }
 
     }

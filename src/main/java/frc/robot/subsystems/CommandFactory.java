@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.AdjustHoodBackwardCommand;
 import frc.robot.commands.AdjustRaiseHoodCommand;
-import frc.robot.commands.AdjustTurretLeftCommand;
-import frc.robot.commands.SpinTurretSpeedCommand;
+import frc.robot.commands.AdjustTurretCounterClockwiseCommand;
 import frc.robot.commands.AutoHoodShooterAdjust;
 import frc.robot.commands.AutoTurretAdjust;
 import frc.robot.commands.DriveDistancePIDCommand;
@@ -277,11 +276,9 @@ public class CommandFactory {
             setElevatorSpeed(0),
             new WaitUntilCommand ( sm.getIntakeSubsystem()::isBallAtIntake),
             setIntakeSpeed(0.4),
-            setElevatorSpeed(0.3),
-            new WaitCommand( DELAY1),
+            new PerpetualCommand(setElevatorSpeed(0.3)).withTimeout(DELAY1),
             setIntakeSpeed(0.0),
-            setElevatorSpeed(0.5),
-            new WaitCommand(DELAY2)
+            new PerpetualCommand(setElevatorSpeed(0.5)).withTimeout(DELAY2)
         );
     }
 
@@ -326,16 +323,16 @@ public class CommandFactory {
         return new AdjustRaiseHoodCommand(sm.getHoodSubsystem());
     }
 
-    public Command nudgeTurretLeft() {
-        return new SpinTurretSpeedCommand(sm.getTurretSubsystem(), 0.2);
+    public Command nudgeTurretCounterClockwise() {
+        return new InstantCommand(() -> sm.getTurretSubsystem().adjustTurretCounterClockwise());
     }
 
-    public Command nudgeTurretRight() {
-        return new SpinTurretSpeedCommand(sm.getTurretSubsystem(), -0.2);
+    public Command nudgeTurretClockwise() {
+        return new InstantCommand(() -> sm.getTurretSubsystem().adjustTurretClockwise());
     }
 
     public Command turretStop() {
-        return new SpinTurretSpeedCommand(sm.getTurretSubsystem(), 0);
+        return new InstantCommand(() -> sm.getTurretSubsystem().reset());
     }
 
     public Command hoodHomeCommand(){
