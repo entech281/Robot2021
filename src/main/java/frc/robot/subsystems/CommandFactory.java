@@ -24,6 +24,7 @@ import frc.robot.commands.ToggleBrakeModeCommand;
 import frc.robot.commands.ToggleCurvatureDriveCommand;
 import frc.robot.commands.StartDriveLoggingCommand;
 import frc.robot.commands.EndDriveLoggingCommand;
+import frc.robot.commands.IntakeBallPickupCommand;
 import frc.robot.commands.StartDriveReplayCommand;
 import frc.robot.pose.PoseSource;
 import java.util.function.BooleanSupplier;
@@ -77,6 +78,32 @@ public class CommandFactory {
             turnToDirection(180.0).withTimeout(5.0),
             driveForwardSpeedMode(2*30.0,0.5).withTimeout(5.0)
             );
+    }
+
+    public Command autonomousBarrelPathCommand() {
+        return new SequentialCommandGroup(
+            driveForwardSpeedMode(5.25*30.0,0.55).withTimeout(10.0),
+            turnToDirection(90.0).withTimeout(5.0),
+            driveForwardSpeedMode(1.9*30.0,0.55).withTimeout(10.0),
+            turnToDirection(180.0).withTimeout(5.0),
+            driveForwardSpeedMode(2.75*30.0,0.55).withTimeout(10.0),
+            turnToDirection(270.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.55).withTimeout(5.0),
+            turnToDirection(0.0).withTimeout(5.0),
+            driveForwardSpeedMode(4.5*30.0,0.55).withTimeout(5.0),
+            turnToDirection(-90.0).withTimeout(5.0),
+            driveForwardSpeedMode(1.8*30.0,0.55).withTimeout(5.0),
+            turnToDirection(180.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.55).withTimeout(5.0),
+            turnToDirection(90.0).withTimeout(5.0),
+            driveForwardSpeedMode(3.75*30.0,0.55).withTimeout(5.0),
+            turnToDirection(0.0).withTimeout(5.0),
+            driveForwardSpeedMode(4*30.0,0.55).withTimeout(10.0),
+            turnToDirection(-90.0).withTimeout(5.0),
+            driveForwardSpeedMode(2*30.0,0.55).withTimeout(5.0),
+            turnToDirection(180.0).withTimeout(5.0),
+            driveForwardSpeedMode(10.0*30.0,0.7).withTimeout(5.0)
+         );
     }
 
     public Command autonomousReplayPathCommand() {
@@ -272,7 +299,6 @@ public class CommandFactory {
     }
 
     public Command intakeOnCommand(){
-
         double DELAY1 = SmartDashboard.getNumber("delay1", 0.3);
         double DELAY2 = SmartDashboard.getNumber("delay2", 0.1);
         return new SequentialCommandGroup(
@@ -288,6 +314,15 @@ public class CommandFactory {
         );
     }
 
+    // public Command intakeOnCommand(){
+    //     return new SequentialCommandGroup(
+    //         deployAndStartIntake(),
+    //         new WaitUntilCommand ( sm.getIntakeSubsystem()::isBallAtIntake ),
+    //         new IntakeBallPickupCommand(sm.getIntakeSubsystem()),
+    //         raiseAndStopIntake()
+    //     );
+    // }
+
     public Command fireCommand(){
         return new SequentialCommandGroup(
             new WaitUntilCommand ( () ->
@@ -299,6 +334,17 @@ public class CommandFactory {
     }
 
 
+    public Command elevatorUp() {
+        return new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(0.4), sm.getIntakeSubsystem());
+    }
+
+    public Command elevatorDown() {
+        return new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(-0.4), sm.getIntakeSubsystem());
+    }
+
+    public Command elevatorStop() {
+        return new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(0.0), sm.getIntakeSubsystem());
+    }
     public Command fireCommand_Orig(){
         return new SequentialCommandGroup(
             new InstantCommand(() -> sm.getIntakeSubsystem().fire()),
@@ -384,7 +430,7 @@ public class CommandFactory {
     public Command stopShooter() {
         return new InstantCommand(
             () ->  sm.getShooterSubsystem().stopShooter(), sm.getShooterSubsystem()
-        ).alongWith(parkHood());
+        );
     }
 
     public Command parkHood(){

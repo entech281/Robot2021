@@ -43,10 +43,10 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        if(RobotConstants.AVAILABILITY.PNEUMATICS_MOUNTED){
-            compressor = new Compressor(RobotConstants.CAN.PCM_ID);
-            compressor.start();
-        }
+        // if(RobotConstants.AVAILABILITY.PNEUMATICS_MOUNTED){
+        //     compressor = new Compressor(RobotConstants.CAN.PCM_ID);
+        //     compressor.start();
+        // }
 
         DataLoggerFactory.configureForMatch();
         this.logger = DataLoggerFactory.getLoggerFactory().createDataLogger("Robot Main Loop");
@@ -92,9 +92,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        autoCommand = new AutoCommandFactory(commandFactory).getSelectedCommand(optionChooser.getSelected());
+        autoCommand = commandFactory.autonomousBarrelPathCommand();
         CommandScheduler.getInstance().schedule(autoCommand);
-        subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
+        // subsystemManager.getDriveSubsystem().setDefaultCommand(new StopDrivingCommand(subsystemManager.getDriveSubsystem()));
     }
 
     @Override

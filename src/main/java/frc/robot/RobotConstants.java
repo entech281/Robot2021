@@ -191,14 +191,14 @@ public class RobotConstants {
     public interface PID{
         public interface AUTO_STRAIGHT{
             public static final double P = 4e-4;
-            public static final double I = 2e-7;
+            public static final double I = 1e-7; //2e-7
             public static final double D = 0;
             public static final double F = 0;
         }
 
         public interface AUTO_TURN{
-            public static final double P = 3e-2; //2e-2
-            public static final double I = 1e-7;
+            public static final double P = 2.2e-2; //2e-2
+            public static final double I = 1e-5;   // 1e-7
             public static final double D = 0;
             public static final double F = 0;
         }

@@ -67,7 +67,7 @@ public class SubsystemManager implements PoseSource{
 
     public void initAll() {
         driveSubsystem = new DriveSubsystem();
-        intakeSubsystem = new IntakeSubsystem();
+        // intakeSubsystem = new IntakeSubsystem();
         navXSubsystem = new NavXSubsystem();
         shooterSubsystem = new ShooterSubsystem();
         climbSubsystem = new ClimbSubsystem();
@@ -78,7 +78,7 @@ public class SubsystemManager implements PoseSource{
 
         Arrays.asList(
             driveSubsystem, 
-            intakeSubsystem, 
+        //    intakeSubsystem, 
             navXSubsystem, 
            visionSubsystem,
             shooterSubsystem,

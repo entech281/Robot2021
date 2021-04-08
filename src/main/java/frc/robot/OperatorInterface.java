@@ -36,32 +36,42 @@ public class OperatorInterface {
         this.joystickManager = new JoystickButtonManager(driveStick);
         this.operatorPanelManager = new JoystickButtonManager(operatorPanel);
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.TURN_SHOOTER_ON)
-                .whenPressed(commandFactory.startShooterNoShift())
-                .whenReleased(commandFactory.stopShooter())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.TURN_SHOOTER_ON)
+        //         .whenPressed(commandFactory.startShooterNoShift())
+        //         .whenReleased(commandFactory.stopShooter())
+        //         .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.ENABLE_AUTO_HOOD)
-                .whenPressed(commandFactory.enableAutoShooterAndHood())
-                .whenReleased(commandFactory.disableAutoShooterAndHood())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.ENABLE_AUTO_HOOD)
+        //         .whenPressed(commandFactory.enableAutoShooterAndHood())
+        //         .whenReleased(commandFactory.disableAutoShooterAndHood())
+        //         .add();
 
         joystickManager.addButton(2)
                  .whenPressed(commandFactory.snapToTargetVision())
                 .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
-                .whileHeldContinous(commandFactory.deployAndStartIntake())
-                .whenReleased(commandFactory.raiseAndStopIntake())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
+        //         .whileHeldContinous(commandFactory.deployAndStartIntake())
+        //         .whenReleased(commandFactory.raiseAndStopIntake())
+        //         .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_FORWARD_ADJUST)
-                .whileHeld(commandFactory.nudgeHoodForward())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_FORWARD_ADJUST)
+        //         .whileHeld(commandFactory.nudgeHoodForward())
+        //         .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_BACKWARD_ADJUST)
-                .whileHeld(commandFactory.nudgeHoodBackward())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_BACKWARD_ADJUST)
+        //         .whileHeld(commandFactory.nudgeHoodBackward())
+        //         .add();
+
+        // operatorPanelManager.addButton(12)
+        //         .whenPressed(commandFactory.elevatorDown())
+        //         .whenReleased(commandFactory.elevatorStop())
+        //         .add();
+
+        // operatorPanelManager.addButton(14)
+        //         .whenPressed(commandFactory.elevatorUp())
+        //         .whenReleased(commandFactory.elevatorStop())
+        //         .add();
 
         joystickManager.addButton(RobotConstants.BUTTONS.TURRET_LEFT_ADJUST)
                 // .whileHeld(new AdjustTurretCounterClockwiseCommand(subsystemManager.getTurretSubsystem()))
@@ -74,18 +84,18 @@ public class OperatorInterface {
                 .whenReleased(commandFactory.turretStop())
                 .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_1)
-                .whenPressed(commandFactory.hoodUpAgainstTargetPreset())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_1)
+        //         .whenPressed(commandFactory.hoodUpAgainstTargetPreset())
+        //         .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_2)
-                .whenPressed(commandFactory.hoodTrenchPreset())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.SELECT_PRESET_2)
+        //         .whenPressed(commandFactory.hoodTrenchPreset())
+        //         .add();
 
-        operatorPanelManager.addButton(RobotConstants.BUTTONS.FIRE)
-                .whenPressed(commandFactory.fireCommand())
-                .whenReleased(commandFactory.stopElevator())
-                .add();
+        // operatorPanelManager.addButton(RobotConstants.BUTTONS.FIRE)
+        //         .whenPressed(commandFactory.fireCommand())
+        //         .whenReleased(commandFactory.stopElevator())
+        //         .add();
 
 
         drive = subsystemManager.getDriveSubsystem();
@@ -97,13 +107,13 @@ public class OperatorInterface {
         //        .add();
 
 
-        //joystickManager.addButton(5)
-        //        .whenPressed(commandFactory.snapToYawCommand( -90, true))
-        //        .add();
+        joystickManager.addButton(5)
+               .whenPressed(commandFactory.snapToYawCommand( -90, true))
+               .add();
 
-        //joystickManager.addButton(6)
-        //        .whenPressed(commandFactory.snapToYawCommand( 90, true))
-        //        .add();
+        joystickManager.addButton(6)
+               .whenPressed(commandFactory.snapToYawCommand( 90, true))
+               .add();
 
         joystickManager.addButton(7)
                 .whenPressed(commandFactory.startDriveLogging())
@@ -118,8 +128,9 @@ public class OperatorInterface {
                 .add();
 
         joystickManager.addButton(10)
-                .whenPressed(commandFactory.autonomousSlalomPathCommand())
-            //    .whenPressed(commandFactory.startDriveReplay())
+            //    .whenPressed(commandFactory.autonomousSlalomPathCommand())
+            .whenPressed(commandFactory.autonomousBarrelPathCommand())
+            // .whenPressed(commandFactory.startDriveReplay())
                 .add();
 
         joystickManager.addButton(11)
