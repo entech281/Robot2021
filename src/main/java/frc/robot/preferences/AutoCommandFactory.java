@@ -9,13 +9,13 @@ public class AutoCommandFactory{
     public AutoCommandFactory( CommandFactory commandFactory ){
         this.commandFactory = commandFactory; 
     }
-    public  Command getSelectedCommand(AutoOption selected){
+    public  Command getSelectedCommand(int selected){
         switch(selected){
-            case MiddleSixBall:
+            case AutoOption.MiddleSixBall:
                 return commandFactory.middleSixBallAuto();
-            case LeftSevenBall:
+            case AutoOption.LeftSevenBall:
                 return commandFactory.leftEightBallAuto();
-            case ShootAndBackUp:
+            case AutoOption.ShootAndBackUp:
                 return commandFactory.simpleForwardShoot3Auto();
         }
         return commandFactory.doNothing();
