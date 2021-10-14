@@ -121,12 +121,12 @@ public class CommandFactory {
     }
 
     public Command deployIntakeArms(){
-        return new InstantCommand( sm.getIntakeSubsystem()::deployIntakeArms, sm.getIntakeSubsystem())
+        return new InstantCommand( sm.getIntakeSubsystem()::deployAndStart, sm.getIntakeSubsystem())
                 .andThen(new PrintCommand("Deploying Arms"));
     }
 
     public Command raiseIntakeArms(){
-        return new InstantCommand( sm.getIntakeSubsystem()::raiseIntakeArms, sm.getIntakeSubsystem())
+        return new InstantCommand( sm.getIntakeSubsystem()::raiseAndStop, sm.getIntakeSubsystem())
                 .andThen(new PrintCommand("Raising Arms"));
     }
 

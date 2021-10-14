@@ -41,10 +41,10 @@ public class OperatorInterface {
                 .whenReleased(commandFactory.stopShooter())
                 .add();
 
-        // operatorPanelManager.addButton(RobotConstants.BUTTONS.ENABLE_AUTO_HOOD)
-        //         .whenPressed(commandFactory.enableAutoShooterAndHood())
-        //         .whenReleased(commandFactory.disableAutoShooterAndHood())
-        //         .add();
+        operatorPanelManager.addButton(RobotConstants.BUTTONS.ENABLE_AUTO_HOOD)
+                .whenPressed(commandFactory.enableAutoShooterAndHood())
+                .whenReleased(commandFactory.disableAutoShooterAndHood())
+                .add();
 
         joystickManager.addButton(2)
                 .whenPressed(commandFactory.snapToTargetVision())

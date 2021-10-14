@@ -24,13 +24,13 @@ public class IntakeSubsystem extends BaseSubsystem {
     private double elevatorSpeed = 0.;
     private double intakeSpeed = 0.0;
     private Timer m_timer = new Timer();
-    
+
     public static final double INTAKE_ON= 1.0;
     public static final double INTAKE_OFF=0.0;
-    
+
     @Override
     public void initialize() {
-            
+
         intakeMotor = new WPI_TalonSRX(RobotConstants.CAN.INTAKE_MOTOR);
         intakeMotorController = new TalonSpeedController(intakeMotor, MOTOR_SETTINGS.INTAKE,false);
         intakeMotorController.configure();
@@ -53,48 +53,51 @@ public class IntakeSubsystem extends BaseSubsystem {
 
         intakeBallSensor = new DigitalInput(RobotConstants.DIGITIAL_INPUT.BALL_SENSOR);
         shooterBallSensor = new DigitalInput(RobotConstants.DIGITIAL_INPUT.SHOOTER_SENSOR);
-   
     }
 
     public void deployAndStart(){
         deployIntakeArms();
         intakeOn();
     }
-    
+
     public void raiseAndStop(){
         raiseIntakeArms();
         intakeOff();
     }
-    
-    public void deployIntakeArms(){
+
+    private void deployIntakeArms(){
         currentStateIntake = DoubleSolenoid.Value.kForward;
     }
-    
-    public void raiseIntakeArms(){
+
+    private void raiseIntakeArms(){
         currentStateIntake = DoubleSolenoid.Value.kReverse;
     }
-    
+
     public void intakeOn(){
         setIntakeMotorSpeed(INTAKE_ON);
     }
-    
+
     public void intakeOff(){
         setIntakeMotorSpeed(INTAKE_OFF);
     }
-    
-  
+
     public void toggleIntakeArms(){
         if (currentStateIntake == DoubleSolenoid.Value.kForward) {
             currentStateIntake = DoubleSolenoid.Value.kReverse;
         } else {
             currentStateIntake = DoubleSolenoid.Value.kForward;
         }
+        if (isIntakeOn()) {
+            intakeOff();
+        } else {
+            intakeOn();
+        }
     }
-    
+
     public boolean isIntakeOn(){
         return intakeMotorController.getDesiredSpeed() != 0;
     }
-    
+
     @Override
     public void periodic() {
         logger.log("Current command", getCurrentCommand());
@@ -109,7 +112,7 @@ public class IntakeSubsystem extends BaseSubsystem {
         updateFlapperSolenoidPosition();
         updateIntakeSolenoidPosition();
         }
-  
+
     public boolean isBallAtIntake(){
         return intakeBallSensor.get();
     }
@@ -129,7 +132,7 @@ public class IntakeSubsystem extends BaseSubsystem {
             setElevatorSpeed(desiredSpeed);
         }
     }
-    
+
     public void fire(){
         m_timer.stop();
         m_timer.reset();
@@ -146,7 +149,7 @@ public class IntakeSubsystem extends BaseSubsystem {
     public void setIntakeMotorSpeed(double desiredSpeed) {
         intakeSpeed = desiredSpeed;
     }
-    
+
     public void setElevatorSpeed(double desiredSpeed) {
         elevatorSpeed = desiredSpeed;
     }
