@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -299,18 +298,18 @@ public class CommandFactory {
     }
 
     public Command intakeOnCommand(){
-        double DELAY1 = SmartDashboard.getNumber("delay1", 0.3);
-        double DELAY2 = SmartDashboard.getNumber("delay2", 0.1);
+        //double DELAY1 = SmartDashboard.getNumber("delay1", 0.3);
+        //double DELAY2 = SmartDashboard.getNumber("delay2", 0.1);
         return new SequentialCommandGroup(
-            setIntakeSpeed(1),
-            setElevatorSpeed(0),
-            new WaitUntilCommand ( sm.getIntakeSubsystem()::isBallAtIntake),
-            setIntakeSpeed(0.4),
-            setElevatorSpeed(0.3),
-            new WaitCommand(DELAY1),
-            setIntakeSpeed(0.0),
-            setElevatorSpeed(0.5),
-            new WaitCommand(DELAY2)
+            setIntakeSpeed(1)
+            , setElevatorSpeed(0)
+        //    , new WaitUntilCommand ( sm.getIntakeSubsystem()::isBallAtIntake)
+        //    , setIntakeSpeed(0.4)
+        //    , setElevatorSpeed(0.3)
+        //    , new WaitCommand(DELAY1)
+        //    , setIntakeSpeed(0.0)
+        //    , setElevatorSpeed(0.5)
+        //    , new WaitCommand(DELAY2)
         );
     }
 
@@ -423,9 +422,7 @@ public class CommandFactory {
     }
 
     public Command startShooter() {
-        return shiftElevatorBack()
-                .andThen(new InstantCommand(() ->  sm.getShooterSubsystem().startShooterPresetSpeed(), sm.getShooterSubsystem()
-            ));
+        return new InstantCommand(() ->  sm.getShooterSubsystem().startShooterPresetSpeed(), sm.getShooterSubsystem());
     }
     public Command stopShooter() {
         return new InstantCommand(

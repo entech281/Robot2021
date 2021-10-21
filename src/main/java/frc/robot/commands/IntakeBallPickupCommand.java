@@ -5,10 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeBallPickupCommand extends CommandBase {
+public class IntakeBallPickupCommand extends EntechCommandBase {
   private Timer m_timer = new Timer();
   private IntakeSubsystem m_intake;
   private double DELAY1 = 0.3;
@@ -16,9 +15,8 @@ public class IntakeBallPickupCommand extends CommandBase {
 
   /** Creates a new IntakeBallPickupCommand. */
   public IntakeBallPickupCommand(IntakeSubsystem intake) {
-  // Use addRequirements() here to declare subsystem dependencies.
+    super(intake);
     m_intake = intake;
-    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.

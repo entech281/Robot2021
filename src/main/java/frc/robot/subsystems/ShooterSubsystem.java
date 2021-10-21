@@ -2,10 +2,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ControlType;
 import frc.robot.RobotConstants;
 import frc.robot.controllers.*;
-import frc.robot.utils.ClampedDouble;
 
 public class ShooterSubsystem extends BaseSubsystem {
 
@@ -17,12 +15,9 @@ public class ShooterSubsystem extends BaseSubsystem {
     private CANSparkMax shootMotor;
     private SparkSpeedController shooterMotorClosedLoopController;  
 
-    private int currentSpeedSetShooter = DEFAULT_SHOOTER_FIRE_RPM;
-    public boolean isShooterOn = false;
-    
+    private int currentSpeedSetShooter = 0;    
     
     public void startShooterPresetSpeed(){
-        isShooterOn = true;
         currentSpeedSetShooter = DEFAULT_SHOOTER_FIRE_RPM;
         shooterMotorClosedLoopController.setDesiredSpeed(DEFAULT_SHOOTER_FIRE_RPM);
     }
@@ -33,11 +28,13 @@ public class ShooterSubsystem extends BaseSubsystem {
     }
     
     public boolean isShooterOn(){
-        return isShooterOn;
+        if (currentSpeedSetShooter != 0)
+            return true;
+        return false;
     }
     
     public void stopShooter(){
-        isShooterOn = false;
+        currentSpeedSetShooter = 0;
         shooterMotorClosedLoopController.stop();
     }
     

@@ -38,7 +38,7 @@ class JoystickButtonManager {
 
         public Builder whileHeld(Command command);
         
-        public Builder whileHeldContinous(Command command);
+        public Builder whileHeldContinuous(Command command);
         
     }
 
@@ -76,7 +76,7 @@ class JoystickButtonManager {
         }
 
         @Override
-        public Builder whileHeldContinous(Command command) {
+        public Builder whileHeldContinuous(Command command) {
             buttonBeingBuilt.whileHeld(command);
             return this;
         }

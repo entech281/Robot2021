@@ -1,14 +1,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
 import frc.robot.commands.ToggleBrakeModeCommand;
 import frc.robot.commands.ToggleCurvatureDriveCommand;
 import frc.robot.commands.StartDriveLoggingCommand;
 import frc.robot.commands.EndDriveLoggingCommand;
+import frc.robot.commands.IntakeBallPickupCommand;
 import frc.robot.commands.StartDriveReplayCommand;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.CommandFactory;
@@ -51,7 +54,7 @@ public class OperatorInterface {
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
-                 .whileHeldContinous(commandFactory.deployAndStartIntake())
+                 .whileHeldContinuous(commandFactory.deployAndStartIntake())
                  .whenReleased(commandFactory.raiseAndStopIntake())
                  .add();
 
@@ -148,6 +151,10 @@ public class OperatorInterface {
         drive.setDefaultCommand ( new TankDriveCommand(drive,driveStick) );
         //drive.setDefaultCommand(new ToggleDriveCurvatureCommand(drive, driveStick,
         //        new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
+
+        Trigger pickupSensor = new Trigger(subsystemManager.getIntakeSubsystem()::isBallAtIntake);
+        pickupSensor.whenActive(new IntakeBallPickupCommand(subsystemManager.getIntakeSubsystem()));
+        
     }
 
 }
