@@ -2,9 +2,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.RobotConstants;
 import static frc.robot.RobotConstants.*;
 import frc.robot.controllers.*;
@@ -13,17 +12,9 @@ public class IntakeSubsystem extends BaseSubsystem {
 
     private WPI_TalonSRX intakeMotor;
     private TalonSpeedController intakeMotorController;
-    private WPI_TalonSRX elevatorMotor;
-    private TalonSpeedController elevatorMotorController;
     private DoubleSolenoid deployIntakeSolenoids;
-    private DoubleSolenoid flapperSolenoids;
     private DoubleSolenoid.Value currentStateIntake;
-    private DoubleSolenoid.Value currentStateFlapper;
-    private DigitalInput intakeBallSensor;
-    private DigitalInput shooterBallSensor;
-    private double elevatorSpeed = 0.;
     private double intakeSpeed = 0.0;
-    private Timer m_timer = new Timer();
 
     public static final double INTAKE_ON= 1.0;
     public static final double INTAKE_OFF=0.0;
@@ -36,23 +27,20 @@ public class IntakeSubsystem extends BaseSubsystem {
         intakeMotorController.configure();
         intakeMotorController.setDesiredSpeed(0);
 
-
         deployIntakeSolenoids = new DoubleSolenoid(RobotConstants.CAN.FORWARD, RobotConstants.CAN.REVERSE);
         currentStateIntake = DoubleSolenoid.Value.kReverse;
         updateIntakeSolenoidPosition();
+    }
 
-        flapperSolenoids = new DoubleSolenoid(RobotConstants.CAN.FORWARD_S, RobotConstants.CAN.REVERSE_S);
-        currentStateFlapper = DoubleSolenoid.Value.kReverse;
-        updateFlapperSolenoidPosition();
+    @Override
+    public void periodic() {
+	if (DriverStation.getInstance().isDisabled()) {
+	    // nothing to do at the moment
+	}
+        intakeMotorController.setDesiredSpeed(intakeSpeed);
+        updateIntakeSolenoidPosition();
 
-
-        elevatorMotor = new WPI_TalonSRX(RobotConstants.CAN.ELEVATOR_MOTOR);
-        elevatorMotorController = new TalonSpeedController(elevatorMotor, MOTOR_SETTINGS.ELEVATOR,true);
-        elevatorMotorController.configure();
-        elevatorMotorController.setDesiredSpeed(0);
-
-        intakeBallSensor = new DigitalInput(RobotConstants.DIGITIAL_INPUT.BALL_SENSOR);
-        shooterBallSensor = new DigitalInput(RobotConstants.DIGITIAL_INPUT.SHOOTER_SENSOR);
+        logger.log("Current command", getCurrentCommand());
     }
 
     public void deployAndStart(){
@@ -98,60 +86,21 @@ public class IntakeSubsystem extends BaseSubsystem {
         return intakeMotorController.getDesiredSpeed() != 0;
     }
 
-    @Override
-    public void periodic() {
-        logger.log("Current command", getCurrentCommand());
-        logger.log("Ball sensor", isBallAtIntake());
-        logger.log("Shooter sensor", isBallAtShooter());
-
-        elevatorMotorController.setDesiredSpeed(elevatorSpeed);
-        intakeMotorController.setDesiredSpeed(intakeSpeed);
-        if (m_timer.get() > 0.5) {
-            deactivate();
-        }
-        updateFlapperSolenoidPosition();
-        updateIntakeSolenoidPosition();
-        }
-
-    public boolean isBallAtIntake(){
-        return intakeBallSensor.get();
-    }
-
-    public boolean isBallAtShooter(){
-        return shooterBallSensor.get();
-    }
-
-    public void fireSequenceEnable(double desiredSpeed){
-        if(isBallAtShooter()){
-            setIntakeMotorSpeed(0);
-            setElevatorSpeed(0.0);
-            fire();
-        } else {
-            currentStateFlapper = DoubleSolenoid.Value.kReverse;
-            updateFlapperSolenoidPosition();
-            setElevatorSpeed(desiredSpeed);
-        }
-    }
-
-    public void fire(){
-        m_timer.stop();
-        m_timer.reset();
-        m_timer.start();
-        currentStateFlapper = DoubleSolenoid.Value.kForward;
-        updateFlapperSolenoidPosition();
-    }
-
-    public void deactivate(){
-        currentStateFlapper = DoubleSolenoid.Value.kReverse;
-        updateFlapperSolenoidPosition();
-    }
+    // TODO: This needs to be a command since it now involves several subsystems -- keep for the moment
+    // public void fireSequenceEnable(double desiredSpeed){
+    //     if(isBallAtShooter()){
+    //         setIntakeMotorSpeed(0);
+    //         setElevatorSpeed(0.0);
+    //         fire();
+    //     } else {
+    //         currentStateFlapper = DoubleSolenoid.Value.kReverse;
+    //         updateFlapperSolenoidPosition();
+    //         setElevatorSpeed(desiredSpeed);
+    //     }
+    // }
 
     public void setIntakeMotorSpeed(double desiredSpeed) {
         intakeSpeed = desiredSpeed;
-    }
-
-    public void setElevatorSpeed(double desiredSpeed) {
-        elevatorSpeed = desiredSpeed;
     }
 
     public void updateIntakeSolenoidPosition() {
@@ -160,9 +109,4 @@ public class IntakeSubsystem extends BaseSubsystem {
         }
     }
 
-    public void updateFlapperSolenoidPosition() {
-        if ( flapperSolenoids.get() != currentStateFlapper ){
-            flapperSolenoids.set(currentStateFlapper);
-        }
-    }
 }

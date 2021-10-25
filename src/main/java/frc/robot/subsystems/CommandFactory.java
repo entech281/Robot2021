@@ -326,29 +326,30 @@ public class CommandFactory {
         return new SequentialCommandGroup(
             new WaitUntilCommand ( () ->
                     sm.getShooterSubsystem().atShootSpeed() &&
-                    sm.getHoodSubsystem().atHoodPosition() ),
+                    sm.getHoodSubsystem().atHoodPosition() )
             // snapToTargetVision(),
-            new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )
+            // TODO: fix this
+            // , new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )
         );
     }
 
 
     public Command elevatorUp() {
-        return new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(0.4), sm.getIntakeSubsystem());
+        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(0.4), sm.getElevatorSubsystem());
     }
 
     public Command elevatorDown() {
-        return new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(-0.4), sm.getIntakeSubsystem());
+        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(-0.4), sm.getElevatorSubsystem());
     }
 
     public Command elevatorStop() {
-        return new InstantCommand(() -> sm.getIntakeSubsystem().setElevatorSpeed(0.0), sm.getIntakeSubsystem());
+        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(0.0), sm.getElevatorSubsystem());
     }
     public Command fireCommand_Orig(){
         return new SequentialCommandGroup(
-            new InstantCommand(() -> sm.getIntakeSubsystem().fire()),
+            new InstantCommand(() -> sm.getShooterSubsystem().fire()),
             new WaitCommand(0.5),
-            new InstantCommand(() -> sm.getIntakeSubsystem().deactivate())
+            new InstantCommand(() -> sm.getShooterSubsystem().reload())
 
         );
     }
@@ -436,7 +437,7 @@ public class CommandFactory {
 
     public Command setElevatorSpeed(double desiredSpeed) {
         return new InstantCommand(
-            () ->    sm.getIntakeSubsystem().setElevatorSpeed(desiredSpeed), sm.getIntakeSubsystem()
+            () ->    sm.getElevatorSubsystem().setElevatorSpeed(desiredSpeed), sm.getElevatorSubsystem()
         ).withTimeout(TINY_TIMEOUT_SECONDS);
     }
 
@@ -458,23 +459,23 @@ public class CommandFactory {
 
     public Command reverse() {
         return new SequentialCommandGroup(
-            new InstantCommand ( () ->    sm.getIntakeSubsystem().setElevatorSpeed(FULL_SPEED_BWD)  ),
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(FULL_SPEED_BWD)  ),
             new InstantCommand ( () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(FULL_SPEED_BWD)  )
         ).withTimeout(TINY_TIMEOUT_SECONDS);
     }
 
     public Command stopEverything() {
         return new SequentialCommandGroup(
-            new InstantCommand ( () ->    sm.getIntakeSubsystem().setElevatorSpeed(STOP_SPEED)  ),
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(STOP_SPEED)  ),
             new InstantCommand ( () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(STOP_SPEED)  )
         ).withTimeout(TINY_TIMEOUT_SECONDS);
     }
 
     public Command shiftElevatorBack() {
         return new SequentialCommandGroup(
-            new InstantCommand ( () ->    sm.getIntakeSubsystem().setElevatorSpeed(-0.2)  ),
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(-0.2)  ),
             new WaitCommand( 0.5 ),
-            new InstantCommand ( () ->    sm.getIntakeSubsystem().setElevatorSpeed(0)  )
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(0)  )
         ).withTimeout(1.0);
     }
 }

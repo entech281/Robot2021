@@ -152,9 +152,9 @@ public class OperatorInterface {
         //drive.setDefaultCommand(new ToggleDriveCurvatureCommand(drive, driveStick,
         //        new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
 
-        Trigger pickupSensor = new Trigger(subsystemManager.getIntakeSubsystem()::isBallAtIntake);
-        pickupSensor.whenActive(new IntakeBallPickupCommand(subsystemManager.getIntakeSubsystem()));
-        
+        Trigger pickupSensor = new Trigger(subsystemManager.getElevatorSubsystem()::isBallAtIntake);
+        pickupSensor.whenActive(new IntakeBallPickupCommand(subsystemManager.getIntakeSubsystem(),subsystemManager.getElevatorSubsystem()));
+
     }
 
 }
