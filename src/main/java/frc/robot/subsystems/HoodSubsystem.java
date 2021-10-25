@@ -22,12 +22,13 @@ public class HoodSubsystem extends BaseSubsystem {
     private WPI_TalonSRX hoodMotor;
     private TalonPositionController hoodMotorController;
     public static final double HOOD_TOLERANCE_COUNTS = 50;
+    // MCA: How were these presets found and are they wrong if the robot starts away from the limit switches?
     public static final double HOME_OFFSET = 15.0;
     public static final double CLOSE_PRESET = 375;
     public static final double FAR_PRESET = 911;
     public static final double STARTING_LINE_PRESET = 940;
     private boolean hoodHomedAlready = false;
-    
+
     private final ClampedDouble desiredHoodPositionEncoder = ClampedDouble.builder()
             .bounds(0, 1500)
             .withIncrement(5.0)
@@ -39,7 +40,7 @@ public class HoodSubsystem extends BaseSubsystem {
 
         hoodMotorController = new TalonPositionController(hoodMotor, frc.robot.RobotConstants.MOTOR_SETTINGS.HOOD, true);
         hoodMotorController.configure();
-        
+
         hoodMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
                 0);
         hoodMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
@@ -50,7 +51,7 @@ public class HoodSubsystem extends BaseSubsystem {
     public boolean isUpperLimitHit() {
         return hoodMotor.getSensorCollection().isFwdLimitSwitchClosed();
     }
-    
+
     public boolean knowsHome(){
         return hoodHomedAlready;
     }
@@ -59,7 +60,7 @@ public class HoodSubsystem extends BaseSubsystem {
         hoodMotorController.resetPosition();
         desiredHoodPositionEncoder.setValue(0.0);
     }
-    
+
     public boolean isLowerLimitHit() {
         return hoodMotor.getSensorCollection().isRevLimitSwitchClosed();
     }
@@ -68,11 +69,11 @@ public class HoodSubsystem extends BaseSubsystem {
         hoodMotor.set(ControlMode.PercentOutput, 0.2);
         hoodHomedAlready = true;
     }
-    
+
     public void goToHomeOffset(){
         setHoodPosition(HOME_OFFSET);
     }
-    
+
     private void update() {
         hoodMotorController.setDesiredPosition(desiredHoodPositionEncoder.getValue());
     }
@@ -81,7 +82,7 @@ public class HoodSubsystem extends BaseSubsystem {
         desiredHoodPositionEncoder.setValue(desiredAngle);
         update();
     }
-    
+
     public void park(){
         desiredHoodPositionEncoder.setValue(HOME_OFFSET);
         update();
@@ -95,9 +96,10 @@ public class HoodSubsystem extends BaseSubsystem {
         desiredHoodPositionEncoder.increment();
         update();
     }
-    
+
     public void upAgainstTargetPreset(){
         desiredHoodPositionEncoder.setValue(CLOSE_PRESET);
+        update();
         update();
     }
 
@@ -106,11 +108,11 @@ public class HoodSubsystem extends BaseSubsystem {
         update();
     }
 
-    public void startinfLinePreset(){
+    public void startingLinePreset(){
         desiredHoodPositionEncoder.setValue(STARTING_LINE_PRESET);
         update();
     }
-    
+
     public void adjustHoodBackward() {
         desiredHoodPositionEncoder.decrement();
         update();
@@ -125,7 +127,7 @@ public class HoodSubsystem extends BaseSubsystem {
         logger.log("upper limit switch", isUpperLimitHit());
         logger.log("lower limit switch", isLowerLimitHit());
         logger.log("Clamped double", desiredHoodPositionEncoder.getValue());
-        
+
         logger.log("Known home", knowsHome());
     }
 

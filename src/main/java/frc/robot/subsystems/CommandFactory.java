@@ -413,7 +413,7 @@ public class CommandFactory {
     }
 
     public Command hoodStartingLinePreset(){
-        return new InstantCommand( () -> sm.getHoodSubsystem().startinfLinePreset(), sm.getHoodSubsystem());
+        return new InstantCommand( () -> sm.getHoodSubsystem().startingLinePreset(), sm.getHoodSubsystem());
 
     }
 
