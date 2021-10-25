@@ -330,6 +330,9 @@ public class CommandFactory {
             // snapToTargetVision(),
             // TODO: fix this
             // , new InstantCommand(() -> sm.getIntakeSubsystem().fireSequenceEnable(ELEVEATOR_SLOW_SPEED) )
+            , new InstantCommand(() -> sm.getShooterSubsystem().fire()).withTimeout(0.5)
+            // , new WaitCommand(0.5)
+            , new InstantCommand(() -> sm.getShooterSubsystem().reload())
         );
     }
 
@@ -389,11 +392,11 @@ public class CommandFactory {
 
     public Command hoodHomeCommand(){
         return new SequentialCommandGroup(
-        new InstantCommand(() -> sm.getHoodSubsystem().goToHomePosition()),
-        new WaitUntilCommand(() -> sm.getHoodSubsystem().isUpperLimitHit()),
-        new InstantCommand(() -> sm.getHoodSubsystem().reset()),
-        new InstantCommand(() -> sm.getHoodSubsystem().adjustHoodForward()),
-        new WaitUntilCommand(() -> sm.getHoodSubsystem().atHoodPosition())
+            new InstantCommand(() -> sm.getHoodSubsystem().goToHomePosition()),
+            new WaitUntilCommand(() -> sm.getHoodSubsystem().isUpperLimitHit()),
+            new InstantCommand(() -> sm.getHoodSubsystem().reset()),
+            new InstantCommand(() -> sm.getHoodSubsystem().adjustHoodForward()),
+            new WaitUntilCommand(() -> sm.getHoodSubsystem().atHoodPosition())
         );
     }
 
