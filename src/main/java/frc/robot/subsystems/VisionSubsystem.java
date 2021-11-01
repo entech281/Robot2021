@@ -18,7 +18,7 @@ import java.util.*;
  *
  * @author aryan
  */
-public class VisionSubsystem extends BaseSubsystem {
+public class VisionSubsystem extends EntechSubsystem {
 
     private static final int BAUD_RATE = 115200;
 

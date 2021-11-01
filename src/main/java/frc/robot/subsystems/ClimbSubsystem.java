@@ -8,7 +8,7 @@ import frc.robot.RobotConstants;
 import frc.robot.controllers.SparkMaxSettings;
 import frc.robot.controllers.SparkMaxSettingsBuilder;
 import frc.robot.controllers.SparkSpeedController;
-public class ClimbSubsystem extends BaseSubsystem {
+public class ClimbSubsystem extends EntechSubsystem {
 
     CANSparkMax winch;
     SparkSpeedController winchController;

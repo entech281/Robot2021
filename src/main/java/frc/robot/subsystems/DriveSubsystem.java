@@ -20,7 +20,7 @@ import frc.robot.path.Position;
 import java.io.*;
 import java.io.IOException;
 
-public class DriveSubsystem extends BaseSubsystem {
+public class DriveSubsystem extends EntechSubsystem {
 
     private boolean loggingJoystick = false;
     private boolean replayingJoystick = false;

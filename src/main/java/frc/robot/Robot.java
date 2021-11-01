@@ -15,8 +15,6 @@ import frc.robot.commands.StopDrivingCommand;
 
 import frc.robot.logger.DataLogger;
 import frc.robot.logger.DataLoggerFactory;
-import frc.robot.pose.FieldPoseManager;
-import frc.robot.pose.RobotPoseManager;
 import frc.robot.preferences.AutoCommandFactory;
 import frc.robot.preferences.SmartDashboardPathChooser;
 import frc.robot.subsystems.CommandFactory;

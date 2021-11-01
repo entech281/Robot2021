@@ -17,7 +17,7 @@ import frc.robot.utils.NavXDataProcessor;
  *
  * @author dcowden
  */
-public class NavXSubsystem extends BaseSubsystem {
+public class NavXSubsystem extends EntechSubsystem {
 
     private final AHRS navX = new AHRS(SPI.Port.kMXP);
     private Timer timer;

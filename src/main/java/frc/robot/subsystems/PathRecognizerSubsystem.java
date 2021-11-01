@@ -10,7 +10,7 @@ import frc.pathrecognizer.PixyCameraConnector;
 import frc.pathrecognizer.FieldVisionInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PathRecognizerSubsystem extends BaseSubsystem {
+public class PathRecognizerSubsystem extends EntechSubsystem {
 
     private VisionFieldLayoutRecognizer visionFieldLayoutRecognizer = new VisionFieldLayoutRecognizer();    
     private PixyCameraConnector pixyCameraConnector;

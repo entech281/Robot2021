@@ -8,7 +8,7 @@ import frc.robot.RobotConstants;
 import static frc.robot.RobotConstants.*;
 import frc.robot.controllers.*;
 
-public class ElevatorSubsystem extends BaseSubsystem {
+public class ElevatorSubsystem extends EntechSubsystem {
 
     private WPI_TalonSRX elevatorMotor;
     private TalonSpeedController elevatorMotorController;

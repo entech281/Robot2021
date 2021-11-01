@@ -8,7 +8,7 @@ import frc.robot.RobotConstants;
 import static frc.robot.RobotConstants.*;
 import frc.robot.controllers.*;
 
-public class IntakeSubsystem extends BaseSubsystem {
+public class IntakeSubsystem extends EntechSubsystem {
 
     private WPI_TalonSRX intakeMotor;
     private TalonSpeedController intakeMotorController;
@@ -34,9 +34,9 @@ public class IntakeSubsystem extends BaseSubsystem {
 
     @Override
     public void periodic() {
-	if (DriverStation.getInstance().isDisabled()) {
-	    // nothing to do at the moment
-	}
+	    if (DriverStation.getInstance().isDisabled()) {
+	        // nothing to do at the moment
+	    }
         intakeMotorController.setDesiredSpeed(intakeSpeed);
         updateIntakeSolenoidPosition();
 
@@ -85,19 +85,6 @@ public class IntakeSubsystem extends BaseSubsystem {
     public boolean isIntakeOn(){
         return intakeMotorController.getDesiredSpeed() != 0;
     }
-
-    // TODO: This needs to be a command since it now involves several subsystems -- keep for the moment
-    // public void fireSequenceEnable(double desiredSpeed){
-    //     if(isBallAtShooter()){
-    //         setIntakeMotorSpeed(0);
-    //         setElevatorSpeed(0.0);
-    //         fire();
-    //     } else {
-    //         currentStateFlapper = DoubleSolenoid.Value.kReverse;
-    //         updateFlapperSolenoidPosition();
-    //         setElevatorSpeed(desiredSpeed);
-    //     }
-    // }
 
     public void setIntakeMotorSpeed(double desiredSpeed) {
         intakeSpeed = desiredSpeed;

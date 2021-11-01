@@ -11,7 +11,7 @@ import frc.robot.commands.ToggleBrakeModeCommand;
 import frc.robot.commands.ToggleCurvatureDriveCommand;
 import frc.robot.commands.StartDriveLoggingCommand;
 import frc.robot.commands.EndDriveLoggingCommand;
-import frc.robot.commands.IntakeBallPickupCommand;
+import frc.robot.commands.ElevatorBallPickupCommand;
 import frc.robot.commands.StartDriveReplayCommand;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.CommandFactory;
@@ -97,7 +97,7 @@ public class OperatorInterface {
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.FIRE)
                 .whenPressed(commandFactory.fireCommand())
-                .whenReleased(commandFactory.stopElevator())
+                .whenReleased(commandFactory.reloadCommand())
                 .add();
 
 
@@ -130,12 +130,6 @@ public class OperatorInterface {
                 .whenPressed(commandFactory.hoodHomeCommand())
                 .add();
 
-        joystickManager.addButton(10)
-            //    .whenPressed(commandFactory.autonomousSlalomPathCommand())
-            .whenPressed(commandFactory.autonomousBarrelPathCommand())
-            // .whenPressed(commandFactory.startDriveReplay())
-                .add();
-
         joystickManager.addButton(11)
                 .whenPressed(commandFactory.toggleBrakeModeCommand())
                 .add();
@@ -144,16 +138,12 @@ public class OperatorInterface {
                 .whenPressed(commandFactory.toggleCurvatureDriveCommand())
                 .add();
 
-        //joystickManager.addButton(12)
-        //        .whenPressed(commandFactory.driveForward(new Position(122.5, 194.77)))
-        //        .add();
-
         drive.setDefaultCommand ( new TankDriveCommand(drive,driveStick) );
         //drive.setDefaultCommand(new ToggleDriveCurvatureCommand(drive, driveStick,
         //        new JoystickButton(driveStick,RobotConstants.JOYSTICK_BUTTONS.CURVATURE_DRIVE_PIVOT)));
 
         Trigger pickupSensor = new Trigger(subsystemManager.getElevatorSubsystem()::isBallAtIntake);
-        pickupSensor.whenActive(new IntakeBallPickupCommand(subsystemManager.getIntakeSubsystem(),subsystemManager.getElevatorSubsystem()));
+        pickupSensor.whenActive(new ElevatorBallPickupCommand(subsystemManager.getElevatorSubsystem()));
 
     }
 

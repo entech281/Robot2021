@@ -8,9 +8,9 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.RobotConstants;
 import frc.robot.controllers.*;
 
-public class ShooterSubsystem extends BaseSubsystem {
+public class ShooterSubsystem extends EntechSubsystem {
 
-    private static final int DEFAULT_SHOOTER_FIRE_RPM = 4500;
+    private static final int DEFAULT_SHOOTER_FIRE_RPM = 5000;
     private static final int SHOOTER_MAX_RPM = 5400;
     private static final int SHOOTER_RPM_TOLERANCE=100;
     private static final int SHOOTER_RPM_INCREMENT=100;
@@ -41,15 +41,13 @@ public class ShooterSubsystem extends BaseSubsystem {
     public void periodic() {
 	if (DriverStation.getInstance().isDisabled()) {
 	    currentStateFlapper = DoubleSolenoid.Value.kOff;
-	} else if (m_timer.get() > FIRE_TIME) {
-            reload();
-        }
+	} 
         updateFlapperSolenoidPosition();
 
 //        logger.log("Current command", getCurrentCommand());
-//        logger.log("Current Speed", shooterMotorClosedLoopController.getActualSpeed());
-//        logger.log("Desired Speed", shooterMotorClosedLoopController.getDesiredSpeed());
-//        logger.log("AtSpeed", atShootSpeed());
+        logger.log("Current Speed", shooterMotorClosedLoopController.getActualSpeed());
+        logger.log("Desired Speed", shooterMotorClosedLoopController.getDesiredSpeed());
+        logger.log("AtSpeed", atShootSpeed());
 //        logger.log("Enabled", shooterMotorClosedLoopController.isEnabled());
 //        logger.log("Start controller config", RobotConstants.MOTOR_SETTINGS.SHOOTER_CLOSED_LOOP.ctrlType);
 //        logger.log("Output Bus voltage", shootMotor.getBusVoltage());

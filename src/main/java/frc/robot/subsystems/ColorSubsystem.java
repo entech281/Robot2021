@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import frc.robot.pose.WheelColorValue;
 
-public class ColorSubsystem extends BaseSubsystem {
+public class ColorSubsystem extends EntechSubsystem {
 
     public ColorSubsystem() {
     }

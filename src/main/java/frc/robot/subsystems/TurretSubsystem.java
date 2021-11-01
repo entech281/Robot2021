@@ -20,7 +20,7 @@ import frc.robot.pose.PoseSource;
  * @author aryan - for hoodSubsystem
  * @modifiedBy rohit for turretSubsytem
  */
-public class TurretSubsystem extends BaseSubsystem {
+public class TurretSubsystem extends EntechSubsystem {
 
     private WPI_TalonSRX turretMotor;
     private TalonPositionController turretMotorController;

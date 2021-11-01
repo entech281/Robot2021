@@ -12,9 +12,9 @@ public class AutoCommandFactory{
     public  Command getSelectedCommand(int selected){
         switch(selected){
             case AutoOption.MiddleSixBall:
-                return commandFactory.middleSixBallAuto();
+                return commandFactory.simpleForwardShoot3Auto();
             case AutoOption.LeftSevenBall:
-                return commandFactory.leftEightBallAuto();
+                return commandFactory.simpleForwardShoot3Auto();
             case AutoOption.ShootAndBackUp:
                 return commandFactory.simpleForwardShoot3Auto();
         }

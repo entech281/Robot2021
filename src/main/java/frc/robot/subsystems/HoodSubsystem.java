@@ -17,7 +17,7 @@ import frc.robot.utils.ClampedDouble;
  *
  * @author dcowden
  */
-public class HoodSubsystem extends BaseSubsystem {
+public class HoodSubsystem extends EntechSubsystem {
 
     private WPI_TalonSRX hoodMotor;
     private TalonPositionController hoodMotorController;
