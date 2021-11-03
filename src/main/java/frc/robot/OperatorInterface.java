@@ -54,7 +54,7 @@ public class OperatorInterface {
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
-                 .whileHeldContinuous(commandFactory.deployAndStartIntake())
+                 .whenPressed(commandFactory.deployAndStartIntake())
                  .whenReleased(commandFactory.raiseAndStopIntake())
                  .add();
 
