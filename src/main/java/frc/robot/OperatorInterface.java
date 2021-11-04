@@ -45,7 +45,7 @@ public class OperatorInterface {
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.ENABLE_AUTO_HOOD)
-                .whenPressed(commandFactory.enableAutoShooterAndHood())
+                .whenPressed(commandFactory.trackTargetWithHoodAndTurret())
                 .whenReleased(commandFactory.disableAutoShooterAndHood())
                 .add();
 

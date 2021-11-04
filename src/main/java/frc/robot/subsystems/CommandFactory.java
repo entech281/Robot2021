@@ -57,6 +57,8 @@ public class CommandFactory {
         return new StartDriveReplayCommand(sm.getDriveSubsystem());
     }
 
+    // ********** START OF ELEVATOR AND INTAKE COMMANDS
+
     public Command toggleIntakeArms(){
         return new SequentialCommandGroup(
             new InstantCommand(() -> sm.getIntakeSubsystem().toggleIntakeArms()),
@@ -77,14 +79,6 @@ public class CommandFactory {
                 .andThen(new PrintCommand("Raising Arms"));
     }
 
-    public Command snapToTargetVision(){
-        return new SnapToVisionTargetCommand(sm.getTurretSubsystem(), sm);
-    }
-
-    public Command autoTurretAdjust() {
-        return new AutoTurretAdjust(sm.getTurretSubsystem(), sm);
-    }
-
     public Command spinIntake(){
         return new InstantCommand ( sm.getIntakeSubsystem()::intakeOn, sm.getIntakeSubsystem());
     }
@@ -99,6 +93,79 @@ public class CommandFactory {
 
     public Command stopSpinningIntake(){
         return new InstantCommand ( sm.getIntakeSubsystem()::intakeOff, sm.getIntakeSubsystem());
+    }
+
+    public Command elevatorUp() {
+        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(0.4), sm.getElevatorSubsystem());
+    }
+
+    public Command elevatorDown() {
+        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(-0.4), sm.getElevatorSubsystem());
+    }
+
+    public Command elevatorStop() {
+        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(0.0), sm.getElevatorSubsystem());
+    }
+
+    public Command setElevatorSpeed(double desiredSpeed) {
+        return new InstantCommand(
+            () ->    sm.getElevatorSubsystem().setElevatorSpeed(desiredSpeed), sm.getElevatorSubsystem()
+        ).withTimeout(TINY_TIMEOUT_SECONDS);
+    }
+
+    public Command setIntakeSpeed( double desiredSpeed){
+        return new InstantCommand(
+            () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(desiredSpeed), sm.getIntakeSubsystem()
+        ).withTimeout(TINY_TIMEOUT_SECONDS);
+    }
+
+    public Command stopIntake() {
+        return setIntakeSpeed(STOP_SPEED);
+    }
+    public Command stopElevator(){
+        return setElevatorSpeed(STOP_SPEED);
+    }
+    public Command stopIntakeAndElevator(){
+        return new SequentialCommandGroup ( stopIntake(), stopElevator() );
+    }
+
+    public Command reverse() {
+        return new SequentialCommandGroup(
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(FULL_SPEED_BWD)  ),
+            new InstantCommand ( () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(FULL_SPEED_BWD)  )
+        ).withTimeout(TINY_TIMEOUT_SECONDS);
+    }
+
+    public Command stopEverything() {
+        return new SequentialCommandGroup(
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(STOP_SPEED)  ),
+            new InstantCommand ( () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(STOP_SPEED)  )
+        ).withTimeout(TINY_TIMEOUT_SECONDS);
+    }
+
+    public Command shiftElevatorBack() {
+        return new SequentialCommandGroup(
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(-0.2)  ),
+            new WaitCommand( 0.5 ),
+            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(0)  )
+        ).withTimeout(1.0);
+    }
+
+    public Command intakeOnCommand(){
+        return new SequentialCommandGroup(
+            setIntakeSpeed(1)
+            , setElevatorSpeed(0)
+        );
+    }
+
+    // ********** END OF ELEVATOR AND INTAKE COMMANDS
+
+    public Command snapToTargetVision(){
+        return new SnapToVisionTargetCommand(sm.getTurretSubsystem(), sm);
+    }
+
+    public Command autoTurretAdjust() {
+        return new AutoTurretAdjust(sm.getTurretSubsystem(), sm);
     }
 
     public Command zeroYawOfNavX(boolean inverted){
@@ -193,13 +260,6 @@ public class CommandFactory {
         return new StartDriveReplayCommand(sm.getDriveSubsystem());
     }
 
-    public Command intakeOnCommand(){
-        return new SequentialCommandGroup(
-            setIntakeSpeed(1)
-            , setElevatorSpeed(0)
-        );
-    }
-
     public Command fireCommand(){
         return new SequentialCommandGroup(
             new WaitUntilCommand ( () ->
@@ -234,21 +294,17 @@ public class CommandFactory {
     }
 
 
-    public Command elevatorUp() {
-        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(0.4), sm.getElevatorSubsystem());
-    }
-
-    public Command elevatorDown() {
-        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(-0.4), sm.getElevatorSubsystem());
-    }
-
-    public Command elevatorStop() {
-        return new InstantCommand(() -> sm.getElevatorSubsystem().setElevatorSpeed(0.0), sm.getElevatorSubsystem());
-    }
-
     public Command enableAutoShooterAndHood(){
         BooleanSupplier shooterOn = () -> sm.getShooterSubsystem().isShooterOn();
         return new ConditionalCommand(new AutoHoodShooterAdjust(sm.getShooterSubsystem(), sm.getHoodSubsystem(), sm), stopShooter(), shooterOn);
+    }
+
+    public Command trackTargetWithHoodAndTurret(){
+        BooleanSupplier shooterOn = () -> sm.getShooterSubsystem().isShooterOn();
+        return new ParallelCommandGroup(
+            new ConditionalCommand(new AutoHoodShooterAdjust(sm.getShooterSubsystem(), sm.getHoodSubsystem(), sm), stopShooter(), shooterOn)
+            , new SnapToVisionTargetCommand(sm.getTurretSubsystem(), sm)
+        );
     }
 
     public Command disableAutoShooterAndHood(){
@@ -318,49 +374,5 @@ public class CommandFactory {
 
     public Command parkHood(){
         return new InstantCommand(()-> sm.getHoodSubsystem().park(), sm.getHoodSubsystem());
-    }
-
-    public Command setElevatorSpeed(double desiredSpeed) {
-        return new InstantCommand(
-            () ->    sm.getElevatorSubsystem().setElevatorSpeed(desiredSpeed), sm.getElevatorSubsystem()
-        ).withTimeout(TINY_TIMEOUT_SECONDS);
-    }
-
-    public Command setIntakeSpeed( double desiredSpeed){
-        return new InstantCommand(
-            () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(desiredSpeed), sm.getIntakeSubsystem()
-        ).withTimeout(TINY_TIMEOUT_SECONDS);
-    }
-
-    public Command stopIntake() {
-        return setIntakeSpeed(STOP_SPEED);
-    }
-    public Command stopElevator(){
-        return setElevatorSpeed(STOP_SPEED);
-    }
-    public Command stopIntakeAndElevator(){
-        return new SequentialCommandGroup ( stopIntake(), stopElevator() );
-    }
-
-    public Command reverse() {
-        return new SequentialCommandGroup(
-            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(FULL_SPEED_BWD)  ),
-            new InstantCommand ( () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(FULL_SPEED_BWD)  )
-        ).withTimeout(TINY_TIMEOUT_SECONDS);
-    }
-
-    public Command stopEverything() {
-        return new SequentialCommandGroup(
-            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(STOP_SPEED)  ),
-            new InstantCommand ( () ->    sm.getIntakeSubsystem().setIntakeMotorSpeed(STOP_SPEED)  )
-        ).withTimeout(TINY_TIMEOUT_SECONDS);
-    }
-
-    public Command shiftElevatorBack() {
-        return new SequentialCommandGroup(
-            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(-0.2)  ),
-            new WaitCommand( 0.5 ),
-            new InstantCommand ( () ->    sm.getElevatorSubsystem().setElevatorSpeed(0)  )
-        ).withTimeout(1.0);
     }
 }

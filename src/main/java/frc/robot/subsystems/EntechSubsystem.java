@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
+// import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.logger.DataLogger;
 import frc.robot.logger.DataLoggerFactory;
@@ -22,7 +22,8 @@ public abstract class EntechSubsystem extends SubsystemBase {
 
     public EntechSubsystem() {
         this.logger = DataLoggerFactory.getLoggerFactory().createDataLogger(this.getName());
-        CommandScheduler.getInstance().registerSubsystem(this);
+        // done by Subsystembase:
+        // CommandScheduler.getInstance().registerSubsystem(this);
     }
 
     public abstract void initialize();

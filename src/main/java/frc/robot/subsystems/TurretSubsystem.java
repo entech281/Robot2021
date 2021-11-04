@@ -61,9 +61,9 @@ public class TurretSubsystem extends EntechSubsystem {
         }
     }
 
-    //public void turnTurret(Double speed){
-     //   turretMotor.set(ControlMode.PercentOutput, speed);
-    //}
+    public void turnTurret(Double speed){
+        turretMotor.set(ControlMode.PercentOutput, speed);
+    }
 
     public boolean isCounterClockLimitHit() {
         return turretMotor.getSensorCollection().isRevLimitSwitchClosed();
