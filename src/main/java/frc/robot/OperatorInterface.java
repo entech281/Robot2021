@@ -2,16 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.SnapToVisionTargetCommand;
-import frc.robot.commands.SnapToYawCommand;
-import frc.robot.commands.ToggleBrakeModeCommand;
-import frc.robot.commands.ToggleCurvatureDriveCommand;
-import frc.robot.commands.StartDriveLoggingCommand;
-import frc.robot.commands.EndDriveLoggingCommand;
-import frc.robot.commands.ElevatorDownCommand;
-import frc.robot.commands.StartDriveReplayCommand;
 import frc.robot.commands.TankDriveCommand;
 import frc.robot.subsystems.CommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
@@ -53,8 +44,8 @@ public class OperatorInterface {
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.DEPLOY_INTAKE)
-                 .whenPressed(commandFactory.deployAndStartIntake())
-                 .whenReleased(commandFactory.raiseAndStopIntake())
+                 .whenPressed(commandFactory.startAutoBallGather())
+                 .whenReleased(commandFactory.stopAutoBallGather())
                  .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.HOOD_FORWARD_ADJUST)

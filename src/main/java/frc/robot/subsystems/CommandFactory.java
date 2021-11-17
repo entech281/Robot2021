@@ -15,9 +15,11 @@ import frc.robot.commands.AutoTurretAdjust;
 import frc.robot.commands.DriveDistancePIDCommand;
 import frc.robot.commands.DriveToPositionCommand;
 import frc.robot.commands.ElevatorAutoPickupOnCommand;
-import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorStopCommand;
+import frc.robot.commands.ElevatorDownCommand;
 import frc.robot.commands.ElevatorUpCommand;
+import frc.robot.commands.IntakeDeployCommand;
+import frc.robot.commands.IntakeRaiseCommand;
 import frc.robot.commands.SnapToVisionTargetCommand;
 import frc.robot.commands.SnapToYawCommand;
 import frc.robot.commands.ToggleBrakeModeCommand;
@@ -57,11 +59,11 @@ public class CommandFactory {
     // ********** START OF ELEVATOR AND INTAKE COMMANDS
 
     public Command deployAndStartIntake(){
-        return new InstantCommand( sm.getIntakeSubsystem()::deployAndStart, sm.getIntakeSubsystem()).withTimeout(0.2);
+        return new IntakeDeployCommand(sm.getIntakeSubsystem());
     }
 
     public Command raiseAndStopIntake(){
-        return new InstantCommand( sm.getIntakeSubsystem()::raiseAndStop, sm.getIntakeSubsystem()).withTimeout(0.2);
+        return new IntakeRaiseCommand(sm.getIntakeSubsystem());
     }
 
     public Command elevatorUp() {
@@ -78,7 +80,7 @@ public class CommandFactory {
 
     public Command startAutoBallGather() {
         return new ParallelCommandGroup(
-            deployAndStartIntake(),
+            new IntakeDeployCommand(sm.getIntakeSubsystem()),
             new ElevatorAutoPickupOnCommand(sm.getElevatorSubsystem())
         );
     }
