@@ -41,10 +41,8 @@ public class HoodSubsystem extends EntechSubsystem {
         hoodMotorController = new TalonPositionController(hoodMotor, frc.robot.RobotConstants.MOTOR_SETTINGS.HOOD, true);
         hoodMotorController.configure();
 
-        hoodMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-                0);
-        hoodMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen,
-                0);
+        hoodMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
+        hoodMotor.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, 0);
         hoodMotor.overrideLimitSwitchesEnable(true);
     }
 
@@ -67,11 +65,10 @@ public class HoodSubsystem extends EntechSubsystem {
 
     public void goToHomePosition(){
         hoodMotor.set(ControlMode.PercentOutput, 0.2);
-        hoodHomedAlready = true;
     }
 
     public void goToHomeOffset(){
-        setHoodPosition(HOME_OFFSET);
+        if (knowsHome()) setHoodPosition(HOME_OFFSET);
     }
 
     private void update() {
@@ -79,13 +76,17 @@ public class HoodSubsystem extends EntechSubsystem {
     }
 
     public void setHoodPosition(double desiredAngle) {
-        desiredHoodPositionEncoder.setValue(desiredAngle);
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.setValue(desiredAngle);
+            update();
+        }
     }
 
     public void park(){
-        desiredHoodPositionEncoder.setValue(HOME_OFFSET);
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.setValue(HOME_OFFSET);
+            update();
+        }
     }
 
     public boolean atHoodPosition() {
@@ -93,33 +94,50 @@ public class HoodSubsystem extends EntechSubsystem {
     }
 
     public void adjustHoodForward() {
-        desiredHoodPositionEncoder.increment();
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.increment();
+            update();
+        }
     }
 
     public void upAgainstTargetPreset(){
-        desiredHoodPositionEncoder.setValue(CLOSE_PRESET);
-        update();
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.setValue(CLOSE_PRESET);
+            update();
+        }
     }
 
     public void trenchPreset(){
-        desiredHoodPositionEncoder.setValue(FAR_PRESET);
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.setValue(FAR_PRESET);
+            update();
+        }
     }
 
     public void startingLinePreset(){
-        desiredHoodPositionEncoder.setValue(STARTING_LINE_PRESET);
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.setValue(STARTING_LINE_PRESET);
+            update();
+        }
     }
 
     public void adjustHoodBackward() {
-        desiredHoodPositionEncoder.decrement();
-        update();
+        if (knowsHome()) {
+            desiredHoodPositionEncoder.decrement();
+            update();
+        }
     }
 
     @Override
     public void periodic() {
+        if (!knowsHome()) {
+            goToHomePosition();
+        }
+        // TODO: verify this is the right limit switch to check for home
+        if (isUpperLimitHit()) {
+            reset();
+            hoodHomedAlready = true;
+        }
         logger.log("Hood current position1", hoodMotorController.getActualPosition());
         logger.log("Hood Desired Position1", hoodMotorController.getDesiredPosition());
         logger.log("Hood Current Command", getCurrentCommand());
@@ -129,11 +147,6 @@ public class HoodSubsystem extends EntechSubsystem {
         logger.log("Clamped double", desiredHoodPositionEncoder.getValue());
 
         logger.log("Known home", knowsHome());
-    }
-
-    private static class LimitSwitchState {
-        public static int closed = 1;
-        public static int open = 0;
     }
 
 }
