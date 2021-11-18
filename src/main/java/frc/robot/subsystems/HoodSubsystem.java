@@ -103,7 +103,7 @@ public class HoodSubsystem extends EntechSubsystem {
     public void upAgainstTargetPreset(){
         if (knowsHome()) {
             desiredHoodPositionEncoder.setValue(CLOSE_PRESET);
-            update();
+               update();
         }
     }
 
@@ -130,13 +130,12 @@ public class HoodSubsystem extends EntechSubsystem {
 
     @Override
     public void periodic() {
-        if (!knowsHome()) {
-            goToHomePosition();
-        }
-        // TODO: verify this is the right limit switch to check for home
         if (isUpperLimitHit()) {
             reset();
             hoodHomedAlready = true;
+        }
+        if (!knowsHome()) {
+            goToHomePosition();
         }
         logger.log("Hood current position1", hoodMotorController.getActualPosition());
         logger.log("Hood Desired Position1", hoodMotorController.getDesiredPosition());

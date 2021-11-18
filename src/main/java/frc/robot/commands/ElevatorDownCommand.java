@@ -10,7 +10,7 @@ import frc.robot.subsystems.ElevatorSubsystem.ElevatorMode;
 public class ElevatorDownCommand extends EntechCommandBase {
     private ElevatorSubsystem m_elevator;
 
-    /** Creates a new IntakeBallPickupCommand. */
+    /** Creates a new EvevatorDownCommand. */
     public ElevatorDownCommand(ElevatorSubsystem elevator) {
         super(elevator);
         m_elevator = elevator;

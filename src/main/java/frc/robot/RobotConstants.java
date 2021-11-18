@@ -13,11 +13,6 @@ import frc.robot.vision.VisionData;
 
 public class RobotConstants {
 
-    public interface DIGITIAL_INPUT{
-        public static final int BALL_SENSOR = 0;
-        public static final int SHOOTER_SENSOR = 1;
-    }
-
     public interface MOTOR_SETTINGS {
         public static TalonSettings INTAKE = TalonSettingsBuilder.defaults()
                 .withCurrentLimits(20, 15, 200)
@@ -121,6 +116,11 @@ public class RobotConstants {
         public static final int REVERSE = 7;
         public static final int FORWARD_S = 4;
         public static final int REVERSE_S = 5;
+    }
+
+    public interface DIGITIAL_INPUT{
+        public static final int BALL_SENSOR = 0;
+        public static final int SHOOTER_SENSOR = 1;
     }
 
     public interface PNEUMATICS {
