@@ -34,13 +34,13 @@ public class RobotConstants {
 
 // MCA: why is the limit switch set to off?
         public static TalonSettings HOOD = TalonSettingsBuilder.defaults()
-                .withCurrentLimits(1, 1, 1)
+                .withCurrentLimits(20, 15, 200)
                 .brakeInNeutral()
                 .withDirections(false, false)
                 .noMotorOutputLimits()
                 .noMotorStartupRamping()
                 .usePositionControl()
-                .withGains(4, 2.56 * 3, 0, 0)
+                .withGains(12, 2.56 * 5, 0, 0)
                 .withMotionProfile(1000, 1000, 5)
                 .enableLimitSwitch(false).build();
 
@@ -79,15 +79,24 @@ public class RobotConstants {
 
 
         public static TalonSettings TURRET = TalonSettingsBuilder.defaults()
-        .withCurrentLimits(1, 1, 1)
-        .brakeInNeutral()
-        .withDirections(false, false)
-        .noMotorOutputLimits()
-        .noMotorStartupRamping()
-        .usePositionControl()
-        .withGains(4, 2.56 * 3, 0, 0)
-        .withMotionProfile(200, 200, 5)
-        .enableLimitSwitch(true).build();
+                .withCurrentLimits(20, 15, 200)
+                .brakeInNeutral()
+                .withDirections(false, false)
+                .noMotorOutputLimits()
+                .noMotorStartupRamping()
+                .usePositionControl()
+                .withGains(4, 2.56 * 5, 0, 0)
+                .withMotionProfile(200, 200, 5)
+                .enableLimitSwitch(true).build();
+
+        public static TalonSettings TURRET_SPD = TalonSettingsBuilder.defaults()
+                .withCurrentLimits(20,15,200)
+                .brakeInNeutral()
+                .withDirections(false, false)
+                .noMotorOutputLimits()
+                .noMotorStartupRamping()
+                .useSpeedControl()
+                .build();
 
         public static TalonSettings TURRET_HOMING_SPEED = TalonSettingsBuilder.defaults()
                 .withCurrentLimits(1, 1, 1)

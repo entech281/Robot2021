@@ -68,12 +68,12 @@ public class OperatorInterface {
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.TURRET_LEFT_ADJUST)
                 // .whileHeld(new AdjustTurretCounterClockwiseCommand(subsystemManager.getTurretSubsystem()))
-                .whileHeld(commandFactory.nudgeTurretCounterClockwise())
+                .whenPressed(commandFactory.nudgeTurretCounterClockwise())
                 .whenReleased(commandFactory.turretStop())
                 .add();
 
         operatorPanelManager.addButton(RobotConstants.BUTTONS.TURRET_RIGHT_ADJUST)
-                .whileHeld(commandFactory.nudgeTurretClockwise())
+                .whenPressed(commandFactory.nudgeTurretClockwise())
                 .whenReleased(commandFactory.turretStop())
                 .add();
 

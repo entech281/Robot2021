@@ -26,6 +26,7 @@ public class TurretSubsystem extends EntechSubsystem {
     private TalonPositionController turretMotorController;
     // private ControlMode turretMode = ControlMode.MotionMagic;
     private ControlMode turretMode = ControlMode.PercentOutput;
+    private double desiredSpeed = 0.0;
 
     private final ClampedDouble desiredTurretPositionEncoder = ClampedDouble.builder()
             .bounds(-5000000, 5000000)
@@ -54,6 +55,7 @@ public class TurretSubsystem extends EntechSubsystem {
     public void reset(){
         if (turretMode == ControlMode.PercentOutput) {
             turretMotor.set(ControlMode.PercentOutput,0.0);
+            desiredSpeed = 0.0;
         } else {
             // turretMotorController.resetPosition();
             desiredTurretPositionEncoder.setValue(turretMotorController.getActualPosition());
@@ -97,11 +99,13 @@ public class TurretSubsystem extends EntechSubsystem {
     }
 
     private void adjustTurretCounterClockwisePercent() {
-        turretMotor.set(ControlMode.PercentOutput,-0.2);
+        turretMotor.set(ControlMode.PercentOutput,-0.4);
+        desiredSpeed = -0.4;
     }
 
     private void adjustTurretClockwisePercent() {
-        turretMotor.set(ControlMode.PercentOutput,0.2);
+        turretMotor.set(ControlMode.PercentOutput,0.4);
+        desiredSpeed = 0.4;
     }
 
     private void update() {
@@ -115,6 +119,9 @@ public class TurretSubsystem extends EntechSubsystem {
 
     @Override
     public void periodic() {
+        turretMotor.feed();
+        turretMotor.set(ControlMode.PercentOutput,desiredSpeed);
+
         logger.log("Turret current position1", turretMotorController.getActualPosition());
         logger.log("Turret Desired Position1", turretMotorController.getDesiredPosition());
         logger.log("Turret Current Command", getCurrentCommand());
