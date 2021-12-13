@@ -17,7 +17,7 @@ import frc.robot.logger.DataLogger;
 import frc.robot.logger.DataLoggerFactory;
 import frc.robot.preferences.AutoCommandFactory;
 import frc.robot.preferences.SmartDashboardPathChooser;
-import frc.robot.subsystems.CommandFactory;
+import frc.robot.commands.CommandFactory;
 import frc.robot.subsystems.SubsystemManager;
 
 /**

@@ -2,7 +2,7 @@ package frc.robot.preferences;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.CommandFactory;
+import frc.robot.commands.CommandFactory;
 
 public class AutoCommandFactory{
     private CommandFactory commandFactory;

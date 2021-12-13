@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -8,27 +8,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.robot.commands.AdjustHoodBackwardCommand;
-import frc.robot.commands.AdjustRaiseHoodCommand;
-import frc.robot.commands.AutoHoodShooterAdjust;
-import frc.robot.commands.AutoTurretAdjust;
-import frc.robot.commands.DriveDistancePIDCommand;
-import frc.robot.commands.DriveToPositionCommand;
-import frc.robot.commands.ElevatorAutoPickupOnCommand;
-import frc.robot.commands.ElevatorStopCommand;
-import frc.robot.commands.ElevatorDownCommand;
-import frc.robot.commands.ElevatorUpCommand;
-import frc.robot.commands.IntakeDeployCommand;
-import frc.robot.commands.IntakeRaiseCommand;
-import frc.robot.commands.SnapToVisionTargetCommand;
-import frc.robot.commands.SnapToYawCommand;
-import frc.robot.commands.ToggleBrakeModeCommand;
-import frc.robot.commands.ToggleCurvatureDriveCommand;
-import frc.robot.commands.StartDriveLoggingCommand;
-import frc.robot.commands.EndDriveLoggingCommand;
-import frc.robot.commands.StartDriveReplayCommand;
 import java.util.function.BooleanSupplier;
 import frc.robot.path.Position;
+import frc.robot.subsystems.SubsystemManager;
 
 /**
  *
@@ -108,7 +90,7 @@ public class CommandFactory {
     public Command doNothing(){
         return new PrintCommand("Doing Nothing Skipper!");
     }
- 
+
     //66.91 inches
     public Command simpleForwardShoot3Auto(){
         return new SequentialCommandGroup(

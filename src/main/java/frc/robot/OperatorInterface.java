@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.TankDriveCommand;
-import frc.robot.subsystems.CommandFactory;
+import frc.robot.commands.CommandFactory;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.SubsystemManager;
 import frc.robot.path.Position;
