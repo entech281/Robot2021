@@ -90,6 +90,14 @@ public class OperatorInterface {
                 .whenReleased(commandFactory.reloadCommand())
                 .add();
 
+        joystickManager.addButton(11)
+                .whileHeld(commandFactory.nudgeHoodForward())
+                .add();
+
+        joystickManager.addButton(10)
+                .whileHeld(commandFactory.nudgeHoodBackward())
+                .add();
+
 
         drive = subsystemManager.getDriveSubsystem();
 
@@ -118,14 +126,6 @@ public class OperatorInterface {
 
         joystickManager.addButton(9)
                 .whenPressed(commandFactory.hoodHomeCommand())
-                .add();
-
-        joystickManager.addButton(11)
-                .whenPressed(commandFactory.toggleBrakeModeCommand())
-                .add();
-
-        joystickManager.addButton(12)
-                .whenPressed(commandFactory.toggleCurvatureDriveCommand())
                 .add();
 
         drive.setDefaultCommand ( new TankDriveCommand(drive,driveStick) );

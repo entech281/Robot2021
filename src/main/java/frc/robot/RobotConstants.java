@@ -155,7 +155,7 @@ public class RobotConstants {
         public static final int FIRE = 11;
         public static final int DRIVER_SHOOT = 1;
         public static final int DEPLOY_INTAKE = 13;
-        public static final int HOOD_FORWARD_ADJUST = 3;
+        public static final int HOOD_FORWARD_ADJUST = 6;
         public static final int HOOD_BACKWARD_ADJUST = 5;
         // public static final int SELECT_PRESET_1 = 10;
         // public static final int SELECT_PRESET_2 = 7;
@@ -170,7 +170,6 @@ public class RobotConstants {
         public static final int TURRET_RIGHT_ADJUST = 7;
         public static final int ELEVATOR_UP = 14;
         public static final int ELEVATOR_DOWN = 12;
-
     }
 
     public interface DEFAULTS {
